@@ -1,16 +1,16 @@
-Install / bootstrapping
+#Install / bootstrapping
 
 kubeadm
 
 Flannel (docker)
-sysctl net.bridge.bridge-nf-call-iptables=1
-kubeadm init --pod-network-cidr=10.244.0.0/16
+`sysctl net.bridge.bridge-nf-call-iptables=1`
+`kubeadm init --pod-network-cidr=10.244.0.0/16`
 
-→ Pulling images
-kubeadm config images pull
+- Pulling images
+`kubeadm config images pull`
 
-→ create token and print join command
-kubeadm token create --print-join-command
+- create token and print join command
+`kubeadm token create --print-join-command`
 
 kubectl
 
