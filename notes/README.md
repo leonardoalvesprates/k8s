@@ -19,16 +19,19 @@
 ## kubectl
 
 ### bash completion
-source <(kubectl completion bash)
+
+`source <(kubectl completion bash)`
 
 
 ## Deployment
 
 ### create simple deploy
-kubectl create deployment web --image=nginx
+
+`kubectl create deployment web --image=nginx`
 
 ### change image
-kubectl set image deployment tomcat tomcat=tomcat:9.0.19-jre8-alpine
+
+`kubectl set image deployment tomcat tomcat=tomcat:9.0.19-jre8-alpine`
 
 ### rollout
 
@@ -46,11 +49,12 @@ kubectl set image deployment tomcat tomcat=tomcat:9.0.19-jre8-alpine
        maxSurge: 25%
        maxUnavailable: 25%
      type: RollingUpdate
-
+     ...
      type: OnDelete
 ```
 
 ### expose
+
 `kubectl expose deployment php --port=80 --type=NodePort`
 
 `kubectl expose deployment tomcat --type=NodePort`
@@ -58,7 +62,7 @@ kubectl set image deployment tomcat tomcat=tomcat:9.0.19-jre8-alpine
 ```
       containers:
         ports:
-          - containerPort: 8080
+        - containerPort: 8080
           protocol: TCP
 ```
 
@@ -81,25 +85,32 @@ spec:
         app: frontend
 ```
 
-→ nodeAffinity
+### nodeAffinity
 
+```
      spec:
        affinity:
          nodeAffinity:
-               requiredDuringSchedulingIgnoredDuringExecution:
+           requiredDuringSchedulingIgnoredDuringExecution:
              nodeSelectorTerms:
              - matchExpressions:
                - key: "app"
-                   operator: In
-                   values: ["backend"]
+               operator: In
+               values: ["backend"]
        containers:
+```
 
-→ container command
+### container command
+
+```
       containers:
          command: ["/bin/bash", "-c", "--"]
          args: ["while true; do sleep 600; done"]
+```
 
-→ livenessProbe
+### livenessProbe
+
+```
 spec:
   containers:
   - image: nginx
@@ -114,36 +125,49 @@ spec:
         port: 80
       initialDelaySeconds: 5
       periodSeconds: 5
+``
 
-Taint
-→ remove taint from master
-kubectl taint nodes <master-node> node-role.kubernetes.io/master-
+## Taint
 
-→ set taint to master NoSchedule
-kubectl taint nodes <master-node> node-role.kubernetes.io/master=true:NoSchedule
+### remove taint from master
 
-→ set taint to node NoExecute
-kubectl taint node flannel-2 remove=true:NoExecute
-kubectl taint node flannel-2 remove-
+`kubectl taint nodes <master-node> node-role.kubernetes.io/master-`
 
-Tolerations
+### set taint to master NoSchedule
+
+`kubectl taint nodes <master-node> node-role.kubernetes.io/master=true:NoSchedule`
+
+### set taint to node NoExecute
+
+`kubectl taint node flannel-2 remove=true:NoExecute`
+
+`kubectl taint node flannel-2 remove-`
+
+## Tolerations
+
+```
 kubectl describe node <node> | grep Taints
 Taints:             node-role.kubernetes.io/master=true:NoSchedule
+```
 
+```
       containers:
       tolerations:
       - key: node-role.kubernetes.io/master
         operator: "Equal"
         value: "true"
         effect: "NoSchedule"
+```
 
-Drain / Uncordon
+## Drain / Uncordon
 
-kubectl drain flannel-3 --ignore-daemonsets --delete-local-data
-kubectl uncordon flannel-3
+```kubectl drain flannel-3 --ignore-daemonsets --delete-local-data```
 
-ConfigMaps
-kubectl create configmap php-index --from-file=index.php
+```kubectl uncordon flannel-3```
+
+## ConfigMaps
+
+```kubectl create configmap php-index --from-file=index.php```
 
 containers:
 - image: php:apache
@@ -154,6 +178,7 @@ containers:
   volumeMounts:
   - name: index-file
     mountPath: /var/www/html/
+    subPath: index.php
 volumes:
   - name: index-file
     configMap:
@@ -162,9 +187,11 @@ volumes:
       - key: index.php
         path: index.php
 
-Service
-→ yaml file
+## Service
 
+### yaml file
+
+```
 apiVersion: v1
 kind: Service
 metadata:
@@ -179,16 +206,21 @@ spec:
   selector:
     app: php
   type: NodePort
+```
 
+### Secret
 
-Secret
-→ from files
-kubectl create secret generic mysecret --from-file=.username.txt --from-file=.password.txt
+### from files
 
-→ from prompt
-kubectl create secret generic test-secret --from-literal=username='my-app' --from-literal=password='39528$vdg7Jb'
+`kubectl create secret generic mysecret --from-file=.username.txt --from-file=.password.txt`
 
-→ yaml file
+### from prompt
+
+```kubectl create secret generic test-secret --from-literal=username='my-app' --from-literal=password='39528$vdg7Jb'```
+
+### yaml file
+
+```
 apiVersion: v1
 kind: Secret
 metadata:
@@ -197,8 +229,9 @@ type: Opaque
 data:
   username: YWRtaW4K
   password: MTIzNDU2Cg==
+```
 
-
+```
 apiVersion: v1
 kind: Secret
 metadata:
@@ -209,9 +242,11 @@ stringData:
     apiUrl: "https://my.api.com/api/v1"
     username: {{username}}
     password: {{password}}
+```
 
-→ pod yaml
+### pod yaml
 
+```
 containers:
   volumeMounts:
   - name: secret-volume
@@ -220,51 +255,60 @@ volumes:
   - name: secret-volume
     secret:
     secretName: test-secret
+```
 
+## API
 
-API
+### Checking
 
-→ Checking
-kubectl auth can-i create deployments
-kubectl auth can-i create deployments -n kube-system
+`kubectl auth can-i create deployments`
 
-→ Inside container
+`kubectl auth can-i create deployments -n kube-system
+
+### Inside container
+
+```
 # pwd
 /var/run/secrets/kubernetes.io/serviceaccount
 
 curl https://10.142.0.2:6443/api/v1 --header "Authorization: Bearer $(cat token)" -k
+```
 
+## Context
 
+`kubectl config view`
+`kubectl config get-clusters`
+`kubectl config get-contexts`
 
-Context
+## ServiceAccounts
 
-kubectl config view
-kubectl config get-clusters
-kubectl config get-contexts
-
-
-
-ServiceAccounts
-
+```
 kubectl describe serviceaccounts default | grep Tokens
 Tokens:              default-token-8fbcw
+```
 
+```
 kubectl get secrets | grep default
 default-token-8fbcw   kubernetes.io/service-account-token   3      48d
+```
 
+```
 kubectl describe pod fedora-bc487fb88-tjxj4 | grep -A1 Mounts
     Mounts:
       /var/run/secrets/kubernetes.io/serviceaccount from default-token-8fbcw (ro)
+```
 
+```
 kubectl apply -f - <<EOF
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: build-robot
 EOF
+```
 
+## StatefulSet
 
-StatefulSet
 
 apiVersion: apps/v1
 kind: StatefulSet
