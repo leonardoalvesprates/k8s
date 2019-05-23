@@ -125,7 +125,7 @@ spec:
         port: 80
       initialDelaySeconds: 5
       periodSeconds: 5
-``
+```
 
 ## Taint
 
