@@ -1,40 +1,43 @@
 # Install / bootstrapping
 
-kubeadm
-
-Flannel (docker)
+## kubeadm
+ 
+### Flannel (docker)
 
 `sysctl net.bridge.bridge-nf-call-iptables=1`
 
 `kubeadm init --pod-network-cidr=10.244.0.0/16`
 
-- Pulling images
+### Pulling images
 
 `kubeadm config images pull`
 
-- create token and print join command
+### create token and print join command
 
 `kubeadm token create --print-join-command`
 
-kubectl
+## kubectl
 
-→ bash completion
+### bash completion
 source <(kubectl completion bash)
 
 
-Deployment
+## Deployment
 
-→ create simple deploy
+### create simple deploy
 kubectl create deployment web --image=nginx
 
-→ change image
+### change image
 kubectl set image deployment tomcat tomcat=tomcat:9.0.19-jre8-alpine
 
-→ rollout
+### rollout
 
 `kubectl rollout history deployment <deployname>`
+
 `kubectl rollout undo daemonset <deployname>`
+
 `kubectl rollout undo deployment <deployname> --to-revision=X`
+
 `kubectl rollout status daemonset <deployname>`
 
 ```
@@ -47,28 +50,36 @@ kubectl set image deployment tomcat tomcat=tomcat:9.0.19-jre8-alpine
      type: OnDelete
 ```
 
-→ expose
-kubectl expose deployment php --port=80 --type=NodePort
-kubectl expose deployment tomcat --type=NodePort
+### expose
+`kubectl expose deployment php --port=80 --type=NodePort`
 
+`kubectl expose deployment tomcat --type=NodePort`
+
+```
       containers:
         ports:
           - containerPort: 8080
           protocol: TCP
+```
 
-→ scale
-kubectl scale deployment tomcat --replicas=20
+### scale
 
-→ replicas (deployment yaml file)
+`kubectl scale deployment tomcat --replicas=20`
+
+### replicas (deployment yaml file)
+
+```
 spec:
   replicas: 1
+```
 
+### nodeSeletor
 
-→ nodeSeletor
-
+```
       containers:
       nodeSelector:
         app: frontend
+```
 
 → nodeAffinity
 
