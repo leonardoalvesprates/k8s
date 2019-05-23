@@ -150,6 +150,8 @@ kubectl describe node <node> | grep Taints
 Taints:             node-role.kubernetes.io/master=true:NoSchedule
 ```
 
+### yaml file
+
 ```
       containers:
       tolerations:
@@ -161,14 +163,15 @@ Taints:             node-role.kubernetes.io/master=true:NoSchedule
 
 ## Drain / Uncordon
 
-```kubectl drain flannel-3 --ignore-daemonsets --delete-local-data```
+`kubectl drain flannel-3 --ignore-daemonsets --delete-local-data`
 
-```kubectl uncordon flannel-3```
+`kubectl uncordon flannel-3`
 
 ## ConfigMaps
 
-```kubectl create configmap php-index --from-file=index.php```
+`kubectl create configmap php-index --from-file=index.php`
 
+```
 containers:
 - image: php:apache
   name: php
@@ -186,6 +189,7 @@ volumes:
       items:
       - key: index.php
         path: index.php
+```
 
 ## Service
 
@@ -216,7 +220,7 @@ spec:
 
 ### from prompt
 
-```kubectl create secret generic test-secret --from-literal=username='my-app' --from-literal=password='39528$vdg7Jb'```
+`kubectl create secret generic test-secret --from-literal=username='my-app' --from-literal=password='39528$vdg7Jb'`
 
 ### yaml file
 
@@ -263,7 +267,7 @@ volumes:
 
 `kubectl auth can-i create deployments`
 
-`kubectl auth can-i create deployments -n kube-system
+`kubectl auth can-i create deployments -n kube-system`
 
 ### Inside container
 
@@ -277,7 +281,9 @@ curl https://10.142.0.2:6443/api/v1 --header "Authorization: Bearer $(cat token)
 ## Context
 
 `kubectl config view`
+
 `kubectl config get-clusters`
+
 `kubectl config get-contexts`
 
 ## ServiceAccounts
@@ -309,14 +315,16 @@ EOF
 
 ## StatefulSet
 
-
+```
 apiVersion: apps/v1
 kind: StatefulSet
+```
 
+### Headless services
 
-→ Headless services
 None for ClusterIP
 
+```
 apiVersion: v1
 kind: Service
 metadata:
@@ -330,16 +338,24 @@ spec:
   clusterIP: None
   selector:
     app: nginx
+```
 
-→ Management Policies
+### Management Policies
+
+```
 spec:
   podManagementPolicy: OrderedReady
+```
 
+```
 spec:
   podManagementPolicy: Parallel
+```
 
-→ POD name into label:
-#kubectl describe pod web-0
+### POD name into label
+
+```
+$kubectl describe pod web-0
 Name:               web-0
 Namespace:          default
 Priority:           0
@@ -349,21 +365,21 @@ Start Time:         Tue, 14 May 2019 23:16:03 +0000
 Labels:             app=nginx
                     controller-revision-hash=web-6596ffb49b
                     statefulset.kubernetes.io/pod-name=web-0
+```
 
+## ETCD
 
-→ ETCD
+`$ kubectl -n kube-system exec -it etcd-flannel-1 sh`
 
-kubectl -n kube-system exec -it etcd-flannel-1 sh
+`$ etcdctl-3.2.24 --endpoints=https://10.142.0.2:2379 --cert-file=/etc/kubernetes/pki/etcd/server.crt --key-file=./server.key member list`
 
-# etcdctl-3.2.24 --endpoints=https://10.142.0.2:2379 --cert-file=/etc/kubernetes/pki/etcd/server.crt --key-file=./server.key member list
+## ACCESS
 
+`prates  flannel-1  /home/prates  kubectl create namespace accessk8s`
 
-→ ACCESS
+`useradd -c "access k8s" -m access`
 
-prates  flannel-1  /home/prates  kubectl create namespace accessk8s
-
-useradd -c "access k8s" -m access
-
+```
 access@flannel-1:~$ kubectl config view
 apiVersion: v1
 clusters: []
@@ -372,11 +388,13 @@ current-context: ""
 kind: Config
 preferences: {}
 users: []
+```
 
-access@flannel-1:~$ openssl genrsa -out access.key 2048
+`access@flannel-1:~$ openssl genrsa -out access.key 2048`
 
-access@flannel-1:~$ openssl req -new -key access.key -out access.csr -subj "/CN=access/O=accessk8s"
+`access@flannel-1:~$ openssl req -new -key access.key -out access.csr -subj "/CN=access/O=accessk8s"`
 
+```
 prates  flannel-1  /home/prates  sudo openssl x509 -req -in /home/access/access.csr \
 > -CA /etc/kubernetes/pki/ca.crt \
 > -CAkey /etc/kubernetes/pki/ca.key \
@@ -385,10 +403,14 @@ prates  flannel-1  /home/prates  sudo openssl x509 -req -in /home/access/access.
 Signature ok
 subject=/CN=access/O=accessk8s
 Getting CA Private Key
+```
 
+```
 access@flannel-1:~$ kubectl config set-credentials access --client-certificate=/home/access/access.crt --client-key=/home/access/access.key
 User "access" set.
+```
 
+```
 access@flannel-1:~$ kubectl config view
 apiVersion: v1
 clusters: []
@@ -401,11 +423,14 @@ users:
   user:
     client-certificate: /home/access/access.crt
     client-key: /home/access/access.key
+```
 
-
+```
 access@flannel-1:~$ kubectl config set-context Access-context --cluster=kubernetes --namespace=accessk8s --user=access
 Context "Access-context" created.
+``` 
 
+```
 access@flannel-1:~$ kubectl config view
 apiVersion: v1
 clusters: []
@@ -423,26 +448,35 @@ users:
   user:
     client-certificate: /home/access/access.crt
     client-key: /home/access/access.key
+```
 
-
+```
 access@flannel-1:~$ kubectl config set-cluster kubernetes --server=https://10.142.0.2:6443
 Cluster "kubernetes" set.
+```
 
-
+```
 root@flannel-1:~# cat /etc/kubernetes/pki/ca.crt > /home/access/ca.crt
 root@flannel-1:~# chown access:access /home/access/ca.crt
+```
 
+```
 access@flannel-1:~$ kubectl config set-cluster kubernetes --certificate-authority=/home/access/ca.crt
 Cluster "kubernetes" set.
+```
 
+```
 access@flannel-1:~$ kubectl config get-contexts
 CURRENT   NAME             CLUSTER      AUTHINFO   NAMESPACE
           Access-context   kubernetes   access     accessk8s
+```
 
+```
 access@flannel-1:~$ kubectl --context=Access-context get pod
 Error from server (Forbidden): pods is forbidden: User "access" cannot list resource "pods" in API group "" in the namespace "accessk8s"
+```
 
-
+```
 access@flannel-1:~$ kubectl config use-context Access-context
 
 access@flannel-1:~$ kubectl config view
@@ -466,8 +500,4 @@ users:
   user:
     client-certificate: /home/access/access.crt
     client-key: /home/access/access.key
-
-
-
-
-
+``` 
