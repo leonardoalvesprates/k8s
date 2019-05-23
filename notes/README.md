@@ -3,13 +3,17 @@
 kubeadm
 
 Flannel (docker)
+
 `sysctl net.bridge.bridge-nf-call-iptables=1`
+
 `kubeadm init --pod-network-cidr=10.244.0.0/16`
 
 - Pulling images
+
 `kubeadm config images pull`
 
 - create token and print join command
+
 `kubeadm token create --print-join-command`
 
 kubectl
@@ -31,7 +35,7 @@ kubectl rollout history deployment <deployname>
 kubectl rollout undo daemonset <deployname>
 kubectl rollout undo deployment <deployname> --to-revision=X
 kubectl rollout status daemonset <deployname>
-...
+```
    strategy:
      rollingUpdate:
        maxSurge: 25%
@@ -39,7 +43,7 @@ kubectl rollout status daemonset <deployname>
      type: RollingUpdate
 
      type: OnDelete
-...
+```
 
 → expose
 kubectl expose deployment php --port=80 --type=NodePort
