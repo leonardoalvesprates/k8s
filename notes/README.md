@@ -1,4 +1,4 @@
-#Install / bootstrapping
+# Install / bootstrapping
 
 kubeadm
 
@@ -31,10 +31,12 @@ kubectl create deployment web --image=nginx
 kubectl set image deployment tomcat tomcat=tomcat:9.0.19-jre8-alpine
 
 → rollout
-kubectl rollout history deployment <deployname>
-kubectl rollout undo daemonset <deployname>
-kubectl rollout undo deployment <deployname> --to-revision=X
-kubectl rollout status daemonset <deployname>
+
+`kubectl rollout history deployment <deployname>`
+`kubectl rollout undo daemonset <deployname>`
+`kubectl rollout undo deployment <deployname> --to-revision=X`
+`kubectl rollout status daemonset <deployname>`
+
 ```
    strategy:
      rollingUpdate:
