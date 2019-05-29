@@ -493,6 +493,8 @@ CURRENT   NAME             CLUSTER      AUTHINFO   NAMESPACE
           Access-context   kubernetes   access     accessk8s
 ```
 
+### --context
+
 ```
 access@flannel-1:~$ kubectl --context=Access-context get pod
 Error from server (Forbidden): pods is forbidden: User "access" cannot list resource "pods" in API group "" in the namespace "accessk8s"
@@ -526,4 +528,63 @@ users:
     client-key: /home/access/access.key
 ```
 
-## Rolebinding
+## Roles, rolebinding
+
+### creating role
+
+`kubectl create -f role-access.yaml`
+
+```
+$ cat role-access.yaml
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  namespace: accessk8s
+  name: user-access
+rules:
+- apiGroups: ["", "extensions", "apps"]
+  resources: ["deployments", "replicasets", "pods"]
+  verbs: ["list", "get", "watch", "create", "update", "patch", "delete", "logs"]
+# You can use ["*"] for all verbs
+```
+
+### creating rolebinding
+
+`kubectl create -f rolebind-user-access.yaml`
+
+```
+$ cat rolebind-user-access.yaml
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: user-access-role-binding
+  namespace: accessk8s
+subjects:
+- kind: User
+  name: access
+  apiGroup: ""
+roleRef:
+  kind: Role
+  name: user-access
+  apiGroup: ""
+```
+
+### admin rolebinding as namespace admin
+
+```
+$ cat rolebind-user-access.yaml 
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: user-access-role-binding
+  namespace: accessk8s
+subjects:
+- kind: User
+  name: access
+  apiGroup: ""
+roleRef:
+  kind: ClusterRole
+  name: admin
+  apiGroup: ""
+
+```
