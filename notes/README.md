@@ -22,6 +22,9 @@
 
 `source <(kubectl completion bash)`
 
+### verbose
+
+`kubectl --v=10 get pods nginx`
 
 ## Deployment
 
@@ -104,8 +107,8 @@ spec:
 
 ```
       containers:
-         command: ["/bin/bash", "-c", "--"]
-         args: ["while true; do sleep 600; done"]
+        command: ["/bin/bash", "-c", "--"]
+        args: ["while true; do sleep 600; done"]
 ```
 
 ### livenessProbe
@@ -266,6 +269,8 @@ volumes:
 ### Checking
 
 `kubectl auth can-i create deployments`
+
+`kubectl auth can-i create deployments --as bob`
 
 `kubectl auth can-i create deployments -n kube-system`
 
@@ -572,7 +577,7 @@ roleRef:
 ### admin rolebinding as namespace admin
 
 ```
-$ cat rolebind-user-access.yaml 
+$ cat rolebind-user-access.yaml
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
@@ -587,4 +592,59 @@ roleRef:
   name: admin
   apiGroup: ""
 
+```
+
+## Cluster start sequence
+
+systemctl status kubelet.services
+
+`/etc/systemd/system/kubelet.service.d/10-kubeadm.conf`
+
+Uses `/var/lib/kubelet/config.yaml`
+
+staticPodPath is set to `/etc/kubernetes/manifests/`
+
+
+## Troubleshooting
+
+### apps
+
+`kubectl logs ${POD_NAME} ${CONTAINER_NAME}`
+
+`kubectl logs --previous ${POD_NAME} ${CONTAINER_NAME}`
+
+### cluster
+
+`kubectl get nodes`
+
+### logs
+
+#### masters
+
+```
+/var/log/kube-apiserver.log
+/var/log/kube-scheduler.log
+/var/log/kube-controller-manager.log
+```
+
+#### workers
+
+```
+/var/log/kubelet.log
+/var/log/kube-proxy.log
+```
+
+## Security Contexts
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  securityContext:
+    runAsNonRoot: True
+  containers:
+  - image: nginx
+    name: nginx
 ```
