@@ -648,3 +648,20 @@ spec:
   - image: nginx
     name: nginx
 ```
+
+## TIPS ##
+
+#### List all containers in all namespaces
+
+
+```
+kubectl get pods --all-namespaces -o jsonpath="{..image}" |\
+tr -s '[[:space:]]' '\n' |\
+sort |\
+uniq -c
+```
+
+```
+kubectl get pods --all-namespaces -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}' |\
+sort
+```
