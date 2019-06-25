@@ -649,6 +649,40 @@ spec:
     name: nginx
 ```
 
+## Ingress
+
+#### service
+
+```
+$ kubectl get svc apache -o yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: apache
+  name: apache
+  namespace: default
+```
+
+#### Ingress
+
+```
+$ cat ingress-httpd.yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-httpd
+spec:
+  rules:
+  - host: www.my-httpd.com.br
+    http:
+      paths:
+      - backend:
+          serviceName: apache
+          servicePort: 80
+        path: /
+```
+
 ## TIPS ##
 
 #### List all containers in all namespaces
