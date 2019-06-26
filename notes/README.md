@@ -683,6 +683,42 @@ spec:
         path: /
 ```
 
+## Auditing
+
+```
+touch /var/log/kube-audit
+vi /etc/kubernetes/manifests/kube-apiserver.yaml
+```
+
+```
+- command:
+  - kube-apiserver
+....
+- --audit-policy-file=/etc/kubernetes/manifests/audit-policy.yaml
+- --audit-log-path=/var/log/kube-audit
+- --audit-log-format=json
+....
+volumeMounts:
+....
+- mountPath: /etc/kubernetes/manifests/audit-policy.yaml
+  name: audit-file-config
+  readOnly: true
+- mountPath: /var/log/kube-audit
+  name: audit-log-file
+  readOnly: false
+....
+volumes:
+....
+- hostPath:
+    path: /etc/kubernetes/manifests/audit-policy.yaml
+    type: "FileOrCreate"
+  name: audit-file-config
+- hostPath:
+    path: /var/log/kube-audit
+    type: "FileOrCreate"
+  name: audit-log-file
+```
+
 ## TIPS ##
 
 #### List all containers in all namespaces
