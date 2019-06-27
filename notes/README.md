@@ -139,7 +139,10 @@ Edit/Remove
 
 `kind: DaemonSet`
 
-Remove `annotations, creationTimestamp, generation, selfLink, progressDeadlineSeconds, strategy:, status: {}`
+Remove
+
+ `annotations, creationTimestamp, generation, selfLink, progressDeadlineSeconds, strategy:, status: {}`
+   
 
 `kubectl create -f dset.yaml`
 
