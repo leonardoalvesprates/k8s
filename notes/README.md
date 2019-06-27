@@ -156,7 +156,7 @@ spec:
   minReadySeconds: 30
 ```
 
-## linessProbe / readinessProbe
+## livenessProbe / readinessProbe
 
 ```
 spec:
