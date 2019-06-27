@@ -130,6 +130,29 @@ spec:
       periodSeconds: 5
 ```
 
+## DaemonSet
+
+`kubectl create deployment nginx --image=nginx:1.16.0`
+`kubectl get deployments. nginx -o yaml --export > dset.yaml`
+
+Edit/Remove
+
+`kind: DaemonSet`
+
+Remove `annotations, creationTimestamp, generation, selfLink, progressDeadlineSeconds, strategy:, status: {}`
+
+`kubectl create -f dset.yaml`
+
+Options
+
+```
+spec:
+  ....
+  updateStrategy:
+    type: RollingUpdate
+  minReadySeconds: 30
+```
+
 ## Taint
 
 ### remove taint from master
