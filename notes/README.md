@@ -142,7 +142,7 @@ Edit/Remove
 Remove
 
  `annotations, creationTimestamp, generation, selfLink, progressDeadlineSeconds, strategy:, status: {}`
-   
+
 
 `kubectl create -f dset.yaml`
 
@@ -154,6 +154,29 @@ spec:
   updateStrategy:
     type: RollingUpdate
   minReadySeconds: 30
+```
+
+## linessProbe / readinessProbe
+
+```
+spec:
+  containers:
+  - image: nginx:1.16.0
+    imagePullPolicy: IfNotPresent
+    name: nginx
+    livenessProbe:
+      httpGet:
+        path: /
+        port: 80
+      initialDelaySeconds: 3
+      periodSeconds: 3
+    readinessProbe:
+      exec:
+        command:
+        - ls
+        - /tmp/
+      initialDelaySeconds: 5
+      periodSeconds: 5
 ```
 
 ## Taint
