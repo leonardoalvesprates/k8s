@@ -23,7 +23,7 @@ spec:
         app: web-green
     spec:
       containers:
-      - image: leonardoalvesprates/web-first:v0.1
+      - image: leonardoalvesprates/web-first:v0.2
         imagePullPolicy: Always
         name: web-first
         ports:
