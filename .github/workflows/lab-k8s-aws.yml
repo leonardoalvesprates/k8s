@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: CDTerraform
 
 # Controls when the action will run. 
 on:
@@ -26,11 +26,11 @@ jobs:
       - uses: actions/checkout@v2
       
       # Runs a single command using the runners shell
-      - name: Build docker image
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Docker Login
+      - name: Download Terraform
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+              curl -sL https://releases.hashicorp.com/terraform/0.14.8/terraform_0.14.8_linux_amd64.zip -o tf.zip
+              unzip tf.zip
+
+      - name: show path dir
+        run: pwd
+             
