@@ -33,4 +33,7 @@ jobs:
 
       - name: show path dir
         run: pwd
+
+      - name: list files
+        run: ls -l
              
