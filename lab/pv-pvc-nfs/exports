@@ -1,0 +1,1 @@
+/nfsshare	$ALLOWED_IPS(rw,sync,no_root_squash)
