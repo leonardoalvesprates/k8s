@@ -45,8 +45,8 @@ jobs:
         
       - name: terraform-plan
         env:
-          TF_VAR_AWS_ACCESS_KEY_ID = {{ secrets.TF_VAR_AWS_ACCESS_KEY_ID }}
-          TF_VAR_AWS_SECRET_ACCESS_KEY = {{ secrets.TF_VAR_AWS_SECRET_ACCESS_KEY }}
+          TF_VAR_AWS_ACCESS_KEY_ID: {{ secrets.TF_VAR_AWS_ACCESS_KEY_ID }}
+          TF_VAR_AWS_SECRET_ACCESS_KEY: {{ secrets.TF_VAR_AWS_SECRET_ACCESS_KEY }}
         run: |
               cd lab/terraform
               ./terraform plan 
