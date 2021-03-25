@@ -38,7 +38,10 @@ jobs:
       - name: list files
         run: ls -l
       
-      - name: terraform init
+      - name: terraform-init
+        env:
+          TF_VAR_AWS_ACCESS_KEY_ID: ${{ secrets.TF_VAR_AWS_ACCESS_KEY_ID }}
+          TF_VAR_AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_VAR_AWS_SECRET_ACCESS_KEY }}
         run: |
               cd lab/terraform
               ./terraform init
