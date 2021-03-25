@@ -5,7 +5,7 @@ resource "aws_vpc" "vpc_lab" {
 resource "aws_subnet" "subnet_lab" {
   vpc_id            = aws_vpc.vpc_lab.id
   cidr_block        = "10.0.0.0/24"
-  availability_zone = "us-east-1"
+  availability_zone = "us-east-1a"
 
   tags = {
     Name = "K8s LAB"
