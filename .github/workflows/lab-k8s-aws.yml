@@ -42,4 +42,9 @@ jobs:
         run: |
               cd lab/terraform
               ./terraform init
+        
+      - name: terraform-plan
+        run: |
+              cd lab/terraform
+              ./terraform plan
              
