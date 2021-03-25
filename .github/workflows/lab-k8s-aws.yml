@@ -7,8 +7,8 @@ on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  # pull_request:
+  #   branches: [ master ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -45,8 +45,8 @@ jobs:
         
       - name: terraform-plan
         env:
-          TF_VAR_AWS_ACCESS_KEY_ID: {{ secrets.TF_VAR_AWS_ACCESS_KEY_ID }}
-          TF_VAR_AWS_SECRET_ACCESS_KEY: {{ secrets.TF_VAR_AWS_SECRET_ACCESS_KEY }}
+          TF_VAR_AWS_ACCESS_KEY_ID: ${{ secrets.TF_VAR_AWS_ACCESS_KEY_ID }}
+          TF_VAR_AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_VAR_AWS_SECRET_ACCESS_KEY }}
         run: |
               cd lab/terraform
               ./terraform plan 
