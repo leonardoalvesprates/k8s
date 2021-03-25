@@ -9,6 +9,8 @@ terraform {
   bucket     = "labtfstate"
   key        = "tfstate/labk8s.tfstate"
   region     = "us-east-1"
+  role_arn   = "arn:aws:iam::931049509788:user/admin"
+
   }
 }
 
