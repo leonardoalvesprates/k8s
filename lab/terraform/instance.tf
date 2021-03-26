@@ -5,10 +5,10 @@ resource "aws_instance" "vm_k8slab" {
   key_name                   = "leoaws"
   associate_public_ip_address = "true"
 
-  network_interface {
-    network_interface_id = aws_network_interface.if_k8slab.id
-    device_index         = 0
-  }
+  # network_interface {
+  #   network_interface_id = aws_network_interface.if_k8slab.id
+  #   device_index         = 0
+  # }
 
   credit_specification {
     cpu_credits = "unlimited"
