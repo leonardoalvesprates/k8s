@@ -44,7 +44,7 @@ jobs:
           TF_VAR_AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
               cd lab/terraform
-              ./terraform init
+              ./terraform init -backend-config="access_key=$(echo $TF_VAR_AWS_ACCESS_KEY_ID)" -backend-config="secret_key=$(echo $TF_VAR_AWS_SECRET_ACCESS_KEY)"
         
       - name: terraform-plan
         env:
