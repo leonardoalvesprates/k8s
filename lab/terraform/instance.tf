@@ -4,7 +4,7 @@ resource "aws_instance" "vm_k8slab" {
   instance_type               = "t3.medium"
   key_name                    = "leoaws"
   associate_public_ip_address = "true"
-  security_groups             = "allow_all"
+  security_groups             = ["allow_all"}
 
   # network_interface {
   #   network_interface_id = aws_network_interface.if_k8slab.id
