@@ -7,10 +7,8 @@ terraform {
   }
   backend "s3" {
   bucket     = "labtfstate"
-  key        = "tfstate/labk8s.tfstate"
+  key        = "labk8s.tfstate"
   region     = "us-east-1"
-  role_arn   = "arn:aws:iam::931049509788:user/admin"
-
   }
 }
 
