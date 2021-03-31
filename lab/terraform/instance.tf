@@ -22,13 +22,13 @@ resource "aws_instance" "vm_k8slab" {
     connection {
       type = "ssh"
       user = "centos"
-      private_key = var.TF_VAR
+      private_key = var.AWS_KEY_SSH
       host = aws_instance.vm_k8slab.public_ip
     }
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i $(aws_instance.vm_k8slab.public_ip), --private-key ${var.TF_VAR_SSH_KEY} k8s.yaml"
+    command = "ansible-playbook -i $(aws_instance.vm_k8slab.public_ip), --private-key ${var.AWS_KEY_SSH} k8s.yaml"
   }
 
   tags = {
