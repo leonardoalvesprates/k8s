@@ -1,10 +1,11 @@
 
 resource "aws_instance" "vm_k8slab" {
   ami                         = "ami-05fc56020e2f7027a"
+  # subnet_id                   = 
   instance_type               = "t3.medium"
   key_name                    = "leoaws"
   associate_public_ip_address = "true"
-  security_groups             = ["${aws_security_group.allow_all.name}"]
+  security_groups             = [aws_security_group.allow_all.id]
 
   # network_interface {
   #   network_interface_id = aws_network_interface.if_k8slab.id
@@ -13,6 +14,21 @@ resource "aws_instance" "vm_k8slab" {
 
   credit_specification {
     cpu_credits = "unlimited"
+  }
+
+  provisioner "remote-exec" {
+    inline = ["echo 'wait until SSH is ready'"]
+
+    connection {
+      type = "ssh"
+      user = "centos"
+      private_key = var.TF_VAR
+      host = aws_instance.vm_k8slab.public.ip
+    }
+  }
+
+  provisioner "local-exec" {
+    command = "ansible-playbook -i $(aws_instance.vm_k8slab.public_ip), --private-key ${var.TF_VAR_SSH_KEY} k8s.yaml"
   }
 
   tags = {
