@@ -1,0 +1,8 @@
+---
+- name: Install kubeadm kubelet and kubectl
+  hosts: all
+  remote_user: centos
+  become: yes
+
+  roles:
+  - kubernetes
