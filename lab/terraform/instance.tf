@@ -23,7 +23,7 @@ resource "aws_instance" "vm_k8slab" {
       type = "ssh"
       user = "centos"
       private_key = var.TF_VAR
-      host = aws_instance.vm_k8slab.public.ip
+      host = aws_instance.vm_k8slab.public_ip
     }
   }
 
