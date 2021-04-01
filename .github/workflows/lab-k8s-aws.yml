@@ -63,4 +63,5 @@ jobs:
         run: |
               echo $TF_VAR_AWS_KEY_SSH > lab/terraform/file.pem
               cd lab/terraform
+              chmod 600 file.pem
               ./terraform apply -auto-approve
