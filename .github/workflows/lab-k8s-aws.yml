@@ -61,6 +61,6 @@ jobs:
           TF_VAR_AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           TF_VAR_AWS_KEY_SSH: ${{ secrets.AWS_KEY_SSH }}
         run: |
-              echo $TF_VAR_AWS_KEY_SSH > file.pem
+              echo $TF_VAR_AWS_KEY_SSH > lab/terraform/file.pem
               cd lab/terraform
               ./terraform apply -auto-approve
