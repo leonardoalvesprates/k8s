@@ -28,7 +28,7 @@ resource "aws_instance" "vm_k8slab" {
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i ${aws_instance.vm_k8slab.public_ip}, --private-key ${local.private_key_var} k8s.yaml"
+    command = "ansible-playbook -i ${aws_instance.vm_k8slab.public_ip}, --private-key ${aws_instance.vm_k8slab.connection.0.private_key} k8s.yaml"
   }
 
   tags = {
