@@ -43,7 +43,8 @@ jobs:
           TF_VAR_AWS_KEY_SSH: ${{ secrets.AWS_KEY_SSH }}
         run: 
           |
-          echo $TF_VAR_AWS_KEY_SSH
+          echo $TF_VAR_AWS_KEY_SSH > test.txt
+          cat test.txt
       
       # - name: terraform-init
       #   env:
