@@ -65,4 +65,4 @@ jobs:
               chmod 600 lab/terraform/file.pem
               cat lab/terraform/file.pem
               cd lab/terraform
-              ./terraform apply -auto-approve
+              # ./terraform apply -auto-approve
