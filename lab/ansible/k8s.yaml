@@ -5,4 +5,4 @@
   become: yes
 
   roles:
-  - kubernetes
+  - k8s

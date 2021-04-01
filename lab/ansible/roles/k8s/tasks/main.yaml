@@ -4,6 +4,6 @@
     name: nginx
     state: latest
 - name: Nginx running
-   systemd:
-     state: started
-     name: nginx
+  systemd:
+    state: started
+    name: nginx
