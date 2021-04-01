@@ -17,7 +17,7 @@ resource "aws_instance" "vm_k8slab" {
   }
 
   provisioner "remote-exec" {
-    inline = ["echo 'wait until SSH is ready'"]
+    inline = ["echo 'wait until SSH is ready'; sleep 30"]
 
     connection {
       type = "ssh"
