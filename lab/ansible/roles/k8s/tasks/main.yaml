@@ -17,7 +17,7 @@
     EOF
     sysctl --system
 
-- name: Install CRI-O
+- name: Install CRI-O binary and daemon
   shell: |
     export OS=Centos_8
     export VERSION=1.20
@@ -26,7 +26,7 @@
     systemctl daemon-reload
     systemctl enable crio --now
 
-- name: Install k8s
+- name: Install k8s dameon and binary
   shell: |
     cat <<EOF | tee /etc/yum.repos.d/kubernetes.repo
     [kubernetes]
@@ -42,4 +42,8 @@
     sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
     sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
     sudo systemctl enable --now kubelet
+    kubeadm init
+
+- name: kubeadm init
+  shell: |
     kubeadm init
