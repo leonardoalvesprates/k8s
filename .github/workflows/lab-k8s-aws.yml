@@ -67,7 +67,17 @@ jobs:
           TF_VAR_AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           TF_VAR_AWS_KEY_SSH: ${{ secrets.AWS_KEY_SSH }}
         run: |
-              echo $TF_VAR_AWS_KEY_SSH > lab/terraform/file.pem
-              chmod 600 lab/terraform/file.pem
+              # echo $TF_VAR_AWS_KEY_SSH > lab/terraform/file.pem
+              # chmod 600 lab/terraform/file.pem
               cd lab/terraform
               ./terraform apply -auto-approve
+              ./terraform output k8slab_ip > ../k8slab_ip.out
+      
+      - name: ansible-playbook
+        env:
+          TF_VAR_AWS_KEY_SSH: ${{ secrets.AWS_KEY_SSH }}
+        run: |
+              cd ..
+              echo $TF_VAR_AWS_KEY_SSH > file.pem
+              chmod 600 file.pem
+              ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $(cat k8slab_ip.out), --private-key ./file.pem ansible/k8s.yaml
