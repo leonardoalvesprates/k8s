@@ -17,7 +17,7 @@ resource "aws_instance" "vm_k8slab" {
   }
 
   provisioner "remote-exec" {
-    inline = ["echo 'wait until SSH is ready'; sleep 60"]
+    inline = ["echo 'wait until SSH is ready'"]
 
     connection {
       type = "ssh"
@@ -27,9 +27,9 @@ resource "aws_instance" "vm_k8slab" {
     }
   }
 
-  provisioner "local-exec" {
-    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ${aws_instance.vm_k8slab.public_ip}, --private-key ./file.pem ../ansible/k8s.yaml"
-  }
+  # provisioner "local-exec" {
+  #   command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ${aws_instance.vm_k8slab.public_ip}, --private-key ./file.pem ../ansible/k8s.yaml"
+  # }
 
   tags = {
     Name = "K8s LAB"
