@@ -75,11 +75,14 @@ jobs:
       
       - name: ansible-playbook
         env:
-          TF_VAR_AWS_KEY_SSH: ${{ secrets.AWS_KEY_SSH }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_KEY_SSH: ${{ secrets.AWS_KEY_SSH }}
         run: |
               pwd
-              echo $TF_VAR_AWS_KEY_SSH > file.pem
-              chmod 600 file.pem
-              sed -i 's/\"//g' k8slab_ip.out
-              sleep 60
-              ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $(cat k8slab_ip.out), --private-key ./file.pem lab/ansible/k8s.yaml
+              # echo $AWS_KEY_SSH > file.pem
+              # chmod 600 file.pem
+              # sed -i 's/\"//g' k8slab_ip.out
+              # sleep 60
+              aws s3
+              # ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $(cat k8slab_ip.out), --private-key ./file.pem lab/ansible/k8s.yaml
