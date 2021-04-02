@@ -78,6 +78,7 @@ jobs:
           TF_VAR_AWS_KEY_SSH: ${{ secrets.AWS_KEY_SSH }}
         run: |
               cd ..
+              pwd
               echo $TF_VAR_AWS_KEY_SSH > file.pem
               chmod 600 file.pem
               ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $(cat k8slab_ip.out), --private-key ./file.pem ansible/k8s.yaml
