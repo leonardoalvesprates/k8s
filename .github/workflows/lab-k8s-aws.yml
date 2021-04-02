@@ -84,5 +84,5 @@ jobs:
               # chmod 600 file.pem
               # sed -i 's/\"//g' k8slab_ip.out
               # sleep 60
-              aws s3
+              aws s3 cp s3://labk8ssshkey/leoaws.pem ./
               # ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $(cat k8slab_ip.out), --private-key ./file.pem lab/ansible/k8s.yaml
