@@ -31,43 +31,43 @@ jobs:
               curl -sL https://releases.hashicorp.com/terraform/0.14.8/terraform_0.14.8_linux_amd64.zip -o tf.zip
               unzip tf.zip
               cp terraform lab/terraform/
-      - name: show path dir
-        run: pwd
 
-      - name: list files
-        run: ls -l
+      # - name: show path dir
+      #   run: pwd
+
+      # - name: list files
+      #   run: ls -l
       
-      - name: cat pem file
+      # - name: cat pem file
+      #   env:
+      #     TF_VAR_AWS_KEY_SSH: ${{ secrets.AWS_KEY_SSH }}
+      #   run: |
+      #         echo $TF_VAR_AWS_KEY_SSH
+
+      - name: terraform-init
         env:
+          TF_VAR_AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          TF_VAR_AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+              cd lab/terraform
+              ./terraform init -backend-config="access_key=$(echo $TF_VAR_AWS_ACCESS_KEY_ID)" -backend-config="secret_key=$(echo $TF_VAR_AWS_SECRET_ACCESS_KEY)"
+        
+      - name: terraform-plan
+        env:
+          TF_VAR_AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          TF_VAR_AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           TF_VAR_AWS_KEY_SSH: ${{ secrets.AWS_KEY_SSH }}
         run: |
-              echo $TF_VAR_AWS_KEY_SSH
+              cd lab/terraform
+              ./terraform plan 
 
-      # - name: terraform-init
-      #   env:
-      #     TF_VAR_AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     TF_VAR_AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #   run: |
-      #         cd lab/terraform
-      #         ./terraform init -backend-config="access_key=$(echo $TF_VAR_AWS_ACCESS_KEY_ID)" -backend-config="secret_key=$(echo $TF_VAR_AWS_SECRET_ACCESS_KEY)"
-        
-      # - name: terraform-plan
-      #   env:
-      #     TF_VAR_AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     TF_VAR_AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     TF_VAR_AWS_KEY_SSH: ${{ secrets.AWS_KEY_SSH }}
-      #   run: |
-      #         cd lab/terraform
-      #         ./terraform plan 
-
-      # - name: terraform-apply
-      #   env:
-      #     TF_VAR_AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     TF_VAR_AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     TF_VAR_AWS_KEY_SSH: ${{ secrets.AWS_KEY_SSH }}
-      #   run: |
-      #         echo $TF_VAR_AWS_KEY_SSH > lab/terraform/file.pem
-      #         chmod 600 lab/terraform/file.pem
-      #         cat lab/terraform/file.pem
-      #         cd lab/terraform
-      #         # ./terraform apply -auto-approve
+      - name: terraform-apply
+        env:
+          TF_VAR_AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          TF_VAR_AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          TF_VAR_AWS_KEY_SSH: ${{ secrets.AWS_KEY_SSH }}
+        run: |
+              echo $TF_VAR_AWS_KEY_SSH > lab/terraform/file.pem
+              chmod 600 lab/terraform/file.pem
+              cd lab/terraform
+              ./terraform apply -auto-approve
