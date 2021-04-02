@@ -22,7 +22,7 @@
     export OS=Centos_8
     export VERSION=1.20
     curl -L -o /etc/yum.repos.d/devel:kubic:libcontainers:stable:cri-o:$VERSION.repo https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:$VERSION/$OS/devel:kubic:libcontainers:stable:cri-o:$VERSION.repo
-    dnf install cri-o
+    dnf install cri-o -y
     systemctl daemon-reload
     systemctl enable crio --now
 
@@ -41,8 +41,8 @@
     sudo setenforce 0
     sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
     sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
-    sudo systemctl enable --now kubelet
+    # sudo systemctl enable --now kubelet
 
-- name: kubeadm init
-  shell: |
-    kubeadm init
+# - name: kubeadm init
+#   shell: |
+#     kubeadm init
