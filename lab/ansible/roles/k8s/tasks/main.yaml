@@ -1,9 +1,7 @@
 ---
-- name: Install nginx
-  yum:
-    name: nginx
-    state: latest
-- name: Nginx running
-  systemd:
-    state: started
-    name: nginx
+- name: Def CRIO modules
+  shell: |
+    cat <<EOF | sudo tee /etc/modules-load.d/crio.conf
+    overlay
+    br_netfilter
+    EOF
