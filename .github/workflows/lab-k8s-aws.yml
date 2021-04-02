@@ -79,7 +79,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-1
         run: |
-              # sleep 60
+              sleep 60
               pwd
               sed -i 's/\"//g' k8slab_ip.out
               mkdir ~/.aws
@@ -89,7 +89,6 @@ jobs:
               echo "[default]" > ~/.aws/credentials
               echo "aws_access_key_id = $(echo $AWS_ACCESS_KEY)" >> ~/.aws/credentials
               echo "aws_secret_access_key = $(echo $AWS_SECRET_ACCESS_KEY)" >> ~/.aws/credentials
-              
               aws s3 cp s3://labk8ssshkey/leoaws.pem ./
-              # chmod 600 leoaws.pem
-              # ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $(cat k8slab_ip.out), --private-key ./leoaws.pem lab/ansible/k8s.yaml
+              chmod 600 leoaws.pem
+              ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $(cat k8slab_ip.out), --private-key ./leoaws.pem lab/ansible/k8s.yaml
