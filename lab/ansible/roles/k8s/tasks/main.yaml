@@ -38,3 +38,6 @@
     gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
     exclude=kubelet kubeadm kubectl
     EOF
+    sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
+    dnf install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
+    
