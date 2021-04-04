@@ -43,4 +43,5 @@
 
 # - name: kubeadm init
 #   shell: |
+#     kubeadm reset -f
 #     kubeadm init
