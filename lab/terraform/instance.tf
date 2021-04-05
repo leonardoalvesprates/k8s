@@ -1,6 +1,6 @@
 
 resource "aws_instance" "vm_k8slab" {
-  ami                         = "ami-05fc56020e2f7027a"
+  ami                         = "ami-06c6e2b03025a524f.4"
   # subnet_id                   = 
   instance_type               = "t3.medium"
   key_name                    = "leoaws"
@@ -21,7 +21,7 @@ resource "aws_instance" "vm_k8slab" {
 
     connection {
       type = "ssh"
-      user = "centos"
+      user = "fedora"
       private_key = var.AWS_KEY_SSH
       host = aws_instance.vm_k8slab.public_ip
     }
