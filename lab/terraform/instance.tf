@@ -16,16 +16,16 @@ resource "aws_instance" "vm_k8slab" {
   #   cpu_credits = "unlimited"
   # }
 
-  provisioner "remote-exec" {
-    inline = ["echo 'wait until SSH is ready'"]
+  # provisioner "remote-exec" {
+  #   inline = ["echo 'wait until SSH is ready'"]
 
-    connection {
-      type = "ssh"
-      user = "fedora"
-      private_key = var.AWS_KEY_SSH
-      host = aws_instance.vm_k8slab.public_ip
-    }
-  }
+  #   connection {
+  #     type = "ssh"
+  #     user = "fedora"
+  #     private_key = var.AWS_KEY_SSH
+  #     host = aws_instance.vm_k8slab.public_ip
+  #   }
+  # }
 
   # provisioner "local-exec" {
   #   command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ${aws_instance.vm_k8slab.public_ip}, --private-key ./file.pem ../ansible/k8s.yaml"
