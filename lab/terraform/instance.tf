@@ -12,9 +12,9 @@ resource "aws_instance" "vm_k8slab" {
   #   device_index          = 0
   # }
 
-  credit_specification {
-    cpu_credits = "unlimited"
-  }
+  # credit_specification {
+  #   cpu_credits = "unlimited"
+  # }
 
   provisioner "remote-exec" {
     inline = ["echo 'wait until SSH is ready'"]
