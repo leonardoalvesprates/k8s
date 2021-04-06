@@ -22,8 +22,11 @@
   shell: |
     sudo sed -i 's/^SELINUX=enforcing$/SELINUX=disabled/' /etc/selinux/config
     export VERSION=1.20
-    sudo dnf module enable cri-o:$VERSION
+    sudo dnf -y module enable cri-o:$VERSION
     sudo dnf -y install cri-o
+
+- name: Changing CRIO conmon_cgroup and cgroup crio.conf
+  shell: |
     sudo sed -i 's/conmon_cgroup = "system.slice"/conmon_cgroup = "pod"/g' /etc/crio/crio.conf
     sudo sed -i 's/cgroup_manager = "systemd"/cgroup_manager = "cgroupfs"/g' /etc/crio/crio.conf
     sudo systemctl daemon-reload
@@ -33,10 +36,11 @@
   register: kernel_result
   shell: |
     sudo grubby --update-kernel=ALL --args="systemd.unified_cgroup_hierarchy=0"
-    sleep 5 && reboot
 
 - name: Reboot if kernel modified
   when: kernel_result is changed
+  async: 1
+  poll: 0
   shell: |
     sleep 5 && reboot
 
