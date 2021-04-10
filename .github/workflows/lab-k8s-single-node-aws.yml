@@ -92,3 +92,9 @@ jobs:
               aws s3 cp s3://labk8ssshkey/leoaws.pem ./
               chmod 600 leoaws.pem
               ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $(cat k8slab_ip.out), --private-key ./leoaws.pem lab/single-node/ansible/k8s.yaml
+
+      - name: def k8s .kube/config
+        run: |
+              sudo mkdir /home/fedora/.kube 
+              sudo cp /etc/kubernetes/config.yaml /home/fedora/.kube/config
+              sudo chown -R fedora: /home/fedora/.kube
