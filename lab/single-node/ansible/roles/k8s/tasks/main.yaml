@@ -78,3 +78,9 @@
 - name: kubeadm init
   shell: |
     kubeadm init
+
+- name: copy k8s config to user fedora
+  shell: |
+    mkdir /home/fedora/.kube
+    cp /etc/kubernetes/config.yaml /home/fedora/.kube/config
+    chown -R fedora: /home/fedora/.kube
