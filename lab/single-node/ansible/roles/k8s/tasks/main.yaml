@@ -82,6 +82,6 @@
 
 - name: copy k8s config to user fedora
   shell: |
-    mkdir /home/fedora/.kube
-    cp /etc/kubernetes/config.yaml /home/fedora/.kube/config
-    chown -R fedora: /home/fedora/.kube
+    sudo mkdir /home/fedora/.kube
+    sudo cp /etc/kubernetes/admin.conf /home/fedora/.kube/config
+    sudo chown -R fedora: /home/fedora/.kube
