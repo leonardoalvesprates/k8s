@@ -6,7 +6,7 @@ name: develop-lab-k8s-single-node-aws-destroy
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   # push:
-  #   branches: [ develop ]
+  #   branches: [ master ]
   # pull_request:
   #   branches: [ master ]
 
@@ -32,11 +32,11 @@ jobs:
               unzip tf.zip
               cp terraform lab/single-node/terraform/
 
-      # - name: show path dir
-      #   run: pwd
+      - name: show path dir
+        run: pwd
 
-      # - name: list files
-      #   run: ls -l
+      - name: list files
+        run: ls -l
       
       - name: terraform-init
         env:
