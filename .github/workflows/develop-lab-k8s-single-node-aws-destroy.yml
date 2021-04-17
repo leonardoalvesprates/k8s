@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: lab-k8s-single-node-aws-destroy
+name: develop-lab-k8s-single-node-aws-destroy
 
 # Controls when the action will run. 
 on:
