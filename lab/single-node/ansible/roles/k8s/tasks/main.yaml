@@ -140,13 +140,18 @@
     sudo cp /etc/kubernetes/admin.conf /home/fedora/.kube/config
     sudo chown -R fedora: /home/fedora/.kube
 
-# - name: untaint master node
-#   shell: |
-#     kubectl taint node $(kubectl get node -o=jsonpath='{.items[0].metadata.name}') node-role.kubernetes.io/master:NoSchedule-
+- name: copy k8s config to user root
+  shell: |
+    sudo mkdir /root/.kube
+    sudo cp /etc/kubernetes/admin.conf /root/.kube/config
 
-# - name: install weavenet network plugin
-#   shell: |
-#     kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+- name: untaint master node
+  shell: |
+    kubectl taint node $(kubectl get node -o=jsonpath='{.items[0].metadata.name}') node-role.kubernetes.io/master:NoSchedule-
+
+- name: install weavenet network plugin
+  shell: |
+    kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
 
 # - name: install argoCD
 # kubectl create namespace argocd
