@@ -132,7 +132,7 @@
 
 - name: kubeadm init
   shell: |
-    sudo kubeadm init
+    sudo kubeadm init --apiserver-cert-extra-sans "'{{ lookup('env', 'PUBLIC_IP') }}'
 
 - name: copy k8s config to user fedora
   shell: |
