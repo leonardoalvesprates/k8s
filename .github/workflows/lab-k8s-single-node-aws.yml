@@ -91,4 +91,5 @@ jobs:
               echo "aws_secret_access_key = $(echo $AWS_SECRET_ACCESS_KEY)" >> ~/.aws/credentials
               aws s3 cp s3://labk8ssshkey/leoaws.pem ./
               chmod 600 leoaws.pem
-              ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $(cat k8slab_ip.out), --private-key ./leoaws.pem lab/single-node/ansible/k8s.yaml
+              export PUBLIC_IP=$(cat k8slab_ip.out)
+              ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $PUBLIC_IP, --private-key ./leoaws.pem lab/single-node/ansible/k8s.yaml
