@@ -1,5 +1,5 @@
 kind: Deployment
-apiVersion: apps1/v1
+apiVersion: apps/v1
 metadata:
   name: traefik-ingress
   namespace: kube-system
