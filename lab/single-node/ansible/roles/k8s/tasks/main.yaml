@@ -160,4 +160,6 @@
 
 - name: deploy traefik helm with argoCD
   shell: |
-    kubectl apply -f lab/argocd/traefik-ingress-controller-argocd.yaml
+    pwd 
+    ls -l
+    kubectl apply -f https://raw.githubusercontent.com/leonardoalvesprates/k8s/master/lab/argocd/traefik-ingress-controller-argocd.yaml
