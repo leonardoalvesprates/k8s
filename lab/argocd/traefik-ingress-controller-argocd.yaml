@@ -17,5 +17,6 @@ items:
       path: lab/traefik
       repoURL: https://github.com/leonardoalvesprates/k8s.git
       targetRevision: HEAD
-    syncPolicy: {}
+    syncPolicy: 
+      automated: {}
 kind: List
