@@ -1,0 +1,21 @@
+apiVersion: v1
+items:
+- apiVersion: argoproj.io/v1alpha1
+  kind: Application
+  metadata:
+    name: traefik-ingress-controller
+    namespace: argocd
+  spec:
+    destination:
+      namespace: default
+      server: https://kubernetes.default.svc
+    project: default
+    source:
+      helm:
+        valueFiles:
+        - values.yaml
+      path: lab/traefik
+      repoURL: https://github.com/leonardoalvesprates/k8s.git
+      targetRevision: HEAD
+    syncPolicy: {}
+kind: List
