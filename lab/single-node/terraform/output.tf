@@ -1,3 +1,3 @@
-output "k8slab_ip" {
-    value = aws_instance.vm_k8slab.public_ip
+output "ubuntu_ip" {
+  value = aws_instance.ubuntu.public_ip
 }
