@@ -1,42 +1,31 @@
 
-resource "aws_instance" "vm_k8slab" {
-  ami                         = "ami-0b416942dd362c53f" #fedora33hvm
-  # subnet_id                   = 
-  instance_type               = "t3.medium"
-  key_name                    = "leoaws"
-  associate_public_ip_address = "true"
-  security_groups             = ["${aws_security_group.allow_all.name}"]
+data "aws_ami" "ubuntu" {
+  most_recent = true
 
-  # network_interface {
-  #   network_interface_id  = aws_network_interface.if_k8slab.id
-  #   device_index          = 0
-  # }
-
-  # credit_specification {
-  #   cpu_credits = "unlimited"
-  # }
-
-  # provisioner "remote-exec" {
-  #   inline = ["echo 'wait until SSH is ready'"]
-
-  #   connection {
-  #     type = "ssh"
-  #     user = "fedora"
-  #     private_key = var.AWS_KEY_SSH
-  #     host = aws_instance.vm_k8slab.public_ip
-  #   }
-  # }
-
-  # provisioner "local-exec" {
-  #   command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ${aws_instance.vm_k8slab.public_ip}, --private-key ./file.pem ../ansible/k8s.yaml"
-  # }
-
-  tags = {
-    Name = "K8s LAB"
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
   }
 
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["099720109477"] # Canonical
 }
 
+resource "aws_instance" "ubuntu" {
+  ami                         = data.aws_ami.ubuntu.id
+  instance_type               = "t3.medium"
+  security_groups             = ["${aws_security_group.allow_all.name}"]
+  associate_public_ip_address = "true"
+  key_name                    = "leoaws"
+
+  tags = {
+    Name = "labubuntu"
+  }
+}
 
 resource "aws_security_group" "allow_all" {
   name        = "allow_all"
