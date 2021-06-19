@@ -6,9 +6,9 @@ terraform {
     }
   }
   backend "s3" {
-  bucket     = "labtfstate"
-  key        = "labubuntu.tfstate"
-  region     = "us-east-1"
+    bucket = "labtfstate"
+    key    = "labubuntu.tfstate"
+    region = "us-east-1"
   }
 }
 
