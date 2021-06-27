@@ -16,6 +16,7 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_instance" "ubuntu" {
+  count                       = 2
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = "t3.xlarge"
   security_groups             = aws_security_group.allow_all.name
