@@ -23,6 +23,10 @@ resource "aws_instance" "ubuntu" {
   associate_public_ip_address = "true"
   key_name                    = "leoaws"
 
+  root_block_device {
+    volume_size = 30
+  }
+
   tags = {
     Name = "labubuntu"
   }
