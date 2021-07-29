@@ -7,7 +7,7 @@ terraform {
   }
   backend "s3" {
   bucket     = "labtfstate"
-  key        = "labk8s.tfstate"
+  key        = "labopensuse.tfstate"
   region     = "us-east-1"
   }
 }

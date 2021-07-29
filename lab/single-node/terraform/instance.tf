@@ -1,6 +1,6 @@
 
-resource "aws_instance" "vm_k8slab" {
-  ami                         = "ami-0b416942dd362c53f" #fedora33hvm
+resource "aws_instance" "opensuse" {
+  ami                         = "ami-06c36d9e01cf230a3" #opensuse
   # subnet_id                   = 
   instance_type               = "t3.medium"
   key_name                    = "leoaws"
