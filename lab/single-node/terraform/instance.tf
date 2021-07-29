@@ -2,7 +2,7 @@
 resource "aws_instance" "opensuse" {
   ami                         = "ami-06c36d9e01cf230a3" #opensuse
   # subnet_id                   = 
-  instance_type               = "t3.medium"
+  instance_type               = "t3.xlarge"
   key_name                    = "leoaws"
   associate_public_ip_address = "true"
   security_groups             = ["${aws_security_group.allow_all.name}"]
