@@ -71,7 +71,7 @@ jobs:
               # chmod 600 lab/single-node/terraform/file.pem
               cd lab/single-node/terraform
               ./terraform apply -auto-approve
-              ./terraform output labubuntu_ip 
+              ./terraform output opensuse_ip 
       
       # - name: ansible-playbook
       #   env:
