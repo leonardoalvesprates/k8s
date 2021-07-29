@@ -1,3 +1,3 @@
-output "k8slab_ip" {
+output "opensuse_ip" {
     value = aws_instance.opensuse.public_ip
 }
