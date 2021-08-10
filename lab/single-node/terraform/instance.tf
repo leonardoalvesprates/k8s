@@ -1,5 +1,6 @@
 
 resource "aws_instance" "opensuse" {
+  count                       = 3
   ami                         = "ami-06c36d9e01cf230a3" #opensuse
   # subnet_id                   = 
   instance_type               = "t3.xlarge"
