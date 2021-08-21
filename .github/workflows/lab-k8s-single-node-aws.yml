@@ -81,7 +81,8 @@ jobs:
         run: |
               sleep 30
               pwd
-              head -1 k8slab_ip.out | sed -i 's/\"//g' > k8slab_ip_node1.out
+              head -1 k8slab_ip.out > k8slab_ip_node1.out 
+              sed -i 's/\"//g' k8slab_ip_node1.out
               mkdir ~/.aws
               echo "[default]" > ~/.aws/config
               echo "region = us-east-1" >> ~/.aws/config
