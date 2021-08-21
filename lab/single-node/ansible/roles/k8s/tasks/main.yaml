@@ -30,7 +30,7 @@
 - name: copy rke config.yml
   copy:
     src: files/config.yml
-    dest: /home/ec2-user/config.yml
+    dest: /home/ec2-user/cluster.yml
     owner: root
     group: root
     mode: '0644'
