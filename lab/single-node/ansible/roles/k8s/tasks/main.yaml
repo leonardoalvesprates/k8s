@@ -32,7 +32,7 @@
     src: files/cluster.yml
     dest: /home/ec2-user/cluster.yml
     owner: ec2-user
-    group: ec2-user
+    group: users
     mode: '0644'
 
 - name: RKE up
