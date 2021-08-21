@@ -72,6 +72,7 @@ jobs:
               cd lab/single-node/terraform
               ./terraform apply -auto-approve
               ./terraform output opensuse_ip > ../../../k8slab_ip.out
+              cat ../../../k8slab_ip.out
       
       - name: ansible-playbook
         env:
