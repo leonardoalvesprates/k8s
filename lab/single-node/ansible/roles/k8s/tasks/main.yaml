@@ -35,6 +35,11 @@
     group: users
     mode: '0644'
 
+- name: create SSH RSA keys and add to authorized_keys
+  shell: |
+    ssh-keygen -f id_rsa -t rsa -N ''
+    cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
+
 - name: RKE up
   shell: |
-    sudo rke up
+    sudo rke 
