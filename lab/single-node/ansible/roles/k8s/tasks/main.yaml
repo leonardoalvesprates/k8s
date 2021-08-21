@@ -1,6 +1,6 @@
 ---
 - name: zypper update
-  dnf: 
+  zypper: 
     name: "*"
     state: latest
 
