@@ -94,4 +94,5 @@ jobs:
               chmod 600 leoaws.pem
               export PUBLIC_IP=$(cat k8slab_ip_node1.out)
               envsubst < lab/single-node/ansible/roles/k8s/files/rkeconfig.yml > lab/single-node/ansible/k8s/files/config.yml
+              cat lab/single-node/ansible/k8s/files/config.yml
               ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $PUBLIC_IP, --private-key ./leoaws.pem lab/single-node/ansible/k8s.yaml
