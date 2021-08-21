@@ -1,165 +1,44 @@
 ---
-- name: dnf update
+- name: zypper update
   dnf: 
     name: "*"
     state: latest
-    
-- name: copy Def CRI-O modules 
-  copy:
-    src: files/crio.conf
-    dest: /etc/modules-load.d/crio.conf
-    owner: root
-    group: root
-    mode: '0644'
 
-- name: sysctl set and reload without reboot
+- name: Remove docker engime if present
+  zypper:
+    name: kubectl-1.20.5-0.x86_64
+    state: absent
+
+- name: Install docker from rancher script
   shell: |
-    sudo modprobe overlay
-    sudo modprobe br_netfilter
-    sudo sysctl --system
+    curl https://releases.rancher.com/install-docker/19.03.sh | sh
 
-- name: set net.bridge.bridge-nf-call-iptables
-  sysctl:
-    name: net.bridge.bridge-nf-call-iptables
-    value: '1'
-    state: present
-    reload: yes
-
-- name: set net.ipv4.ip_forward
-  sysctl:
-    name: net.ipv4.ip_forward
-    value: '1'
-    state: present
-    reload: yes
-
-- name: set net.bridge.bridge-nf-call-ip6tables
-  sysctl:
-    name: net.bridge.bridge-nf-call-ip6tables
-    value: '1'
-    state: present
-    reload: yes
-
-- name: disable SELINUX
-  lineinfile:
-    path: /etc/selinux/config
-    regexp: '^SELINUX='
-    line: SELINUX=disabled
-
-- name: copy k8s repo
-  copy:
-    src: files/kubernetes.repo
-    dest: /etc/yum.repos.d/kubernetes.repo
-    owner: root
-    group: root
-    mode: '0644'
-
-- name: dnf def module cri-o version
-  shell: |
-    export VERSION=1.20
-    sudo dnf -y module enable cri-o:$VERSION
-
-- name: dnf install cri-o 
-  dnf:
-    name: cri-o
-    state: present
-
-- name: Changing CRIO conmon_cgroup crio.conf
-  lineinfile:
-    path: /etc/crio/crio.conf
-    regexp: '^conmon_cgroup = \"system.slice\"'
-    line: conmon_cgroup = "pod"
-
-- name: Changing CRIO cgroup crio.conf
-  lineinfile:
-    path: /etc/crio/crio.conf
-    regexp: '^cgroup_manager = \"systemd\"'
-    line: cgroup_manager = "cgroupfs"
-
-- name: systemctl CRIO reload and restart
+- name: Install docker from rancher script
   systemd:
-    name: crio
-    daemon_reload: yes
-    state: restarted
+    name: docker
+    state: started
     enabled: yes
-
-- name: Install k8s kubelet
-  dnf:
-    name: kubelet-1.20.5-0.x86_64
-    state: present
-    disable_excludes: kubernetes
-
-- name: Install k8s kubeadm
-  dnf:
-    name: kubeadm-1.20.5-0.x86_64
-    state: present
-    disable_excludes: kubernetes
 
 - name: Install k8s kubectl
-  dnf:
-    name: kubectl-1.20.5-0.x86_64
-    state: present
-    disable_excludes: kubernetes
+  shell:
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    chmod 755 kubectl
+    mv kubectl /usr/local/bin/
 
-- name: systemctl kubelet reload and restart
-  systemd:
-    name: kubelet
-    daemon_reload: yes
-    state: restarted
-    enabled: yes
-
-- name: Add systemd.unified_cgroup_hierarchy=0 line to /etc/default/grub
-  lineinfile:
-    path: /etc/default/grub
-    regexp: '^(GRUB_CMDLINE_LINUX=".*?)( systemd\.unified_cgroup_hierarchy=0)?"$'
-    line: '\1 systemd.unified_cgroup_hierarchy=0"'
-    backrefs: yes
-  register: kernel_result
-
-- name: Reboot if kernel modified
-  when: kernel_result is changed
-  async: 1
-  poll: 0
+- name: Download RKE binary
   shell: |
-    sleep 5 && sudo reboot
+    curl -LO https://github.com/rancher/rke/releases/download/v1.1.19/rke_linux-amd64
+    chmod 755 rke_linux-amd64
+    mv rke_linux-adm64 /usr/local/bin/
 
-- name: Wait for the reboot to complete if there was a change.
-  when: kernel_result is changed
-  wait_for_connection:
-    connect_timeout: 20
-    sleep: 5
-    delay: 5
-    timeout: 300
+- name: copy rke config.yml
+  copy:
+    src: files/config.yml
+    dest: /root/config.yml
+    owner: root
+    group: root
+    mode: '0644'
 
-- name: kubeadm init
+- name: RKE up
   shell: |
-    sudo kubeadm init --apiserver-cert-extra-sans '{{ lookup('env', 'PUBLIC_IP') }}'
-
-- name: copy k8s config to user fedora
-  shell: |
-    sudo mkdir /home/fedora/.kube
-    sudo cp /etc/kubernetes/admin.conf /home/fedora/.kube/config
-    sudo chown -R fedora: /home/fedora/.kube
-
-- name: copy k8s config to user root
-  shell: |
-    sudo mkdir /root/.kube
-    sudo cp /etc/kubernetes/admin.conf /root/.kube/config
-
-- name: untaint master node
-  shell: |
-    kubectl taint node $(kubectl get node -o=jsonpath='{.items[0].metadata.name}') node-role.kubernetes.io/master:NoSchedule-
-
-- name: install weavenet network plugin
-  shell: |
-    kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
-
-- name: install argoCD
-  shell: |
-    kubectl create namespace argocd
-    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-
-- name: deploy traefik helm with argoCD
-  shell: |
-    pwd 
-    ls -l
-    kubectl apply -f https://raw.githubusercontent.com/leonardoalvesprates/k8s/master/lab/argocd/traefik-ingress-controller-argocd.yaml
+    rke up

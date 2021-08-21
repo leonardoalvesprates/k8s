@@ -1,0 +1,7 @@
+nodes:
+    - address: $PUBLIC_IP
+      user: root
+      role:
+        - controlplane
+        - etcd
+        - worker
