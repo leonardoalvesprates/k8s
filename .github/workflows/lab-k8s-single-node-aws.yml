@@ -71,7 +71,7 @@ jobs:
               # chmod 600 lab/single-node/terraform/file.pem
               cd lab/single-node/terraform
               ./terraform apply -auto-approve
-              ./terraform output opensuse_ip > k8slab_ip.out 
+              ./terraform output opensuse_ip > ../../../k8slab_ip.out
       
       - name: ansible-playbook
         env:
