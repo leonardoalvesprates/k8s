@@ -4,16 +4,12 @@
     name: "*"
     state: latest
 
-- name: Remove docker engime if present
+- name: Install docker engime
   zypper:
     name: docker
-    state: absent
+    state: present
 
-- name: Install docker from rancher script
-  shell: |
-    curl https://releases.rancher.com/install-docker/19.03.sh | sh
-
-- name: Install docker from rancher script
+- name: enable systemd docker 
   systemd:
     name: docker
     state: started
