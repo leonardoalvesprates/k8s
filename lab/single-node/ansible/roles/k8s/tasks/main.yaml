@@ -6,7 +6,7 @@
 
 - name: Remove docker engime if present
   zypper:
-    name: kubectl-1.20.5-0.x86_64
+    name: docker
     state: absent
 
 - name: Install docker from rancher script
