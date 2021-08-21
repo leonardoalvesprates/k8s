@@ -37,4 +37,4 @@
 
 - name: RKE up
   shell: |
-    rke up
+    sudo rke up
