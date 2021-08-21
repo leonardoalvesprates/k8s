@@ -95,7 +95,7 @@ jobs:
               export PUBLIC_IP=$(cat k8slab_ip_node1.out)
               pwd
               ls -lR
-              # cat lab/single-node/ansible/k8s/files/rkeconfig.yml
-              # envsubst < lab/single-node/ansible/roles/k8s/files/rkeconfig.yml > lab/single-node/ansible/k8s/files/config.yml
-              # cat lab/single-node/ansible/k8s/files/config.yml
-              # ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $PUBLIC_IP, --private-key ./leoaws.pem lab/single-node/ansible/k8s.yaml
+              cat lab/single-node/ansible/roles/k8s/files/rkeconfig.yml
+              envsubst < lab/single-node/ansible/roles/k8s/files/rkeconfig.yml > lab/single-node/ansible/roles/k8s/files/config.yml
+              cat lab/single-node/ansible/roles/k8s/files/config.yml
+              ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $PUBLIC_IP, --private-key ./leoaws.pem lab/single-node/ansible/k8s.yaml
