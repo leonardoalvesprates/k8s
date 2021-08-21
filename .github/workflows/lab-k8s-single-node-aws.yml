@@ -82,7 +82,7 @@ jobs:
         run: |
               sleep 30
               pwd
-              head -1 k8slab_ip.out > k8slab_ip_node1.out 
+              head -2 k8slab_ip.out | tail -1 > k8slab_ip_node1.out 
               sed -i 's/\"//g' k8slab_ip_node1.out
               mkdir ~/.aws
               echo "[default]" > ~/.aws/config
@@ -99,4 +99,4 @@ jobs:
               envsubst < lab/single-node/ansible/roles/k8s/files/rkeconfig.yml > lab/single-node/ansible/roles/k8s/files/config.yml
               ls -lR
               cat lab/single-node/ansible/roles/k8s/files/config.yml
-              # ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $PUBLIC_IP, --private-key ./leoaws.pem lab/single-node/ansible/k8s.yaml
+              ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i $PUBLIC_IP, --private-key ./leoaws.pem lab/single-node/ansible/k8s.yaml
