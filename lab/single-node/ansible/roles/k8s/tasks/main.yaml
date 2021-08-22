@@ -37,7 +37,7 @@
 
 - name: create SSH RSA keys and add to authorized_keys
   shell: |
-    ssh-keygen -q -t rsa -N '' -f ~/.ssh/id_rsa <<<y >/dev/null 2>&1
+    sudo ssh-keygen -q -t rsa -N '' -f /root/.ssh/id_rsa <<<y >/dev/null 2>&1
     sudo cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
 
 - name: RKE up
