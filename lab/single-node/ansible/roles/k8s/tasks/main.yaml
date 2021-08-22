@@ -42,4 +42,4 @@
 
 - name: RKE up
   shell: |
-    sudo rke --config cluster.yml
+    sudo rke up --config cluster.yml
