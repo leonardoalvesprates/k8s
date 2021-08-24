@@ -21,6 +21,13 @@
     chmod 755 kubectl
     mv kubectl /usr/local/bin/
 
+- name: Install helm
+  shell: |
+    curl -LO https://get.helm.sh/helm-v3.6.3-linux-amd64.tar.gz
+    tar xzvf helm-v3.6.3-linux-amd64.tar.gz
+    chmod 755 linux-amd64/helm
+    sudo mv linux-amd64/helm /usr/local/bin/helm
+
 - name: Download RKE binary
   shell: |
     curl -LO https://github.com/rancher/rke/releases/download/v1.1.19/rke_linux-amd64
