@@ -40,6 +40,6 @@
     sudo ssh-keygen -q -t rsa -N '' -f /root/.ssh/id_rsa <<<y >/dev/null 2>&1
     sudo cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
 
-- name: RKE up
-  shell: |
-    sudo rke up --config cluster.yml
+# - name: RKE up
+#   shell: |
+#     sudo rke up --config cluster.yml
