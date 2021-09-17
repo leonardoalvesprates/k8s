@@ -1,7 +1,74 @@
 nodes:
-    - address: $PUBLIC_IP
+    - address: ec2-23-22-209-172.compute-1.amazonaws.com
+      internal_address: 172.31.21.36
       user: root
       role:
         - controlplane
         - etcd
         - worker
+    - address: ec2-54-88-84-103.compute-1.amazonaws.com
+      internal_address: 172.31.19.133
+      user: root
+      role:
+        - controlplane
+        - etcd
+        - worker
+    - address: ec2-3-85-3-80.compute-1.amazonaws.com  
+      internal_address: 172.31.31.127
+      user: root
+      role:
+        - controlplane
+        - etcd
+        - worker
+kubernetes_version: "v1.20.8-rancher1-1"
+cluster_name: rkeranchercluster
+services:
+  etcd:
+    snapshot: true
+    creation: 6h
+    retention: 24h
+authentication:
+    strategy: x509
+    sans:
+      - "100.26.46.85"
+      - "ec2-100-26-46-85.compute-1.amazonaws.com"
+
+
+
+helm install rancher rancher-stable/rancher --namespace cattle-system --set hostname=ec2-44-197-117-69.compute-1.amazonaws.com --set replicas=1 --version 2.5.5
+
+
+
+
+cat <<EOF| kubectl -n default apply -f -
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    name: overlaytest
+  name: overlaytest-12345
+spec:
+  containers:
+  - image: rancherlabs/swiss-army-knife
+    imagePullPolicy: Always
+    name: overlaytest
+    command: ["sh", "-c", "tail -f /dev/null"]
+    terminationMessagePath: /dev/termination-log
+EOF
+
+
+cat <<EOF| kubectl -n default apply -f -
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    name: overlaytest
+  name: overlaytest-12345
+spec:
+  containers:
+  - image: rancherlabs/swiss-army-knife
+    imagePullPolicy: Always
+    name: overlaytest
+    command: ["sh", "-c", "tail -f /dev/null"]
+    terminationMessagePath: /dev/termination-log
+EOF
