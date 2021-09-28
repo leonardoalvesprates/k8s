@@ -1,0 +1,17 @@
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: test5
+  namespace: fleet-default
+spec:
+  branch: labopensuse
+  insecureSkipTLSVerify: false
+  paths:
+  - /lab/fleet
+  repo: https://github.com/leonardoalvesprates/k8s.git
+  targets:
+  - clusterGroup: sandbox
+    clusterSelector:
+       matchLabels:
+         fleet-managed: "true"
+         name: sandbox
