@@ -133,6 +133,6 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    app: web-green
+    app: web-blue
   sessionAffinity: None
   type: NodePort
