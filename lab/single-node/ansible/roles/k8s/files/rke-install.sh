@@ -47,15 +47,38 @@ helm install rancher rancher-stable/rancher --namespace cattle-system --set host
 
 
 #ubuntu 
-sed -i 's/#AllowTcpForwarding yes/AllowTcpForwarding yes/g' /etc/ssh/sshd_config
+sudo sed -i 's/#AllowTcpForwarding yes/AllowTcpForwarding yes/g' /etc/ssh/sshd_config
 sudo systemctl restart sshd
-modprobe br_netfilter
-echo 'net.bridge.bridge-nf-call-iptables=1' >> /etc/sysctl.conf 
-sysctl -p /etc/sysctl.conf
-apt-get update
+sudo modprobe br_netfilter
+sudo echo 'net.bridge.bridge-nf-call-iptables=1' >> /etc/sysctl.conf 
+sudo sysctl -p /etc/sysctl.conf
+sudo curl https://releases.rancher.com/install-docker/20.10.sh | sh
+sudo usermod -G docker ubuntu
+###
+cluster.yml
+###
+rke up
+export KUBECONFIG=kube_config_cluster.yml
+source <(kubectl completion bash)
+kubectl get nodes
+###
+helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
+kubectl create namespace cattle-system
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.5.1/cert-manager.crds.yaml
+helm repo add jetstack https://charts.jetstack.io
+helm repo update
+helm install cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --create-namespace \
+  --version v1.5.1
+####
+helm install rancher rancher-latest/rancher \
+  --namespace cattle-system \
+  --set hostname=rancher.my.org \
+  --set bootstrapPassword=admin \
+  --version 2.6.0
+
+
+
+#apt-get update
 #apt install docker.io
-curl https://releases.rancher.com/install-docker/20.10.sh | sh
-
-
-
-
