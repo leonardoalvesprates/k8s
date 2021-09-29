@@ -50,7 +50,7 @@ helm install rancher rancher-stable/rancher --namespace cattle-system --set host
 sudo sed -i 's/#AllowTcpForwarding yes/AllowTcpForwarding yes/g' /etc/ssh/sshd_config
 sudo systemctl restart sshd
 sudo modprobe br_netfilter
-sudo echo 'net.bridge.bridge-nf-call-iptables=1' >> /etc/sysctl.conf 
+sudo bash -c 'echo "net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf'
 sudo sysctl -p /etc/sysctl.conf
 sudo curl https://releases.rancher.com/install-docker/20.10.sh | sh
 sudo usermod -G docker ubuntu
