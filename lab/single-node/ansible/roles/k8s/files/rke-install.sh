@@ -54,6 +54,8 @@ sudo bash -c 'echo "net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf'
 sudo sysctl -p /etc/sysctl.conf
 sudo curl https://releases.rancher.com/install-docker/20.10.sh | sh
 sudo usermod -G docker ubuntu
+ssh-keygen -q -t rsa -N '' -f $HOME/.ssh/id_rsa <<<y >/dev/null 2>&1
+cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
 ###
 cat <<EOF>> cluster.yml
 nodes:
