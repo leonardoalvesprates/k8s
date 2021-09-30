@@ -61,7 +61,7 @@ cat <<EOF>> cluster.yml
 nodes:
     - address: ec2-23-22-209-172.compute-1.amazonaws.com
       internal_address: 172.31.21.36
-      user: root
+      user: ubuntu
       role:
         - controlplane
         - etcd
