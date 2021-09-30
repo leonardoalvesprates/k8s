@@ -55,7 +55,42 @@ sudo sysctl -p /etc/sysctl.conf
 sudo curl https://releases.rancher.com/install-docker/20.10.sh | sh
 sudo usermod -G docker ubuntu
 ###
-cluster.yml
+cat <<EOF>> cluster.yml
+nodes:
+    - address: ec2-23-22-209-172.compute-1.amazonaws.com
+      internal_address: 172.31.21.36
+      user: root
+      role:
+        - controlplane
+        - etcd
+        - worker
+    - address: ec2-54-88-84-103.compute-1.amazonaws.com
+      internal_address: 172.31.19.133
+      user: root
+      role:
+        - controlplane
+        - etcd
+        - worker
+    - address: ec2-3-85-3-80.compute-1.amazonaws.com  
+      internal_address: 172.31.31.127
+      user: root
+      role:
+        - controlplane
+        - etcd
+        - worker
+kubernetes_version: "v1.20.8-rancher1-1"
+cluster_name: rkeranchercluster
+services:
+  etcd:
+    snapshot: true
+    creation: 6h
+    retention: 24h
+authentication:
+    strategy: x509
+    sans:
+      - "100.26.46.85"
+      - "ec2-100-26-46-85.compute-1.amazonaws.com"
+EOF
 ###
 rke up
 export KUBECONFIG=kube_config_cluster.yml
