@@ -68,14 +68,14 @@ nodes:
         - worker
     - address: ec2-54-88-84-103.compute-1.amazonaws.com
       internal_address: 172.31.19.133
-      user: root
+      user: ubuntu
       role:
         - controlplane
         - etcd
         - worker
     - address: ec2-3-85-3-80.compute-1.amazonaws.com  
       internal_address: 172.31.31.127
-      user: root
+      user: ubuntu
       role:
         - controlplane
         - etcd
