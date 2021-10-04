@@ -57,6 +57,20 @@ sudo usermod -G docker ubuntu
 ssh-keygen -q -t rsa -N '' -f $HOME/.ssh/id_rsa <<<y >/dev/null 2>&1
 cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
 ###
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod 755 kubectl
+sudo mv kubectl /usr/local/bin/
+curl -LO https://get.helm.sh/helm-v3.6.3-linux-amd64.tar.gz
+tar xzvf helm-v3.6.3-linux-amd64.tar.gz
+chmod 755 linux-amd64/helm
+sudo mv linux-amd64/helm /usr/local/bin/helm
+curl -LO https://github.com/derailed/k9s/releases/download/v0.24.15/k9s_Linux_x86_64.tar.gz
+tar xzvf k9s_Linux_x86_64.tar.gz
+sudo mv k9s /usr/local/bin/
+curl -LO https://github.com/rancher/rke/releases/download/v1.2.9/rke_linux-amd64
+chmod 755 rke_linux-amd64
+sudo mv rke_linux-amd64 /usr/local/bin/rke
+###
 cat <<EOF>> cluster.yml
 nodes:
     - address: ec2-23-22-209-172.compute-1.amazonaws.com
