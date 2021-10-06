@@ -1,3 +1,4 @@
+#sles 15.3
 #!/bin/bash
 sudo zypper -n update 
 sudo zypper -n install bash-completion 
@@ -47,6 +48,28 @@ helm install rancher rancher-stable/rancher --namespace cattle-system --set host
 
 
 #ubuntu 
+#!/bin/bash
+
+printf "Public DNS: "
+read EC2_PUBLIC_DNS
+printf "Internal Address: "
+read EC2_INT_ADDRESS
+printf "RKE Version: "
+read RKE_BIN_VERSION  ## https://github.com/rancher/rke/releases
+printf "K8S Version: "
+read K8S_VERSION
+printf "Rancher Repo stable/latest: "
+read RANCHER_REPO     ## latest / stable
+printf "Rancher version: "
+read RANCHER_VERSION
+
+export EC2_PUBLIC_DNS
+export EC2_INT_ADDRESS
+export RKE_BIN_VERSION
+export K8S_VERSION
+export RANCHER_REPO
+export RANCHER_VERSION
+
 sudo sed -i 's/#AllowTcpForwarding yes/AllowTcpForwarding yes/g' /etc/ssh/sshd_config
 sudo systemctl restart sshd
 sudo modprobe br_netfilter
@@ -67,53 +90,40 @@ sudo mv linux-amd64/helm /usr/local/bin/helm
 curl -LO https://github.com/derailed/k9s/releases/download/v0.24.15/k9s_Linux_x86_64.tar.gz
 tar xzvf k9s_Linux_x86_64.tar.gz
 sudo mv k9s /usr/local/bin/
-curl -LO https://github.com/rancher/rke/releases/download/v1.2.9/rke_linux-amd64
+curl -LO https://github.com/rancher/rke/releases/download/$RKE_BIN_VERSION/rke_linux-amd64
 chmod 755 rke_linux-amd64
 sudo mv rke_linux-amd64 /usr/local/bin/rke
 ###
-cat <<EOF>> cluster.yml
+cat <<EOF>> cluster.sample
 nodes:
-    - address: ec2-23-22-209-172.compute-1.amazonaws.com
-      internal_address: 172.31.21.36
+    - address: $EC2_PUBLIC_DNS
+      internal_address: $EC2_INT_ADDRESS
       user: ubuntu
       role:
         - controlplane
         - etcd
         - worker
-    - address: ec2-54-88-84-103.compute-1.amazonaws.com
-      internal_address: 172.31.19.133
-      user: ubuntu
-      role:
-        - controlplane
-        - etcd
-        - worker
-    - address: ec2-3-85-3-80.compute-1.amazonaws.com  
-      internal_address: 172.31.31.127
-      user: ubuntu
-      role:
-        - controlplane
-        - etcd
-        - worker
-kubernetes_version: "v1.20.8-rancher1-1"
+kubernetes_version: $K8S_VERSION
 cluster_name: rkeranchercluster
 services:
   etcd:
     snapshot: true
-    creation: 6h
+    creation: 1h
     retention: 24h
-authentication:
-    strategy: x509
-    sans:
-      - "100.26.46.85"
-      - "ec2-100-26-46-85.compute-1.amazonaws.com"
+#authentication:
+#    strategy: x509
+#    sans:
+#      - "100.26.46.85"
+#      - "ec2-100-26-46-85.compute-1.amazonaws.com"
 EOF
+envsubst < cluster.sample > cluster.yml
 ###
 rke up
 export KUBECONFIG=kube_config_cluster.yml
 source <(kubectl completion bash)
 kubectl get nodes
 ###
-helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
+helm repo add rancher-$RANCHER_REPO https://releases.rancher.com/server-charts/$RANCHER_REPO
 kubectl create namespace cattle-system
 kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.5.1/cert-manager.crds.yaml
 helm repo add jetstack https://charts.jetstack.io
@@ -123,13 +133,9 @@ helm install cert-manager jetstack/cert-manager \
   --create-namespace \
   --version v1.5.1
 ####
-helm install rancher rancher-latest/rancher \
+sleep 20
+helm install rancher rancher-$RANCHER_REPO/rancher \
   --namespace cattle-system \
-  --set hostname=rancher.my.org \
-  --set bootstrapPassword=admin \
-  --version 2.6.0
+  --set hostname=$EC2_PUBLIC_DNS \
+  --version $RANCHER_VERSION
 
-
-
-#apt-get update
-#apt install docker.io
