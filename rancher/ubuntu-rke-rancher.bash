@@ -54,12 +54,12 @@ printf "Public DNS: "
 read EC2_PUBLIC_DNS
 printf "Internal Address: "
 read EC2_INT_ADDRESS
-printf "RKE Version: "
-read RKE_BIN_VERSION  ## https://github.com/rancher/rke/releases
+printf "RKE Version (https://github.com/rancher/rke/releases): "
+read RKE_BIN_VERSION  
 printf "K8S Version: "
 read K8S_VERSION
-printf "Rancher Repo stable/latest: "
-read RANCHER_REPO     ## latest / stable
+printf "Rancher Repo (stable/latest): "
+read RANCHER_REPO     
 printf "Rancher version: "
 read RANCHER_VERSION
 
