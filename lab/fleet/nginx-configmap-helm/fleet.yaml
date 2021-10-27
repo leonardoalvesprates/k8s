@@ -1,6 +1,7 @@
 
 namespace: labfleethelm
- - name: helm
+targetCustomizations:
+ - name: web
     helm:
       # The release name to use. If empty a generated release name will be used
       releaseName: web01
