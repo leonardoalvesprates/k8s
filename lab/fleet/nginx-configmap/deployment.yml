@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: web01
+  name: web01
+  namespace: labfleet
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web01
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: web01
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: vol01
+          mountPath: /usr/share/nginx/html/index.html
+        resources: {}
+      volumes:
+      - name: vol01
+        configmap:
+          name: web01-wwwdata
