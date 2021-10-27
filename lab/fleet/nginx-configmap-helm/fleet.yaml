@@ -34,6 +34,6 @@ helm:
   dependsOn:
     - name: configmap-www-data
 
-- name: configmap-www-data
-  yaml:
-    - configmap.yaml
+yaml: 
+  name: configmap-www-data
+  - configmap.yaml
