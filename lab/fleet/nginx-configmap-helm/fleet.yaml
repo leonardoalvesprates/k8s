@@ -35,5 +35,4 @@ helm:
     - name: configmap-www-data
 
 yaml: 
-  name: configmap-www-data
   - configmap.yaml
