@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v2
 name: web01
 description: lab web
 version: 0.0.0
