@@ -5,7 +5,7 @@ metadata:
     app: web01
   name: web01
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       app: web01
