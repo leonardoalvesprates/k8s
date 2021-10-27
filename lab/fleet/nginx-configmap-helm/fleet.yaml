@@ -9,3 +9,7 @@ targetCustomizations:
     version: ""
     values:
       replicas: 2
+- name: configmap
+  namespace: labfleethelm
+  yaml:
+  - configmap.yaml
