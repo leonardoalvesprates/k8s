@@ -1,7 +1,7 @@
 
 namespace: labfleethelm
 targetCustomizations:
- - name: web
+- name: web
     helm:
       values:
         replicas: 2
