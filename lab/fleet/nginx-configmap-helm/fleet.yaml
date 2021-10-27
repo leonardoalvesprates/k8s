@@ -1,4 +1,4 @@
-namespace: fleet-helm-example
+namespace: labfleethelm
 helm:
   releaseName: web01
   chart: ""
