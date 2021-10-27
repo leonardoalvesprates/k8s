@@ -1,4 +1,5 @@
 namespace: labfleethelm
+targetCustomizations:
 - name: helm
   namespace: labfleethelm
   helm:
