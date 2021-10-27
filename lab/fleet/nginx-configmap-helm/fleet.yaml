@@ -6,3 +6,5 @@ helm:
   version: ""
   values:
     replicas: 2
+yaml:
+  - configmap.yaml
