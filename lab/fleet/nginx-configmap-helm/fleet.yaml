@@ -1,5 +1,6 @@
 namespace: labfleethelm
 - name: helm
+  namespace: labfleethelm
   helm:
     releaseName: web01
     chart: ""
