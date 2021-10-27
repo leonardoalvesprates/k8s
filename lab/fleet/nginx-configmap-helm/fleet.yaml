@@ -12,4 +12,5 @@ targetCustomizations:
 - name: configmap
   namespace: labfleethelm
   yaml:
-  - configmap.yaml
+    overlays:
+    - configmap
