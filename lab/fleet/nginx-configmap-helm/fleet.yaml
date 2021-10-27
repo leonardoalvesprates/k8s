@@ -1,12 +1,18 @@
 namespace: labfleethelm
 targetCustomizations:
 - name: web
-    helm:
-      values:
-        replicas: 2
-    dependsOn:
-      - name: configmap
+  clusterSelector:
+    matchLabels:
+      env: lab
+  helm:
+    values:
+      replicas: 2
+  dependsOn:
+    - name: configmap
 
 - name: configmap
-    yaml: 
-      - configmap.yaml
+  clusterSelector:
+    matchLabels:
+      env: lab
+  yaml: 
+    - configmap.yaml
