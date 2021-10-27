@@ -28,5 +28,5 @@ spec:
         resources: {}
       volumes:
       - name: vol01
-        configmap:
+        configMap:
           name: web01-wwwdata
