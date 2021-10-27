@@ -1,10 +1,9 @@
 namespace: labfleethelm
-helm:
-  releaseName: web01
-  chart: ""
-  repo: ""
-  version: ""
-  values:
-    replicas: 2
-yaml:
-  - configmap.yaml
+- name: helm
+  helm:
+    releaseName: web01
+    chart: ""
+    repo: ""
+    version: ""
+    values:
+      replicas: 2
