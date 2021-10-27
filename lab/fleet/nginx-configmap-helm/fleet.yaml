@@ -1,7 +1,8 @@
-namespace: labfleethelm
+namespace: fleet-helm-example
 helm:
-  releasename: web
+  releaseName: guestbook
+  chart: ""
+  repo: ""
+  version: ""
   values:
     replicas: 2
-yaml: 
-  - configmap.yaml
