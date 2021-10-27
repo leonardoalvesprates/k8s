@@ -1,6 +1,6 @@
 namespace: fleet-helm-example
 helm:
-  releaseName: guestbook
+  releaseName: web01
   chart: ""
   repo: ""
   version: ""

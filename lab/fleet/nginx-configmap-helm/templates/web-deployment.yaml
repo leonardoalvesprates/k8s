@@ -6,13 +6,13 @@ spec:
   replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-      app: guestbook
+      app: web01
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: guestbook
+        app: web01
     spec:
       containers:
       - image: nginx
