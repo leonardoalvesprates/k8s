@@ -4,9 +4,15 @@ targetCustomizations:
   helm:
     values:
       replicas: 2
+  clusterSelector:
+    matchLabels:
+      env: lab
   dependsOn:
     - name: configmap
 
 - name: configmap
+  clusterSelector:
+    matchLabels:
+      env: lab
   yaml: 
     - configmap.yaml
