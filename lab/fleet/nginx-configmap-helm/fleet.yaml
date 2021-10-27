@@ -5,8 +5,8 @@ targetCustomizations:
     helm:
       values:
         replicas: 2
-      dependsOn:
-        - name: configmap
+    dependsOn:
+      - name: configmap
 
 - name: configmap
     yaml: 
