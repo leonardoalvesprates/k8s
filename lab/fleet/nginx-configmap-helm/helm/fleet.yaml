@@ -1,16 +1,8 @@
 namespace: labfleethelm
-targetCustomizations:
-- name: helm
-  namespace: labfleethelm
-  helm:
-    releaseName: web01
-    chart: ""
-    repo: ""
-    version: ""
-    values:
-      replicas: 2
-- name: configmap
-  namespace: labfleethelm
-  yaml:
-    overlays:
-    - configmap
+helm:
+  releaseName: web01
+  chart: ""
+  repo: ""
+  version: ""
+  values:
+    replicas: 2
