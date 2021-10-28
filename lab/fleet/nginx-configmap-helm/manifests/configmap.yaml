@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web01-wwwdata
+data:
+  index.html: |
+    <html>
+    <body>
+    <h1> version 01 </h1>
+    </body>
+    </html>
