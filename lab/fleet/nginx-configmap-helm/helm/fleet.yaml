@@ -6,5 +6,3 @@ helm:
   version: ""
   values:
     replicas: 2
-dependsOn:
-  - name: lab-lab-fleet-nginx-configmap-helm-manifests
