@@ -6,3 +6,5 @@ helm:
   version: ""
   values:
     replicas: 2
+dependsOn:
+  - name: lab-manifests
