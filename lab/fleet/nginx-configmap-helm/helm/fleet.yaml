@@ -5,6 +5,6 @@ helm:
   repo: ""
   version: ""
   values:
-    replicas: 3
+    replicas: 4
 dependsOn:
   - name: lab-manifests
