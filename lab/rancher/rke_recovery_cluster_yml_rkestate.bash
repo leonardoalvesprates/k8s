@@ -14,7 +14,7 @@ build() {
  kubectl -n kube-system get configmap full-cluster-state -o json | jq -r .data.\"full-cluster-state\" | jq -r . > cluster.rkestate
 }
 
-#Download jq and yq
+#Downloading jq and yq
 curl -LO https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
 chmod 755 jq-linux64 
 mv jq-linux64 jq
