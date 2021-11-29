@@ -23,7 +23,7 @@ chmod 755 yq_linux_amd64
 mv yq_linux_amd64 yq
 
 #exporting $PATH
-export PATH=$PATH:$(pwd)
+export PATH=$(pwd):$PATH
 
 #running build function
 build
