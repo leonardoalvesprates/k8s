@@ -65,6 +65,10 @@ services:
 #    sans:
 #      - "100.26.46.85"
 #      - "ec2-100-26-46-85.compute-1.amazonaws.com"
+# ingress:
+#   provider: nginx
+#   options:
+#     error-log-level: "debug"
 EOF
 envsubst < cluster.sample > cluster.yml
 ###
