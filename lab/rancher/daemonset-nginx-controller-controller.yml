@@ -11,9 +11,6 @@ metadata:
     app.kubernetes.io/version: 0.49.3
   name: nginx-ingress-controller
   namespace: ingress-nginx
-  resourceVersion: "914"
-  selfLink: /apis/apps/v1/namespaces/ingress-nginx/daemonsets/nginx-ingress-controller
-  uid: 41aae83c-eb23-46d0-a61b-2e35a2704b88
 spec:
   revisionHistoryLimit: 10
   selector:
