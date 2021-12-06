@@ -69,6 +69,8 @@ services:
 #  provider: nginx
 #  options:
 #    error-log-level: "debug"
+#addons_include:
+#    - https://raw.githubusercontent.com/leonardoalvesprates/k8s/master/lab/rancher/daemonset-nginx-controller-controller.yml
 EOF
 envsubst < cluster.sample > cluster.yml
 ###
