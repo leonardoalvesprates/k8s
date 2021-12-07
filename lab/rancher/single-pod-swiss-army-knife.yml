@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    name: overlaytest
+  name: overlaytest-12345
+spec:
+  containers:
+  - image: rancherlabs/swiss-army-knife
+    imagePullPolicy: Always
+    name: overlaytest
+    command: ["sh", "-c", "tail -f /dev/null"]
+    terminationMessagePath: /dev/termination-log
