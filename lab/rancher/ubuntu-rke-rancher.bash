@@ -51,12 +51,12 @@ chmod 755 kubectl
 sudo mv kubectl /usr/local/bin/
 printf "${green}Downloading Helm 3.6.3...${normal} \n"
 curl -sLO https://get.helm.sh/helm-v3.6.3-linux-amd64.tar.gz
-tar xzvf helm-v3.6.3-linux-amd64.tar.gz
+tar xzf helm-v3.6.3-linux-amd64.tar.gz
 chmod 755 linux-amd64/helm
 sudo mv linux-amd64/helm /usr/local/bin/helm
 printf "${green}Downloading K9s binary...${normal} \n"
 curl -sLO https://github.com/derailed/k9s/releases/download/v0.24.15/k9s_Linux_x86_64.tar.gz
-tar xzvf k9s_Linux_x86_64.tar.gz
+tar xzf k9s_Linux_x86_64.tar.gz
 sudo mv k9s /usr/local/bin/
 
 ###
