@@ -45,7 +45,7 @@ sudo usermod -G docker ubuntu
 ssh-keygen -q -t rsa -N '' -f $HOME/.ssh/id_rsa <<<y >/dev/null 2>&1
 cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
 ###
-printf "${green}Downloading latest kubectl binary... ${normal} \n"
+printf "${green}Downloading latest kubectl binary...${normal} \n"
 curl -sLO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 chmod 755 kubectl
 sudo mv kubectl /usr/local/bin/
