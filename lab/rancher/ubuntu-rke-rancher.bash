@@ -17,7 +17,6 @@ printf "\n"
 printf "${green}k8s versions for RKE $RKE_BIN_VERSION: \n"
 rke config -list-version -all
 printf "${normal} \n"
-printf "\n"
 printf "K8S Version: "
 read K8S_VERSION
 printf "Rancher Repo (stable/latest): "
