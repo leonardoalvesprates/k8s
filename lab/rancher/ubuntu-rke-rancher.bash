@@ -6,6 +6,13 @@ printf "Internal Address: "
 read EC2_INT_ADDRESS
 printf "RKE Version (https://github.com/rancher/rke/releases): "
 read RKE_BIN_VERSION  
+printf "Downloading and installing RKE binary"
+curl -LO https://github.com/rancher/rke/releases/download/$RKE_BIN_VERSION/rke_linux-amd64
+chmod 755 rke_linux-amd64
+sudo mv rke_linux-amd64 /usr/local/bin/rke
+printf "k8s versions for RKE $RKE_BIN_VERSION"
+rke config -list-version -all
+printf ""
 printf "K8S Version: "
 read K8S_VERSION
 printf "Rancher Repo (stable/latest): "
@@ -40,9 +47,7 @@ sudo mv linux-amd64/helm /usr/local/bin/helm
 curl -LO https://github.com/derailed/k9s/releases/download/v0.24.15/k9s_Linux_x86_64.tar.gz
 tar xzvf k9s_Linux_x86_64.tar.gz
 sudo mv k9s /usr/local/bin/
-curl -LO https://github.com/rancher/rke/releases/download/$RKE_BIN_VERSION/rke_linux-amd64
-chmod 755 rke_linux-amd64
-sudo mv rke_linux-amd64 /usr/local/bin/rke
+
 ###
 cat <<EOF>> cluster.sample
 nodes:
