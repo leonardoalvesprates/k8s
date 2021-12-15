@@ -1,18 +1,23 @@
 #!/bin/bash
 
+green=$(tput setaf 2)
+normal=$(tput sgr0)
+
 printf "Public DNS: "
 read EC2_PUBLIC_DNS
 printf "Internal Address: "
 read EC2_INT_ADDRESS
-printf "RKE Version (https://github.com/rancher/rke/releases): "
+printf "RKE Version (https://github.com/rancher/rke/releases) e,g v1.2.9: "
 read RKE_BIN_VERSION  
-printf "Downloading and installing RKE binary...\n"
+printf "${green}Downloading and installing RKE binary...${normal}\n"
 curl -sLO https://github.com/rancher/rke/releases/download/$RKE_BIN_VERSION/rke_linux-amd64
 chmod 755 rke_linux-amd64
 sudo mv rke_linux-amd64 /usr/local/bin/rke
 printf "\n"
-printf "k8s versions for RKE $RKE_BIN_VERSION:\n"
+printf "${green}k8s versions for RKE $RKE_BIN_VERSION:${normal} \n"
+${green} 
 rke config -list-version -all
+${normal}
 printf "\n"
 printf "K8S Version: "
 read K8S_VERSION
@@ -28,30 +33,30 @@ export K8S_VERSION
 export RANCHER_REPO
 export RANCHER_VERSION
 
-printf "Changing SSH AllowTcpForwarding to yes ... \n"
+printf "${green}Changing SSH AllowTcpForwarding to yes...${normal} \n"
 sudo sed -i 's/#AllowTcpForwarding yes/AllowTcpForwarding yes/g' /etc/ssh/sshd_config
 sudo systemctl restart sshd
-printf "Loading br_netfilter ... \n"
+printf "${green}Loading br_netfilter...${normal} \n"
 sudo modprobe br_netfilter
-printf "Add and loading net.bridge.bridge-nf-call-iptables=1 \n"
+printf "${green}Add and loading net.bridge.bridge-nf-call-iptables=1 ${normal} \n"
 sudo bash -c 'echo "net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf'
 sudo sysctl -p /etc/sysctl.conf
-printf "Downloading and installing docker engine \n"
+printf "${green}Downloading and installing docker engine ${normal} \n"
 sudo curl https://releases.rancher.com/install-docker/20.10.sh | sh
 sudo usermod -G docker ubuntu
 ssh-keygen -q -t rsa -N '' -f $HOME/.ssh/id_rsa <<<y >/dev/null 2>&1
 cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
 ###
-printf "Downloading latest kubectl binary... \b"
+printf "${green}Downloading latest kubectl binary... ${normal} \b"
 curl -sLO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 chmod 755 kubectl
 sudo mv kubectl /usr/local/bin/
-printf "Downloading Helm 3.6.3... \n"
+printf "${green}Downloading Helm 3.6.3...${normal} \n"
 curl -sLO https://get.helm.sh/helm-v3.6.3-linux-amd64.tar.gz
 tar xzvf helm-v3.6.3-linux-amd64.tar.gz
 chmod 755 linux-amd64/helm
 sudo mv linux-amd64/helm /usr/local/bin/helm
-printf "Downloading K9s binary... \n"
+printf "${green}Downloading K9s binary...${normal} \n"
 curl -sLO https://github.com/derailed/k9s/releases/download/v0.24.15/k9s_Linux_x86_64.tar.gz
 tar xzvf k9s_Linux_x86_64.tar.gz
 sudo mv k9s /usr/local/bin/
