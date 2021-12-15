@@ -6,13 +6,13 @@ printf "Internal Address: "
 read EC2_INT_ADDRESS
 printf "RKE Version (https://github.com/rancher/rke/releases): "
 read RKE_BIN_VERSION  
-printf "Downloading and installing RKE binary"
+echo "Downloading and installing RKE binary..."
 curl -LO https://github.com/rancher/rke/releases/download/$RKE_BIN_VERSION/rke_linux-amd64
 chmod 755 rke_linux-amd64
 sudo mv rke_linux-amd64 /usr/local/bin/rke
-printf "k8s versions for RKE $RKE_BIN_VERSION"
+echo "k8s versions for RKE $RKE_BIN_VERSION"
 rke config -list-version -all
-printf ""
+echo
 printf "K8S Version: "
 read K8S_VERSION
 printf "Rancher Repo (stable/latest): "
