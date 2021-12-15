@@ -16,7 +16,7 @@ sudo mv rke_linux-amd64 /usr/local/bin/rke
 printf "\n"
 printf "${green}k8s versions for RKE $RKE_BIN_VERSION: \n"
 rke config -list-version -all
-print "${normal}"
+print "${normal} \n"
 printf "\n"
 printf "K8S Version: "
 read K8S_VERSION
