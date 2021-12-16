@@ -3,10 +3,10 @@
 green=$(tput setaf 2)
 normal=$(tput sgr0)
 
-printf "Public DNS: "
-read EC2_PUBLIC_DNS
-printf "Internal Address: "
-read EC2_INT_ADDRESS
+printf "RKE IP Adress/DNS address: "
+read IP_ADDRESS
+printf "Rancher hostname/URL: "
+read RANCHER_HOSTNAME
 printf "RKE Version (https://github.com/rancher/rke/releases) e,g v1.2.9: "
 read RKE_BIN_VERSION  
 printf "${green}Downloading and installing RKE binary...${normal}\n"
@@ -24,12 +24,12 @@ read RANCHER_REPO
 printf "Rancher version: "
 read RANCHER_VERSION
 
-export EC2_PUBLIC_DNS
-export EC2_INT_ADDRESS
+export IP_ADDRESS
 export RKE_BIN_VERSION
 export K8S_VERSION
 export RANCHER_REPO
 export RANCHER_VERSION
+export RANCHER_HOSTNAME
 
 printf "${green}Changing SSH AllowTcpForwarding to yes...${normal} \n"
 sudo sed -i 's/#AllowTcpForwarding yes/AllowTcpForwarding yes/g' /etc/ssh/sshd_config
@@ -62,8 +62,7 @@ sudo mv k9s /usr/local/bin/
 ###
 cat <<EOF>> cluster.sample
 nodes:
-    - address: $EC2_PUBLIC_DNS
-      internal_address: $EC2_INT_ADDRESS
+    - address: $IP_ADDRESS
       user: ubuntu
       role:
         - controlplane
@@ -108,6 +107,6 @@ helm install cert-manager jetstack/cert-manager \
 sleep 20
 helm install rancher rancher-$RANCHER_REPO/rancher \
   --namespace cattle-system \
-  --set hostname=$EC2_PUBLIC_DNS \
+  --set hostname=$RANCHER_HOSTNAME \
   --version $RANCHER_VERSION
 
