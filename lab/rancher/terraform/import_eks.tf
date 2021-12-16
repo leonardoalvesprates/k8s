@@ -7,4 +7,7 @@ resource rancher2_cluster eks_import_01 {
     region = "us-east-1"
     imported = true
   }
+  depends_on = [
+    rancher2_cloud_credential.aws
+  ]
 }
