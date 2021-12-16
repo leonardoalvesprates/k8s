@@ -9,7 +9,6 @@ terraform {
 
 provider "rancher2" {
   api_url    = "https://lprates-lab.support.rancher.space"
-  access_key = var.rancher2_access_key
-  secret_key = var.rancher2_secret_key
+  token_key = var.rancher2_token_key
   bootstrap = false
 }
