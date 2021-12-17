@@ -7,5 +7,6 @@ resource rancher2_cluster eks_import_01 {
     name = var.aws_eks_name
     region = var.aws_region
     imported = true
+    service_role = var.aws_eks_service_role
   }
 }
