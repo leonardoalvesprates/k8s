@@ -5,7 +5,7 @@ variable rancher_url {
     default = "https://lprates-lab.support.rancher.space"
 }
 variable aws_eks_name {
-    default = "lprates-eks-lab"
+    default = "lprates-eks-lab2"
 }
 variable aws_region {
     default = "us-east-1"
