@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "rancher2" {
-  api_url    = "https://lprates-lab.support.rancher.space"
+  api_url    = var.rancher_url
   token_key = var.rancher2_token_key
   bootstrap = false
 }
