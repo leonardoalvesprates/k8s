@@ -12,7 +12,7 @@ resource rancher2_cluster eks_import_01 {
   }
   lifecycle {
     ignore_changes = [
-      eks_config_v2
+      eks_config_v2,
     ]
   }  
 }
