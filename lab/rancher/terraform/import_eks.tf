@@ -10,7 +10,4 @@ resource rancher2_cluster eks_import_01 {
       name = "ng01"
     }
   }
-#  lifecycle {
-#    ignore_changes = [eks_config_v2]
-#  }  
 }
