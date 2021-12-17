@@ -11,5 +11,5 @@ variable aws_region {
     default = "us-east-1"
 }
 variable aws_eks_service_role {
-    default = "eksctl-lramage-eks-010-nodegroup-NodeInstanceRole-1R9ZB5IXAMLZT"
+    default = "eks-worker-node"
 }
