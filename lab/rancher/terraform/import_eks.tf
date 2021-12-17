@@ -1,5 +1,5 @@
 resource rancher2_cluster eks_import_01 {
-  name = "eks_import_01"
+  name = "eks-import-01"
   description = "lprates lab environment"
   eks_config_v2 {
     cloud_credential_id = rancher2_cloud_credential.aws.id
