@@ -1,4 +1,4 @@
-resource rancher2_cluster eks_import_01 {
+resource "rancher2_cluster" "eks_import_01" {
   name = "importeks01"
   description = "lprates lab environment"
   eks_config_v2 {
