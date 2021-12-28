@@ -2,4 +2,4 @@ curl -sfL https://get.k3s.io | K3S_TOKEN=SECRET sh -s - --write-kubeconfig-mode 
 #
 curl -sfL https://get.k3s.io | K3S_TOKEN=SECRET sh -s - --server https://URL:6443
 #
-curl -sfL https://get.k3s.io | K3S_TOKEN=SECRET sh -s - --agent https://URL:6443 --token ${NODE_TOKEN}
+curl -sfL https://get.k3s.io | K3S_TOKEN=SECRET sh -s - agent --server https://URL:6443 --token ${NODE_TOKEN}
