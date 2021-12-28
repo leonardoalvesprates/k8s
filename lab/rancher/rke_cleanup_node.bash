@@ -8,3 +8,6 @@ for dir in $cleanupdirs; do
   echo "Removing $dir"
   rm -rf $dir
 done
+sudo iptables -F
+sudo iptables -t nat -F
+sudo systemctl restart docker
