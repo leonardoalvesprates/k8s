@@ -99,16 +99,10 @@ kubectl create namespace cattle-system
 kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.5.1/cert-manager.crds.yaml
 helm repo add jetstack https://charts.jetstack.io
 helm repo update
-helm install cert-manager jetstack/cert-manager \
-  --namespace cert-manager \
-  --create-namespace \
-  --version v1.5.1
+helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.5.1
 ####
 sleep 20
-helm install rancher rancher-$RANCHER_REPO/rancher \
-  --namespace cattle-system \
-  --set hostname=$RANCHER_HOSTNAME \
-  --version $RANCHER_VERSION
+helm install rancher rancher-$RANCHER_REPO/rancher --namespace cattle-system --set hostname=$RANCHER_HOSTNAME --version $RANCHER_VERSION
 
 
 #
