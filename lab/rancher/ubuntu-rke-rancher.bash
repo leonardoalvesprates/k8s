@@ -90,7 +90,7 @@ services:
 EOF
 envsubst < cluster.sample > cluster.yml
 ###
-rke up
+rke up --ignore-docker-version
 export KUBECONFIG=kube_config_cluster.yml
 source <(kubectl completion bash)
 kubectl get nodes
