@@ -60,7 +60,7 @@ tar xzf k9s_Linux_x86_64.tar.gz
 sudo mv k9s /usr/local/bin/
 
 ###
-cat <<EOF>> cluster.sample
+cat <<EOF> cluster.sample
 nodes:
     - address: $IP_ADDRESS
       user: ubuntu
