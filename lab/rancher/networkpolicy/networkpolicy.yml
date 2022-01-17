@@ -35,5 +35,5 @@ spec:
               number: 80
 #
 # kubectl -n default run -it --rm --restart=Never swiss-army-knife --image=rancherlabs/swiss-army-knife -- curl -kL -H 'Host: test.prates.lab' https://ec2-3-228-21-96.compute-1.amazonaws.com
-# kubectl -n default run -it --rm --restart=Never swiss-army-knife --image=rancherlabs/swiss-army-knife -- curl http://nginx.defaultA
+# kubectl -n default run -it --rm --restart=Never swiss-army-knife --image=rancherlabs/swiss-army-knife -- curl http://nginx.default
 #
