@@ -41,6 +41,6 @@ spec:
 
 #kubectl  run busybox --rm -i --image=busybox --restart=Never -- wget --spider --timeout=1 nginx
 
-# kubectl  create deployment web01 --image=leonardoalvesprates/web-first:v0.1
+# kubectl create deployment web01 --image=leonardoalvesprates/web-first:v0.1
 # kubectl expose deployment web01 --port=80 --target-port=8080
 # kubectl -n default run -i --rm --restart=Never swiss-army-knife --image=rancherlabs/swiss-army-knife -- curl -sv http://web01.default
