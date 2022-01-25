@@ -1,0 +1,25 @@
+apiVersion: management.cattle.io/v3
+globalRoleName: gr-5rp79
+kind: GlobalRoleBinding
+metadata:
+  annotations:
+    authz.management.cattle.io/crb-name: cattle-globalrolebinding-grb-ng7qd
+    cleanup.cattle.io/grbUpgradeCluster: "true"
+    field.cattle.io/creatorId: user-w6ntd
+    lifecycle.cattle.io/create.mgmt-auth-grb-controller: "true"
+  creationTimestamp: "2022-01-25T19:55:51Z"
+  finalizers:
+  - controller.cattle.io/mgmt-auth-grb-controller
+  generateName: grb-
+  generation: 1
+  labels:
+    cattle.io/creator: norman
+  name: grb-ng7qd
+  ownerReferences:
+  - apiVersion: management.cattle.io/v3
+    kind: GlobalRole
+    name: gr-5rp79
+    uid: d9a3c962-c056-42b6-9051-4063a858cb90
+  resourceVersion: "118969"
+  uid: 0ff49e81-c3e6-4e52-8893-23b7ba4ee829
+userName: u-q9wj6

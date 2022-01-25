@@ -1,0 +1,24 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: downstream-testloggin-user
+  annotations:
+    meta.helm.sh/release-name: rancher-monitoring
+    meta.helm.sh/release-namespace: cattle-monitoring-system
+  labels:
+    app: rancher-monitoring-operator
+    app.kubernetes.io/instance: rancher-monitoring
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: rancher-monitoring
+    app.kubernetes.io/version: 16.6.0
+    chart: rancher-monitoring-16.6.0
+    heritage: Helm
+    release: rancher-monitoring
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: u-q9wj6
+roleRef:
+  kind: ClusterRole
+  name: monitoring-admin
+  apiGroup: rbac.authorization.k8s.io
