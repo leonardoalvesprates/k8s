@@ -36,7 +36,10 @@ sudo sed -i 's/#AllowTcpForwarding yes/AllowTcpForwarding yes/g' /etc/ssh/sshd_c
 sudo systemctl restart sshd
 printf "${green}Loading br_netfilter...${normal} \n"
 sudo modprobe br_netfilter
-printf "${green}Add and loading net.bridge.bridge-nf-call-iptables=1 ${normal} \n"
+printf "${green}Setting and loading net.ipv4.ip_forward=1 ${normal} \n"
+sudo bash -c 'echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf'
+sudo sysctl -p /etc/sysctl.conf
+printf "${green}Setting and loading net.bridge.bridge-nf-call-iptables=1 ${normal} \n"
 sudo bash -c 'echo "net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf'
 sudo sysctl -p /etc/sysctl.conf
 printf "${green}Downloading and installing docker engine ${normal} \n"
