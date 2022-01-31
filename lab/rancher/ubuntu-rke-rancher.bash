@@ -115,3 +115,7 @@ helm install rancher rancher-$RANCHER_REPO/rancher --namespace cattle-system --s
 # helm install rancher rancher-stable/rancher --namespace cattle-system --set hostname=lprates-lab.support.rancher.space --set bootstrapPassword= --set ingress.tls.source=secret --version 2.6.3
 #
 
+#
+# helm get values rancher -n cattle-system > values.yml
+# helm upgrade -f values.yml rancher rancher-stable/rancher -n cattle-system --version 2.5.12
+#
