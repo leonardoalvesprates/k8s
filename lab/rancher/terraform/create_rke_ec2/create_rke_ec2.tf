@@ -2,8 +2,9 @@ resource "rancher2_node_template" "rke_template" {
   name = var.rke_node_template_name
   description = "lprates lab"
   amazonec2_config {
-    access_key = var.aws_access_key
-    secret_key = var.aws_secret_key
+    #access_key = var.aws_access_key
+    #secret_key = var.aws_secret_key
+    cloud_credential_id = rancher2_cloud_credential.aws.id
     ami = var.aws_ami
     region = var.aws_region
     security_group = [var.aws_nsg]
