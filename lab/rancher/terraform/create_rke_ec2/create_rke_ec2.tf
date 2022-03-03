@@ -11,6 +11,7 @@ resource "rancher2_node_template" "rke_template" {
     vpc_id = var.aws_vpc
     zone = var.aws_region
     instance_type = var.aws_instance_type
+    zone = var.aws_zone
   }
 }
 
