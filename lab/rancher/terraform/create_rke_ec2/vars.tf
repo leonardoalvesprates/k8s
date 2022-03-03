@@ -7,6 +7,9 @@ variable rancher_url {
 variable aws_region {
     default = "us-east-1"
 }
+variable rke_node_template_name{
+    default = "rke-ec2-template"
+}
 variable rke_cluster_name {
     default = "rke-ec2-downstream"
 }
@@ -21,4 +24,7 @@ variable aws_nsg {
 }
 variable aws_ami {
     default = "ami-04505e74c0741db8d"
+}
+variable aws_instance_type {
+    default = "t3a.large"
 }

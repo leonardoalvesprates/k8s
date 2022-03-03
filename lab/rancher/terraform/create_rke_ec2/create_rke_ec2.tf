@@ -1,5 +1,5 @@
-resource "rancher2_node_template" "rke_downstream" {
-  name = var.rke_cluster_name
+resource "rancher2_node_template" "rke_template" {
+  name = var.rke_node_template_name
   description = "lprates lab"
   amazonec2_config {
     access_key = var.aws_access_key
@@ -10,6 +10,7 @@ resource "rancher2_node_template" "rke_downstream" {
     subnet_id = var.aws_subnet
     vpc_id = var.aws_vpc
     zone = var.aws_region
+    instance_type = var.aws_instance_type
   }
 }
 
