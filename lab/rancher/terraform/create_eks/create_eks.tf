@@ -7,6 +7,7 @@ resource "rancher2_cluster" "eks_create_01" {
     region = var.aws_region
     imported = false
     public_access = true
+    kubernetes_version = "1.21"
     node_groups {
       name = "ng01"
     }
