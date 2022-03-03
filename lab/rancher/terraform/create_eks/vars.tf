@@ -8,5 +8,5 @@ variable aws_eks_name {
     default = "lprates-eks-mar22-3"
 }
 variable aws_region {
-    default = "us-east-1"
+    default = "sa-east-1"
 }
