@@ -23,7 +23,7 @@ variable aws_vpc {
     default = "vpc-e23ae898"
 }
 variable aws_nsg {
-    default = "sg-052c40e46fd744af9"
+    default = "all-open"
 }
 variable aws_ami {
     default = "ami-04505e74c0741db8d"
