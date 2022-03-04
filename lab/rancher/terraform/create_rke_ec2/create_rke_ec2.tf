@@ -27,7 +27,7 @@ resource "rancher2_cluster" "rke_ec2" {
     services {
       etcd {
         creation = "6h"
-        retention = "24h"
+        retention = "72h"
       }
     }
   }
