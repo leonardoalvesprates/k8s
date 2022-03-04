@@ -8,7 +8,7 @@ variable aws_region {
     default = "us-east-1"
 }
 variable aws_zone {
-    default = "us-east-1a"
+    default = "a"
 }
 variable rke_node_template_name{
     default = "rke-ec2-template"
