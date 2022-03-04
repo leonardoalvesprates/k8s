@@ -47,3 +47,7 @@ resource "rancher2_node_pool" "wk26" {
   etcd = false
   worker = true
 }
+
+output kube_config {
+  value = rancher2_cluster.rke_ec2.kube_config
+}
