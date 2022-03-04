@@ -27,6 +27,10 @@ resource "rancher2_cluster" "rke_ec2" {
     network {
       plugin = "canal"
     }
+    services {
+      etcd {
+        creation = "6h"
+        retention = "24h"
   }
 }
 
