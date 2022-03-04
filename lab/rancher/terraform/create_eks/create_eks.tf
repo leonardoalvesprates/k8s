@@ -9,6 +9,7 @@ resource "rancher2_cluster" "eks_create_01" {
     public_access = true
     kubernetes_version = "1.21"
     kms_key = var.aws_kms_key
+    secrets_encryption = true
     node_groups {
       name = "ng01"
     }
