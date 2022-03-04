@@ -5,7 +5,7 @@ resource "rancher2_node_template" "rke_template" {
     access_key = var.aws_access_key
     secret_key = var.aws_secret_key
     ami = var.aws_ami
-    region = var.aws_region
+    region = var.aws_zone
     security_group = [var.aws_nsg]
     subnet_id = var.aws_subnet
     vpc_id = var.aws_vpc
