@@ -13,7 +13,7 @@ resource "rancher2_node_template" "rke_template" {
     zone = var.aws_region
     instance_type = var.aws_instance_type
     root_size = "30"
-    zone = var.aws_zone
+    #zone = var.aws_zone
     iam_instance_profile = "rk-all-role"
     tags = [Owner,lprates]
   }
