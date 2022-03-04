@@ -26,7 +26,7 @@ variable aws_nsg {
     default = "all-open"
 }
 variable aws_ami {
-    default = "ami-04505e74c0741db8d"
+    default = "ami-01b996646377b6619"
 }
 variable aws_instance_type {
     default = "t3a.large"
