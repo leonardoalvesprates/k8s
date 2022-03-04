@@ -28,6 +28,8 @@ resource "rancher2_cluster" "rke_ec2" {
       etcd {
         creation = "6h"
         retention = "24h"
+      }
+    }
   }
 }
 
