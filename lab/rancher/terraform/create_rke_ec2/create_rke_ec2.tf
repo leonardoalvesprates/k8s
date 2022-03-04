@@ -2,6 +2,9 @@ resource "rancher2_node_template" "rke_template" {
   name = var.rke_node_template_name
   description = "lprates lab"
   cloud_credential_id = rancher2_cloud_credential.aws.id
+  engine_install_url = "https://releases.rancher.com/install-docker/20.10.sh"
+  driver = "amazonec2"
+  driver_id = "amazonec2"
   amazonec2_config {
     ami = var.aws_ami
     region = var.aws_region
@@ -16,7 +19,6 @@ resource "rancher2_node_template" "rke_template" {
     #keypair_name = "leonardo.prates-lab"
     #ssh_user = "ubuntu"
     #ssh_keypath = "./sshkey.pem"
-    engine_install_url = "https://releases.rancher.com/install-docker/20.10.sh"
   }
 }
 
