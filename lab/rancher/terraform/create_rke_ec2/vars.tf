@@ -5,7 +5,7 @@ variable rancher_url {
     default = "https://rancher26.prateslabs.com.br"
 }
 variable aws_region {
-    default = "us-east-1a"
+    default = "us-east-1"
 }
 variable aws_zone {
     default = "a"
