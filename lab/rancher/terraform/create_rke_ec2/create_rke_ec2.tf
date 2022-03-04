@@ -13,6 +13,9 @@ resource "rancher2_node_template" "rke_template" {
     root_size = "30"
     iam_instance_profile = "rk-all-role"
     tags = "Owner,lprates"
+    keypair_name = "leonardo.prates-lab"
+    ssh_user = "ubuntu"
+    ssh_keypath = "./sshkey.pem"
   }
 }
 
