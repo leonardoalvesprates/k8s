@@ -8,8 +8,8 @@ resource "rancher2_cluster" "eks_create_01" {
     imported = false
     public_access = true
     kubernetes_version = "1.21"
-    kms_key = aws_kms_key.kms01.key_id
-    secrets_encryption = true
+    #kms_key = aws_kms_key.kms01.key_id
+    #secrets_encryption = true
     node_groups {
       name = "ng01"
     }
