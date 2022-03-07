@@ -8,7 +8,7 @@ variable rancher_url {
 }
 
 variable aws_eks_name {
-    default = "lprates-eks-mar22-7"
+    default = "lprates-eks-mar22-7-t2"
 }
 
 variable aws_region {
