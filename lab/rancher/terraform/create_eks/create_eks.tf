@@ -12,7 +12,7 @@ resource "rancher2_cluster" "eks_create_01" {
     # kms_key = "alias/lprates-lab-mar-9-t3"
     # kms_key = aws_kms_key.kms01.key_id
     # kms_key = aws_kms_alias.kms_alias01.name
-    # secrets_encryption = true
+    secrets_encryption = true
     node_groups {
       name = "ng01"
     }
