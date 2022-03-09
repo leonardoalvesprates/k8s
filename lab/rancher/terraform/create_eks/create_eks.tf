@@ -9,9 +9,7 @@ resource "rancher2_cluster" "eks_create_01" {
     public_access = true
     kubernetes_version = "1.21"
     kms_key = "arn:aws:kms:sa-east-1:028473989100:alias/lprates-lab"
-    # kms_key = "alias/lprates-lab-mar-9-t3"
-    # kms_key = aws_kms_key.kms01.key_id
-    # kms_key = aws_kms_alias.kms_alias01.name
+    # kms_key = aws_kms_alias.kms_alias01.arn
     secrets_encryption = true
     node_groups {
       name = "ng01"
