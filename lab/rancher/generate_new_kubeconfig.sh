@@ -28,3 +28,7 @@ echo "  user:" >> new_kube_config.yml
 echo "    client-certificate-data: $(cat kube-admin.crt | base64 -w 0)" >> new_kube_config.yml
 echo "    client-key-data: $(cat kube-admin.key | base64 -w 0)" >> new_kube_config.yml
 echo "Done. New kube config file can be found at new_kube_config.yml"
+
+### kubectl + local CP/kubelet + jq
+# kubectl --kubeconfig $(docker inspect kubelet --format '{{ range .Mounts }}{{ if eq .Destination "/etc/kubernetes" }}{{ .Source }}{{ end }}{{ end }}')/ssl/kubecfg-kube-node.yaml get configmap -n kube-system full-cluster-state -o json | jq -r .data.\"full-cluster-state\" | jq -r .currentState.certificatesBundle.\"kube-admin\".config | sed -e "/^[[:space:]]*server:/ s_:.*_: \"https://127.0.0.1:6443\"_" > kubeconfig_admin.yaml
+###
