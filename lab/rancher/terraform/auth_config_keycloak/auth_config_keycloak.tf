@@ -7,4 +7,5 @@ resource "rancher2_auth_config_keycloak" "keycloak" {
   sp_key = "lab-key"
   uid_field = "lab-uid"
   user_name_field = "lab-user-field"
+  enabled = "false"
 }
