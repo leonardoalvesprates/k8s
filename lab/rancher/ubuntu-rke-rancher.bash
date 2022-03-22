@@ -112,10 +112,10 @@ helm install rancher rancher-$RANCHER_REPO/rancher --namespace cattle-system --s
 #
 # kubectl create namespace cattle-system
 # kubectl -n cattle-system create secret tls tls-rancher-ingress --cert=cert/fullchain1.pem --key=cert/privatekey.pem
-# helm install rancher rancher-stable/rancher --namespace cattle-system --set hostname=lprates-lab.support.rancher.space --set bootstrapPassword= --set ingress.tls.source=secret --version 2.6.3
+# helm install rancher rancher-stable/rancher --namespace cattle-system --set hostname=rancher26.prateslabs.com.br --set bootstrapPassword=**** --set ingress.tls.source=secret --version 2.6.3
 #
 
 #
 # helm get values rancher -n cattle-system > values.yml
-# helm upgrade -f values.yml rancher rancher-stable/rancher -n cattle-system --version 2.5.12
+# helm upgrade rancher rancher-stable/rancher -n cattle-system --values values.yml --version 2.5.11
 #
