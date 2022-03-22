@@ -1,0 +1,278 @@
+administrative: false
+apiVersion: management.cattle.io/v3
+builtin: false
+clusterCreatorDefault: false
+context: cluster
+description: null
+displayName: cluster-monitoring
+external: false
+hidden: false
+kind: RoleTemplate
+locked: false
+metadata:
+  annotations:
+    cleanup.cattle.io/rtUpgradeCluster: "true"
+    field.cattle.io/creatorId: user-wz6w2
+    lifecycle.cattle.io/create.mgmt-auth-roletemplate-lifecycle: "true"
+  creationTimestamp: "2022-03-22T17:52:47Z"
+  finalizers:
+  - controller.cattle.io/mgmt-auth-roletemplate-lifecycle
+  generateName: rt-
+  generation: 3
+  labels:
+    cattle.io/creator: norman
+  name: rt-slwdc
+  resourceVersion: "3308822"
+  uid: f42c2aa0-dce2-4595-a3cc-8083747de9ce
+projectCreatorDefault: false
+roleTemplateNames: []
+rules:
+- apiGroups:
+  - networking.k8s.io
+  resources:
+  - ingresses
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - endpoints
+  verbs:
+  - create
+  - delete
+  - get
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - services/finalizers
+  verbs:
+  - create
+  - delete
+  - get
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - services
+  verbs:
+  - create
+  - delete
+  - get
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - delete
+  - list
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - statefulsets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - alertmanagers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - prometheuses
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - prometheuses/finalizers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - alertmanagers/finalizers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - thanosrulers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - thanosrulers/finalizers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - servicemonitors
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - podmonitors
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - prometheusrules
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - podmonitors
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - probes
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - probes/finalizers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - alertmanagerconfigs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
