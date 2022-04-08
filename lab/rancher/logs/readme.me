@@ -1,0 +1,1 @@
+for FILE in $(ls *.tar.gz); do DIR=$(echo $FILE|sed 's/.tar.gz//'); mkdir $DIR; cd $_; tar xzvf ../$FILE; cd ..; done
