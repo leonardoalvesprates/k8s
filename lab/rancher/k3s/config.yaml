@@ -4,4 +4,5 @@ system-default-registry: "harbor1.prateslabs.com.br"
 
 
 # INSTALL_K3S_SKIP_DOWNLOAD=true CONFIG=/etc/rancher/k3s/config.yaml ./install.sh
+#
 # k3s server --debug
