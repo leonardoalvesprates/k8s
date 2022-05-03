@@ -1,4 +1,4 @@
-# kubectl create secret generic aws-s3 --from-literal=*** --from-literal=AWS_SECRET_ACCESS_KEY=*** -n longhorn-system
+# kubectl create secret generic aws-s3 --from-literal=AWS_ACCESS_KEY_ID=*** --from-literal=AWS_SECRET_ACCESS_KEY=*** -n longhorn-system
 # s3://<your-bucket-name>@<your-aws-region>/  || s3://lprates-lab@us-east-1/longhorn-backups/
 apiVersion: longhorn.io/v1beta1
 kind: Volume
