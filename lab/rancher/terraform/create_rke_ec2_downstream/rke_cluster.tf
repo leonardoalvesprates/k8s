@@ -12,4 +12,5 @@ resource "rancher2_cluster" "rke_ec2" {
       }
     }
   }
+  cluster_auth_endpoint {}
 }
