@@ -11,6 +11,9 @@ resource "rancher2_cluster" "rke_ec2" {
         retention = "72h"
       }
     }
+    ingress {
+      default_backend = "false"
+    }
   }
   cluster_auth_endpoint {}
 }
