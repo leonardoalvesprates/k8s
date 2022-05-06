@@ -1,3 +1,5 @@
+#install monitoring + longhorn 1.2.3 through UI
+
 #create 1000 LH volumes
 for VOL in $(seq 1 1000); do export VOL; envsubst < vols-1000.yml |kubectl apply -f -; done
 
@@ -12,4 +14,7 @@ kubectl delete pv $(kubectl get pv --no-headers -o custom-columns=":metadata.nam
 
 #delete all LH volumes
 kubectl -n longhorn-system delete volume $(kubectl -n longhorn-system get volumes --no-headers -o custom-columns=":metadata.name")
+
+#delete all default namespaced deployment
+kubectl -n default delete deploy $(kubectl -n default get deploy --no-headers -o custom-columns=":metadata.name")
 
