@@ -45,7 +45,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  label:
+  labels:
     app: web-$NR
   name: web-$NR
   namespace: default
