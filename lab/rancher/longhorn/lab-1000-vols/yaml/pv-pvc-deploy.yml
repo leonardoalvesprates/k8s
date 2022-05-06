@@ -1,0 +1,87 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    pv.kubernetes.io/bound-by-controller: "yes"
+  name: pv-$NR
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: pvc-$NR
+    namespace: default
+  csi:
+    driver: driver.longhorn.io
+    fsType: ext4
+    volumeAttributes:
+      diskSelector: ""
+      nodeSelector: ""
+      numberOfReplicas: "3"
+      staleReplicaTimeout: "20"
+    volumeHandle: vol-$NR
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: longhorn-static
+  volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-$NR
+  namespace: default
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: longhorn-static
+  volumeMode: Filesystem
+  volumeName: pv-$NR
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:                                                                                                                                                                                                          
+    workload.user.cattle.io/workloadselector: apps.deployment-default-web-first
+  name: web-$NR
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: apps.deployment-default-web-first
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        workload.user.cattle.io/workloadselector: apps.deployment-default-web-first
+    spec:
+      containers:
+      - image: leonardoalvesprates/web-first:v0.1
+        imagePullPolicy: Always
+        name: container-0
+        ports:
+        - containerPort: 8080
+          name: port
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /data
+          name: vol01
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        fsGroup: 1000
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: vol01
+        persistentVolumeClaim:
+          claimName: pvc-$NR

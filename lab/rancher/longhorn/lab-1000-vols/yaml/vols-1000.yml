@@ -1,0 +1,31 @@
+apiVersion: longhorn.io/v1beta1
+kind: Volume
+metadata:
+  labels:
+    longhornvolume: vol-$VOL
+    recurring-job-group.longhorn.io/default: enabled
+  name: vol-$VOL
+  namespace: longhorn-system
+spec:
+  Standby: false
+  accessMode: rwo
+  backingImage: ""
+  baseImage: ""
+  dataLocality: disabled
+  dataSource: ""
+  disableFrontend: false
+  diskSelector: []
+  encrypted: false
+  engineImage: rancher/mirrored-longhornio-longhorn-engine:v1.2.3
+  fromBackup: ""
+  frontend: blockdev
+  lastAttachedBy: ""
+  migratable: false
+  migrationNodeID: ""
+  nodeID: ""
+  nodeSelector: []
+  numberOfReplicas: 3
+  replicaAutoBalance: ignored
+  revisionCounterDisabled: false
+  size: "1073741824"
+  staleReplicaTimeout: 20
