@@ -4,7 +4,7 @@ metadata:
   name: default-backup
   namespace: longhorn-system
 spec:
-  cron: "* * * * ?"
+  cron: "*/5 * * * *"
   task: "backup"
   groups:
   - default

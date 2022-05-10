@@ -14,13 +14,18 @@ for I in $(cat xac); do kubectl -n longhorn-system patch volume $I -p '{"spec":{
 for I in $(cat xad); do kubectl -n longhorn-system patch volume $I -p '{"spec":{"nodeID":"wk4"}}' --type=merge; done
 for I in $(cat xae); do kubectl -n longhorn-system patch volume $I -p '{"spec":{"nodeID":"wk5"}}' --type=merge; done
 
+### create recurringJob - for each 5 minutes, retain 70, concurrency 50, default group
+kubectl apply -f recurringJob.yml
+
 
 
 
 
 ### workload steps
-### create 1000 pv, pvc and deployment attaching that
-for NR in $(seq 1 1000); do export NR; envsubst < pv-pvc-deploy.yml |kubectl apply -f -; done
+### create 300 pv, pvc and deployment attaching that
+for NR in $(seq 1 300); do export NR; envsubst < pv-pvc-deploy.yml |kubectl apply -f -; done
+
+
 
 
 
