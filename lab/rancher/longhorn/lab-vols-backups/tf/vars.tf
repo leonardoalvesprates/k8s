@@ -14,7 +14,7 @@ variable rke_node_template_name{
     default = "rke-ec2-template"
 }
 variable rke_cluster_name {
-    default = "rke-ec2-downstream"
+    default = "rke-ec2-longhorn-lab"
 }
 variable aws_subnet {
     default = "subnet-ab21ac85"
