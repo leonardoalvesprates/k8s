@@ -16,7 +16,7 @@ spec:
   disableFrontend: false
   diskSelector: []
   encrypted: false
-  engineImage: rancher/mirrored-longhornio-longhorn-engine:v1.2.3
+  engineImage: rancher/mirrored-longhornio-longhorn-engine:v1.2.4
   fromBackup: ""
   frontend: blockdev
   lastAttachedBy: ""
