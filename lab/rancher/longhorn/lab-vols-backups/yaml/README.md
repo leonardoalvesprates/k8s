@@ -36,7 +36,7 @@ kubectl -v 9 get backups.longhorn.io -n longhorn-system -o json 2>get-prior-dele
 
 * watch remaining backup by minute / before date/hour
 ``` 
-while true :; do kubectl -v 9 get backups.longhorn.io -n longhorn-system -o json 2>get-during-while.log   | jq ".items | .[] | select(.status.snapshotCreatedAt<\"2022-05-10T19\") | .metadata.name" |wc -l && date; sleep 60; done
+while true :; do kubectl -v 9 get backups.longhorn.io -n longhorn-system -o json 2>get-during-while.out   | jq ".items | .[] | select(.status.snapshotCreatedAt<\"2022-05-10T19\") | .metadata.name" |wc -l && date; sleep 60; done
 ```
 
 
