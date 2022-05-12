@@ -52,7 +52,7 @@ while true :; do kubectl -v 9 get backups.longhorn.io -n longhorn-system -o json
 ######### FUTURE Lab ###########
 * create some workload *
 * create 300 pv, pvc and deployment attaching that
-for NR in $(seq 1 300); do export NR; envsubst < pv-pvc-deploy.yml |kubectl apply -f -; done
+` for NR in $(seq 1 300); do export NR; envsubst < pv-pvc-deploy.yml |kubectl apply -f -; done `
 
 * delete everything
 * delete all default namespaced deployment
