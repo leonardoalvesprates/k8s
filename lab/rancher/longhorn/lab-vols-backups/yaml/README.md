@@ -1,7 +1,7 @@
 * install monitoring + longhorn 1.2.4 through UI
 * set LH backup endpoint + LH backup endpoint creds
 * set "Storage Over Provisioning Percentage" to 20000
-* delete all object storage from the endpoint previously
+* delete all object storage from the endpoint previously created by other labs
 
 * create 300 LH volumes
 ```
