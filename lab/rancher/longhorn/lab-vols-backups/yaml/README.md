@@ -23,6 +23,29 @@ for I in $(cat xae); do kubectl -n longhorn-system patch volume $I -p '{"spec":{
 kubectl apply -f recurringJob.yml
 ```
 
+* count the number of backups before date/hour
+``` 
+kubectl -v 9 get backups.longhorn.io -n longhorn-system -o json 2>get-error.out   | jq ".items | .[] | select(.status.snapshotCreatedAt<\"2022-05-10T19\") | .metadata.name" |wc -l && date
+``` 
+
+* delete backups before date/hour
+``` 
+kubectl -v 9 get backups.longhorn.io -n longhorn-system -o json 2>get-prior-delete-jq-select.out   | jq ".items | .[] | select(.status.snapshotCreatedAt<\"2022-05-10T19\") | .metadata.name"  | xargs -P 1 -n 1000 -r kubectl -v 9 delete backups.longhorn.io -n longhorn-system >>deleted-backups-list.out 2>delete-error.log
+```
+
+* watch remaining backup by minute / before date/hour
+``` 
+while true :; do kubectl -v 9 get backups.longhorn.io -n longhorn-system -o json 2>get-error-durring-while.log   | jq ".items | .[] | select(.status.snapshotCreatedAt<\"2022-05-10T19\") | .metadata.name" |wc -l && date; sleep 60; done
+```
+
+
+
+
+
+
+
+
+
 
 
 ######### FUTURE Lab ###########
