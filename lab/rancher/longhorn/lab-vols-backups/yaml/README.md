@@ -50,21 +50,21 @@ while true :; do kubectl -v 9 get backups.longhorn.io -n longhorn-system -o json
 
 
 ######### FUTURE Lab ###########
-### create some workload 
-### create 300 pv, pvc and deployment attaching that
+* create some workload 
+* create 300 pv, pvc and deployment attaching that
 for NR in $(seq 1 300); do export NR; envsubst < pv-pvc-deploy.yml |kubectl apply -f -; done
 
-### delete everything
-### delete all default namespaced deployment
+* delete everything
+* delete all default namespaced deployment
 kubectl -n default delete deploy $(kubectl -n default get deploy --no-headers -o custom-columns=":metadata.name")
 
-### delete all default namespaced pvc
+* delete all default namespaced pvc
 kubectl delete pvc $(kubectl get pvc --no-headers -o custom-columns=":metadata.name")
 
-### delete all pv
+* delete all pv
 kubectl delete pv $(kubectl get pv --no-headers -o custom-columns=":metadata.name")
 
-### delete all LH volumes
+* delete all LH volumes
 kubectl -n longhorn-system delete volume $(kubectl -n longhorn-system get volumes --no-headers -o custom-columns=":metadata.name")
 
 
