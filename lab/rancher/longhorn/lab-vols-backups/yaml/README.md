@@ -26,7 +26,7 @@ kubectl apply -f recurringJob.yml
 
 * count the number of backups before date/hour
 ``` 
-kubectl -v 9 get backups.longhorn.io -n longhorn-system -o json 2>get-error.out   | jq ".items | .[] | select(.status.snapshotCreatedAt<\"2022-05-10T19\") | .metadata.name" |wc -l && date
+kubectl -v 9 get backups.longhorn.io -n longhorn-system -o json 2>get-count-error.out   | jq ".items | .[] | select(.status.snapshotCreatedAt<\"2022-05-10T19\") | .metadata.name" |wc -l && date
 ``` 
 
 * delete backups before date/hour
