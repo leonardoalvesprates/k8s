@@ -22,10 +22,9 @@ echo 'listing pods and svc default namespace'
 echo
 kubectl -n default get pod,svc -o wide
 echo
-echo 'listing all pods default namespace'
-kubectl -n default get pod -o wide
 echo
 echo 'running some tests'
+echo
 for POD in $(kubectl -n default get pods -l name=overlaytest --no-headers -o custom-columns=":metadata.name")
 do
   echo $POD
