@@ -28,8 +28,8 @@ echo
 for POD in $(kubectl -n default get pods -l name=overlaytest --no-headers -o custom-columns=":metadata.name")
 do
   echo $POD
-  kubectl exec -it $POD -- nslookup web-first 
-  kubectl exec -it $POD -- curl http://web-first
+  kubectl -n default exec -it $POD -- nslookup web-first 
+  kubectl -n default exec -it $POD -- curl http://web-first
   echo
   echo
 done
