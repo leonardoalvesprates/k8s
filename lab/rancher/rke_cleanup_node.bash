@@ -8,7 +8,7 @@ for dir in $cleanupdirs; do
   echo "Removing $dir"
   sudo rm -rf $dir
 done
-# removing /opt/rke - snapshots
+# not removing /opt/rke - etcd snapshots
 sudo iptables -F
 sudo iptables -t nat -F
 sudo systemctl restart docker
