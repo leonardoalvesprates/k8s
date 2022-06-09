@@ -1,0 +1,6 @@
+#### /etc/rancher/rke2/config.yaml
+kubelet-arg:                               
+  - "container-log-max-files=5"            
+  - "container-log-max-size=10Mi" 
+etcd-snapshot-retention: "2"
+etcd-snapshot-schedule-cron: "*/1 * * * *"
