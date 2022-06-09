@@ -3,11 +3,12 @@
 green=$(tput setaf 2)
 normal=$(tput sgr0)
 
+printf " ####### This applies only to Ubuntu 20.04 + CertManager (not owned certs) ######"
 printf "RKE IP Adress/DNS address: "
 read IP_ADDRESS
 printf "Rancher hostname/URL: "
 read RANCHER_HOSTNAME
-printf "RKE Version (https://github.com/rancher/rke/releases) e,g v1.2.9: "
+printf "RKE Version (https://github.com/rancher/rke/releases) e.g v1.2.9: "
 read RKE_BIN_VERSION  
 printf "${green}Downloading and installing RKE binary...${normal}\n"
 curl -sLO https://github.com/rancher/rke/releases/download/$RKE_BIN_VERSION/rke_linux-amd64
@@ -23,6 +24,8 @@ printf "Rancher Repo (stable/latest): "
 read RANCHER_REPO     
 printf "Rancher version: "
 read RANCHER_VERSION
+printf "CertManager version (e.g. v1.5.1 - Rancher 2.5.x / v1.7.1 - Rancher 2.6.x): "
+read CERTMANAGER_VERSION
 
 export IP_ADDRESS
 export RKE_BIN_VERSION
@@ -100,10 +103,10 @@ kubectl get nodes
 ###
 helm repo add rancher-$RANCHER_REPO https://releases.rancher.com/server-charts/$RANCHER_REPO
 kubectl create namespace cattle-system
-kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.5.1/cert-manager.crds.yaml
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/$CERTMANAGER_VERSION/cert-manager.crds.yaml
 helm repo add jetstack https://charts.jetstack.io
 helm repo update
-helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.5.1
+helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version $CERTMANAGER_VERSION
 ####
 sleep 120
 helm install rancher rancher-$RANCHER_REPO/rancher --namespace cattle-system --set hostname=$RANCHER_HOSTNAME --version $RANCHER_VERSION
