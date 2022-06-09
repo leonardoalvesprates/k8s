@@ -4,3 +4,11 @@ kubelet-arg:
   - "container-log-max-size=10Mi" 
 etcd-snapshot-retention: "2"
 etcd-snapshot-schedule-cron: "*/1 * * * *"
+selinux: false
+write-kubeconfig-mode: "0600"
+kube-apiserver-arg:
+- "feature-gates=TTLAfterFinished=true"
+kube-controller-manager-arg:
+- "node-cidr-mask-size=22"
+- "pod-eviction-timeout=10s"
+- "feature-gates=TTLAfterFinished=true"
