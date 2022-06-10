@@ -3,7 +3,7 @@
 green=$(tput setaf 2)
 normal=$(tput sgr0)
 
-printf " ####### This applies only to Ubuntu 20.04 + CertManager (not owned certs) ######"
+printf " ####### This applies only to Ubuntu 20.04 + CertManager (not owned certs) ###### \n"
 printf "RKE IP Adress/DNS address: "
 read IP_ADDRESS
 printf "Rancher hostname/URL: "
