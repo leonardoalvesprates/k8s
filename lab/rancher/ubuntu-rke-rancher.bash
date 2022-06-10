@@ -33,6 +33,7 @@ export K8S_VERSION
 export RANCHER_REPO
 export RANCHER_VERSION
 export RANCHER_HOSTNAME
+export CERTMANAGER_VERSION
 
 printf "${green}Changing SSH AllowTcpForwarding to yes...${normal} \n"
 sudo sed -i 's/#AllowTcpForwarding yes/AllowTcpForwarding yes/g' /etc/ssh/sshd_config
