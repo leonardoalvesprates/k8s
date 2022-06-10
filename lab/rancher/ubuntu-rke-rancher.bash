@@ -76,7 +76,7 @@ nodes:
         - etcd
         - worker
 kubernetes_version: $K8S_VERSION
-cluster_name: rkeranchercluster
+#cluster_name: rkeranchercluster
 services:
   etcd:
     snapshot: true
