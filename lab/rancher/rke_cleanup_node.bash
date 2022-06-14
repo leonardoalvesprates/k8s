@@ -1,5 +1,5 @@
-# https://github.com/rancherlabs/support-kb/wiki/One-Liners#cleanup-script
 #!/bin/bash
+#https://github.com/rancherlabs/support-kb/wiki/One-Liners#cleanup-script
 sudo docker rm -f $(docker ps -qa)
 sudo docker rmi -f $(docker images -q)
 sudo docker volume rm $(docker volume ls -q)
