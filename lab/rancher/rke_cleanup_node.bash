@@ -1,3 +1,4 @@
+# https://github.com/rancherlabs/support-kb/wiki/One-Liners#cleanup-script
 #!/bin/bash
 sudo docker rm -f $(docker ps -qa)
 sudo docker rmi -f $(docker images -q)
