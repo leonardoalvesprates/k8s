@@ -1,4 +1,17 @@
+#single cp
 curl -sfL https://get.rke2.io | INSTALL_RKE2_VERSION=v1.20.11+rke2r2 sh -
+
+# ha
+curl -sfL https://get.rke2.io | INSTALL_RKE2_VERSION=v1.20.11+rke2r2 sh -
+curl -sfL https://get.rke2.io | sh -
+
+#settings
+mkdir -p /etc/rancher/rke2/
+vi /etc/rancher/rke2/config.yaml
+tls-san:
+  - rke2ha.prateslabs.com.br
+
+
 systemctl enable rke2-server.service
 systemctl start rke2-server.service
 journalctl -u rke2-server -f
@@ -6,11 +19,21 @@ export KUBECONFIG=/etc/rancher/rke2/rke2.yaml
 cp /var/lib/rancher/rke2/bin/kubectl /usr/local/bin/
 source <(kubectl completion bash)
 
-###
+# token
 /var/lib/rancher/rke2/server/node-token
-###
 
+# additional server nodes
+mkdir -p /etc/rancher/rke2/
+vim /etc/rancher/rke2/config.yaml
+server: https://rke2ha.prateslabs.com.br:9345
+token: <token from server node>
+tls-san:
+  - rke2ha.prateslabs.com.br
+
+
+#agent
 curl -sfL https://get.rke2.io | INSTALL_RKE2_VERSION=v1.20.11+rke2r2 INSTALL_RKE2_TYPE="agent" sh -
+curl -sfL https://get.rke2.io | INSTALL_RKE2_TYPE="agent" sh -
 systemctl enable rke2-agent.service
 mkdir -p /etc/rancher/rke2/
 
