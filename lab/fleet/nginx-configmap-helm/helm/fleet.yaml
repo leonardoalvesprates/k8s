@@ -8,4 +8,4 @@ helm:
     replicas: 4
 dependsOn:
 #  - name: lab-manifests
-  - lab-fleet-nginx-configmap-helm-manifests 
+  - lab-lab-fleet-nginx-configmap-helm-manifests 
