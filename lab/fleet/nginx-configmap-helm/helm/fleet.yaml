@@ -7,4 +7,4 @@ helm:
   values:
     replicas: 4
 dependsOn:
-  - t1-lab-fleet-nginx-configmap-helm-manifests 
+  - name: t1-lab-fleet-nginx-configmap-helm-manifests 
