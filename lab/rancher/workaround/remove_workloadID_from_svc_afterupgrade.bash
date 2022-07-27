@@ -3,7 +3,7 @@
 
 DATE=$(date +%m%d%H%M)
 SAVEFILE=save_svc_state_$DATE.yml
-REMOVESELECTOR=remove_wrong_selector_$DATE.yml
+RECREATE=recreate_without_wrong_selector_$DATE.yml
 
 kubectl get svc -A -o wide | \
 grep 'workloadID_' | \
@@ -14,10 +14,18 @@ kubectl -n $NS get svc $NAME -o yaml >> $SAVEFILE ; \
 echo "---" >> $SAVEFILE; \
 done
 
+kubectl delete -f $SAVEFILE
+
 sed '/workloadID_/d' $SAVEFILE | \
+sed '/^  creationTimestamp:/d' | \
+sed '/^  resourceVersion:/d' | \
 sed '/^  uid:/d' | \
+sed '/^  clusterIP:/d' | \
+sed '/^  clusterIPs:/d' | \
+sed '/^  - 10.43./d' | \
+sed '/^status:/d' | \
+sed '/^  loadBalancer:/d' | \
 sed '/last-applied-configuration:/d' | \
 sed '/^      {"apiVersion":"v1/d' \
-> $REMOVESELECTOR
-
-kubectl apply -f $REMOVESELECTOR
+> $RECREATE
+kubectl apply -f $RECREATE
