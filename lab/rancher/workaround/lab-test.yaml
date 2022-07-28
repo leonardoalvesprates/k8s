@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test1
+  template:
+    metadata:
+      labels:
+        app: test1
+    spec:
+      containers:
+      - name: test
+        image: leonardoalvesprates/web-first:v0.1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test1
+  annotations:
+    field.cattle.io/targetWorkloadIds: '["deployment:default:test1"]'
+spec:
+  selector:
+    app: test1
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test1
+spec:
+  rules:
+  - host: test1.prateslabs.com.br
+    http:
+      paths:
+      - backend:
+          serviceName: test1
+          servicePort: 8080
+        pathType: ImplementationSpecific
