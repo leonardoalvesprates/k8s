@@ -13,8 +13,6 @@ do
 
   if [ ! -z "$FILTER_WORKLOADID" ]
   then
-    # techo "Found the following services which has workloadID_ as selector"
-    # kubectl -n $_namespace get svc -o wide|awk '$7 ~ /workloadID/ {print $0}'
     _svcs_workloadid=$(kubectl -n $_namespace get svc -o wide|awk '$7 ~ /workloadID/ {print $1}')
 
     for _service in $_svcs_workloadid
@@ -35,13 +33,18 @@ do
            _podlabeled=$(kubectl -n $_namespace get po --no-headers --show-labels | awk "/$_selector/"'{print $6}'| sed 's/\,/ /g')
            for _podlabel in $_podlabeled
            do
-             if [[ "$_podlabel" != *"workloadID"* ]]
+             if [[ "$_podlabel" != *"workloadID"* ]] && [[ "$_podlabel" != *"pod-template-hash"* ]]
              then
-             _newselectors=echo $($(echo $_podlabel)","$(echo _newselectors))
+             _newselectors=$(echo $(echo $_podlabel)","$(echo $_newselectors)|sed 's/,$//g')
+
              fi
            done
            printf "${yellow}Service _service new selector(s)${normal}\\n"
            printf "$_newselectors"
+
+           #kubectl -n $_namespace patch svc $_service -p '{"spec":{"selector":{"app":"test1"}}}' --type merge
+           #kubectl patch svc test1 -p '{"spec":{"selector":{"app":"test1"}}}' --type merge
+
          fi
 
        done
