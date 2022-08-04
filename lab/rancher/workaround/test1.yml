@@ -7,10 +7,12 @@ spec:
   selector:
     matchLabels:
       app: test1
+      xyz: xyz
   template:
     metadata:
       labels:
         app: test1
+        xyz: xyz
     spec:
       containers:
       - name: test
@@ -25,6 +27,7 @@ metadata:
 spec:
   selector:
     app: test1
+    xyz: xyz
   ports:
   - port: 8080
     protocol: TCP
