@@ -42,8 +42,10 @@ do
            printf "${yellow}Service _service new selector(s)${normal}\\n"
            printf "$_newselectors"
 
-           #kubectl -n $_namespace patch svc $_service -p '{"spec":{"selector":{"app":"test1"}}}' --type merge
-           #kubectl patch svc test1 -p '{"spec":{"selector":{"app":"test1"}}}' --type merge
+           # kubectl -n $_namespace patch svc $_service -p '{"spec":{"selector":{"app":"test1"}}}' --type merge
+           # kubectl patch svc test1 -p '{"spec":{"selector":{"app":"test1"}}}' --type merge
+           # kubectl annotate svc test1 field.cattle.io/targetWorkloadIds-
+           # kubectl annotate svc test1 kubectl.kubernetes.io/last-applied-configuration-
 
          fi
 
