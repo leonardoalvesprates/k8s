@@ -40,7 +40,7 @@ do
              fi
            done
            printf "${yellow}Service _service new selector(s)${normal}\\n"
-           printf "$_newselectors"
+           printf "$_newselectors \n"
 
            kubectl -n $_namespace annotate svc $_service field.cattle.io/targetWorkloadIds-
            kubectl -n $_namespace annotate svc $_service kubectl.kubernetes.io/last-applied-configuration-
@@ -51,6 +51,7 @@ do
            do
              kubectl -n $_namespace patch svc $_service -p '{"spec":{"selector":{"'${VAR}'":"'${VALUE}'"}}}'
            done
+           printf "${red}... Defined new service selector(s) ...${normal}\\n"
            kubectl -n $_namespace get svc $_service -o wide
 
          fi
