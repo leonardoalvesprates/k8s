@@ -42,10 +42,16 @@ do
            printf "${yellow}Service _service new selector(s)${normal}\\n"
            printf "$_newselectors"
 
-           # kubectl -n $_namespace patch svc $_service -p '{"spec":{"selector":{"app":"test1"}}}' --type merge
-           # kubectl patch svc test1 -p '{"spec":{"selector":{"app":"test1"}}}' --type merge
-           # kubectl annotate svc test1 field.cattle.io/targetWorkloadIds-
-           # kubectl annotate svc test1 kubectl.kubernetes.io/last-applied-configuration-
+           kubectl -n $_namespace annotate svc $_service field.cattle.io/targetWorkloadIds-
+           kubectl -n $_namespace annotate svc $_service kubectl.kubernetes.io/last-applied-configuration-
+           kubectl -n $_namespace patch svc $_service --type=json -p '[{"op":"remove","path":"/spec/selector"}]'
+           
+           echo $_newselectors | sed 's/,/ /g' | tr ' ' '\n' | awk -F "=" '{print $1, $2}' | \
+           while read VAR VALUE
+           do
+             kubectl -n $_namespace patch svc $_service -p '{"spec":{"selector":{"'${VAR}'":"'${VALUE}'"}}}'
+           done
+           kubectl -n $_namespace get svc $_service -o wide
 
          fi
 
