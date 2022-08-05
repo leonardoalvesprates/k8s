@@ -45,18 +45,22 @@ do
            done
            printf "${yellow}Service $_service new selector(s)${normal}\\n"
            printf "$_newselectors \n"
-
-          #  kubectl -n $_namespace annotate svc $_service field.cattle.io/targetWorkloadIds-
-          #  kubectl -n $_namespace annotate svc $_service kubectl.kubernetes.io/last-applied-configuration-
-          #  kubectl -n $_namespace patch svc $_service --type=json -p '[{"op":"remove","path":"/spec/selector"}]'
-           
-          #  echo $_newselectors | sed 's/,/ /g' | tr ' ' '\n' | awk -F "=" '{print $1, $2}' | \
-          #  while read VAR VALUE
-          #  do
-          #    kubectl -n $_namespace patch svc $_service -p '{"spec":{"selector":{"'${VAR}'":"'${VALUE}'"}}}'
-          #  done
-          #  printf "${red}... Defined new service selector(s) ...${normal}\\n"
-          #  kubectl -n $_namespace get svc $_service -o wide
+           printf "${normal} \n"
+           printf "${red}Would like update selector(2) $_newselectors to the $_service ? (Y/N): ${normal}"
+           read _answer
+           if [[ "$_answer" == "Y" ]]
+           then
+             kubectl -n $_namespace get svc $_service -o yaml > bkp-$_date_$_namespace_$_service.yml
+            #  kubectl -n $_namespace annotate svc $_service field.cattle.io/targetWorkloadIds-
+            #  kubectl -n $_namespace annotate svc $_service kubectl.kubernetes.io/last-applied-configuration-
+            #  kubectl -n $_namespace patch svc $_service --type=json -p '[{"op":"remove","path":"/spec/selector"}]'
+            #  echo $_newselectors | sed 's/,/ /g' | tr ' ' '\n' | awk -F "=" '{print $1, $2}' | \
+            #  while read VAR VALUE
+            #  do
+            #    kubectl -n $_namespace patch svc $_service -p '{"spec":{"selector":{"'${VAR}'":"'${VALUE}'"}}}'
+            #  done
+            #  printf "${red}... Defined new service selector(s) ...${normal}\\n"
+            #  kubectl -n $_namespace get svc $_service -o wide
 
          fi
 
