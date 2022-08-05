@@ -4,6 +4,7 @@ green=$(tput setaf 2)
 red=$(tput setaf 1)
 yellow=$(tput setaf 3)
 normal=$(tput sgr0)
+DATE=$(date +%Y%m%d%H%M)
 
 for _namespace in `kubectl get ns --no-headers -o custom-columns=":.metadata.name"`
 do
@@ -50,17 +51,17 @@ do
            read _answer
            if [[ "$_answer" == "Y" ]]
            then
-             kubectl -n $_namespace get svc $_service -o yaml > bkp-$_date_$_namespace_$_service.yml
-            #  kubectl -n $_namespace annotate svc $_service field.cattle.io/targetWorkloadIds-
+             kubectl -n $_namespace get svc $_service -o yaml > bkp-$DATE-$_namespace-$_service.yml
+             kubectl -n $_namespace annotate svc $_service field.cattle.io/targetWorkloadIds-
             #  kubectl -n $_namespace annotate svc $_service kubectl.kubernetes.io/last-applied-configuration-
-            #  kubectl -n $_namespace patch svc $_service --type=json -p '[{"op":"remove","path":"/spec/selector"}]'
-            #  echo $_newselectors | sed 's/,/ /g' | tr ' ' '\n' | awk -F "=" '{print $1, $2}' | \
-            #  while read VAR VALUE
-            #  do
-            #    kubectl -n $_namespace patch svc $_service -p '{"spec":{"selector":{"'${VAR}'":"'${VALUE}'"}}}'
-            #  done
-            #  printf "${red}... Defined new service selector(s) ...${normal}\\n"
-            #  kubectl -n $_namespace get svc $_service -o wide
+             kubectl -n $_namespace patch svc $_service --type=json -p '[{"op":"remove","path":"/spec/selector"}]'
+             echo $_newselectors | sed 's/,/ /g' | tr ' ' '\n' | awk -F "=" '{print $1, $2}' | \
+             while read VAR VALUE
+             do
+               kubectl -n $_namespace patch svc $_service -p '{"spec":{"selector":{"'${VAR}'":"'${VALUE}'"}}}'
+             done
+             printf "${red}... Defined new service selector(s) ...${normal}\\n"
+             kubectl -n $_namespace get svc $_service -o wide
            fi
 
          fi
