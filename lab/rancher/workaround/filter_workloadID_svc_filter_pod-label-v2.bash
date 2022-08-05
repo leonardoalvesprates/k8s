@@ -46,7 +46,7 @@ do
            printf "${yellow}Service $_service new selector(s)${normal}\\n"
            printf "$_newselectors \n"
            printf "${normal} \n"
-           printf "${red}Would like update selector(2) $_newselectors to the $_service ? (Y/N): ${normal}"
+           printf "${red}Would like update selector(s) $_newselectors to the $_service ? (Y/N): ${normal}"
            read _answer
            if [[ "$_answer" == "Y" ]]
            then
@@ -61,6 +61,7 @@ do
             #  done
             #  printf "${red}... Defined new service selector(s) ...${normal}\\n"
             #  kubectl -n $_namespace get svc $_service -o wide
+           fi
 
          fi
 
