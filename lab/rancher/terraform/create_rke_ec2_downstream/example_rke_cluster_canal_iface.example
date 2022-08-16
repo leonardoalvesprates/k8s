@@ -18,6 +18,16 @@ resource "rancher2_cluster" "rke_ec2" {
     ingress {
       default_backend = "false"
     }
+    addons = <<-EOT
+       ---
+       apiVersion: v1
+       kind: ConfigMap
+       metadata:
+         name: kubernetes-services-endpoint
+         namespace: kube-system
+       data:
+         IP_AUTODETECTION_METHOD: interface=ens5
+    EOT 
   }
   cluster_auth_endpoint {}
 }
