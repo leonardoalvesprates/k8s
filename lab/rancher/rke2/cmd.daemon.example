@@ -5,6 +5,7 @@ curl -sfL https://get.rke2.io | INSTALL_RKE2_VERSION=v1.20.11+rke2r2 sh -
 curl -sfL https://get.rke2.io | INSTALL_RKE2_VERSION=v1.20.11+rke2r2 sh -
 curl -sfL https://get.rke2.io | sh -
 
+
 #settings
 mkdir -p /etc/rancher/rke2/
 vi /etc/rancher/rke2/config.yaml

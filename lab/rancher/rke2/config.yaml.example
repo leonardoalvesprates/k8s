@@ -12,3 +12,10 @@ kube-controller-manager-arg:
 - "node-cidr-mask-size=22"
 - "pod-eviction-timeout=10s"
 - "feature-gates=TTLAfterFinished=true"
+cni:
+  - multus
+  - canal
+cluster-cidr: 172.20.0.0/16
+service-cidr: 172.30.0.0/16
+cluster-dns: 172.30.0.10
+service-node-port-range: 30000-32767
