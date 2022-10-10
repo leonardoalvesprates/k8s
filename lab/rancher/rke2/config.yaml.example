@@ -1,4 +1,6 @@
 #### /etc/rancher/rke2/config.yaml
+tls-san:
+  - rke2ha.prateslabs.com.br
 kubelet-arg:                               
   - "container-log-max-files=5"            
   - "container-log-max-size=10Mi" 
