@@ -2,23 +2,38 @@ apiVersion: apps/v1
 kind: Deployment                                                                                                                                                                                                                                                                
 metadata:                                                                                                                                                                                                                                                                       
   labels:                                                                                                                                                                                                                                                                       
-    app: nginx                                                                                                                                                                                                                                                                  
-  name: nginx                                                                                                                                                                                                                                                                   
+    app: example                                                                                                                                                                                                                                                                  
+  name: example                                                                                                                                                                                                                                                                   
   namespace: default                                                                                                                                                                                                                                                            
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx
+      app: example
   template:
     metadata:
       labels:
-        app: nginx
+        app: example
     spec:
       containers:
-      - image: nginx
-        name: container-0
+      - image: quay.io/brancz/prometheus-example-app:v0.3.0
+        name: example
         ports:
-        - containerPort: 80
-          name: port
+        - containerPort: 8080
+          name: example
           protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: example
+  namespace: default
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: example
+  sessionAffinity: None
+  type: ClusterIP
