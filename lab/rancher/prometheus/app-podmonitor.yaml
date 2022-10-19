@@ -1,0 +1,11 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: nginx
+  namespace: default
+spec:
+  podMetricsEndpoints:
+  - targetPort: 80
+  selector:
+    matchLabels:
+      app: nginx
