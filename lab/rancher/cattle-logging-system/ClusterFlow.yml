@@ -1,0 +1,12 @@
+apiVersion: logging.banzaicloud.io/v1beta1
+kind: ClusterFlow
+metadata:
+  name: elastic-lab
+  namespace: cattle-logging-system
+spec:
+  filters:
+  - tag_normaliser: {}
+  globalOutputRefs:
+  - elasticlab
+  match:
+  - select: {}

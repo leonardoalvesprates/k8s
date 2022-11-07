@@ -1,0 +1,24 @@
+apiVersion: logging.banzaicloud.io/v1beta1
+kind: ClusterOutput
+metadata:
+  name: elasticlab
+  namespace: cattle-logging-system
+spec:
+  elasticsearch:
+    ca_file:
+      mountFrom:
+        secretKeyRef:
+          key: elasticlabca.pem
+          name: elasticlabca
+    host: 172.31.72.10
+    index_name: rke1
+    password:
+      valueFrom:
+        secretKeyRef:
+          key: pas
+          name: elasticpass
+    port: 9200
+    scheme: https
+    ssl_verify: false
+    ssl_version: TLSv1_2
+    user: elastic
