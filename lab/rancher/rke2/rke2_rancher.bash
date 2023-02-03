@@ -3,21 +3,24 @@
 green=$(tput setaf 2)
 normal=$(tput sgr0)
 
-printf " ####### This applies only to CertManager (not owned certs) ###### \n"
+printf "${green} ####### This applies only to CertManager (not owned certs) ######${normal} \n"
 curl -s https://raw.githubusercontent.com/rancher/rke/release/v1.3/data/data.json| grep v1.2 | grep rke2 |sed 's/"//g'|awk '{print $2}'|sort
 printf "\n"
-printf "RKE2 Version: "
+printf "${green}RKE2 Version: ${normal}"
 read RKE2_VERSION
-printf "Rancher hostname/URL: "
+printf "${green}TLS SANS: ${normal}"
+read RKE2_TLS_SANS
+printf "${green}Rancher hostname/URL: ${normal}"
 read RANCHER_HOSTNAME
-printf "Rancher Repo (stable/latest): "
+printf "${green}Rancher Repo (stable/latest): ${normal}"
 read RANCHER_REPO     
-printf "Rancher version: "
+printf "${green}Rancher version: ${normal}"
 read RANCHER_VERSION
-printf "CertManager version (e.g. v1.5.1 - Rancher 2.5.x / v1.7.1 - Rancher 2.6.x): "
+printf "${green}CertManager version (e.g. v1.5.1 - Rancher 2.5.x / v1.7.1 - Rancher 2.6.x): ${normal}"
 read CERTMANAGER_VERSION
 
 export RKE2_VERSION
+export RKE2_TLS_SANS
 export RANCHER_REPO
 export RANCHER_VERSION
 export RANCHER_HOSTNAME
@@ -26,6 +29,13 @@ export CERTMANAGER_VERSION
 printf "${green}Installing RKE2...${normal} \n"
 curl -sfL https://get.rke2.io | INSTALL_RKE2_VERSION=$RKE2_VERSION sh -
 systemctl enable rke2-server
+
+mkdir -p /etc/rancher/rke2/
+cat <<EOF > config.sample
+tls-san:
+  - $RKE2_TLS_SANS
+EOF
+envsubst < config.sample > /etc/rancher/rke2/config.yaml
 systemctl start rke2-server
 
 printf "${green}Downloading Helm 3.11.0...${normal} \n"
