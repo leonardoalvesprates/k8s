@@ -38,6 +38,9 @@ EOF
 envsubst < config.sample > /etc/rancher/rke2/config.yaml
 systemctl start rke2-server
 
+printf "${green}Sleeping 60s ...${normal} \n"
+sleep 60
+
 printf "${green}Downloading Helm 3.11.0...${normal} \n"
 curl -sLO https://get.helm.sh/helm-v3.11.0-linux-amd64.tar.gz
 tar xzf helm-v3.11.0-linux-amd64.tar.gz
