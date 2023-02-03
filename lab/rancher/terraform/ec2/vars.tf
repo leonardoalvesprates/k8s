@@ -22,7 +22,7 @@ variable aws_ami {
 }
 
 variable aws_instance_type {
-    default = "t3a.large"
+    default = "t3a.xlarge"
 }
 
 variable key_name {
