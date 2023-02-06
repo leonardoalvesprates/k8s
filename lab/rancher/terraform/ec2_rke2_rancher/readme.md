@@ -1,4 +1,4 @@
-### run on docker
+### run terraform and ansible in docker
 
 +++ export the variables with a space at the begging of the prompt, that won't get in your shell history
 ```
@@ -52,7 +52,7 @@ docker run --rm -v $(pwd):/lab \
 -e RANCHER_URL=$RANCHER_URL \
 -e ANSIBLE_HOST_KEY_CHECKING=False \
 leonardoalvesprates/tfansible ansible-playbook -i $PUBLIC_IP, --private-key ./private_key_ssh.pem ansible/rancher.yaml
-
+```
 
 ### destroy
 ```
