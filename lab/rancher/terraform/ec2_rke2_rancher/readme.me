@@ -7,15 +7,15 @@
 cd tf/
 docker run --rm -v $(pwd):/lab leonardoalvesprates/tfansible terraform init
 
-docker run --rm -v $(pwd):/lab \ 
-  -e TF_VAR_aws_access_key="${AWSKEY}" \
-  -e TF_VAR_aws_secret_key="${AWSSECRET}" \
-  leonardoalvesprates/tfansible terraform plan
+docker run --rm -v $(pwd):/lab \
+-e TF_VAR_aws_access_key="${AWSKEY}" \
+-e TF_VAR_aws_secret_key="${AWSSECRET}" \
+leonardoalvesprates/tfansible terraform plan
 
 docker run --rm -v $(pwd):/lab \
-  -e TF_VAR_aws_access_key="${AWSKEY}" \
-  -e TF_VAR_aws_secret_key="${AWSSECRET}" \
-  leonardoalvesprates/tfansible terraform apply -auto-approve
+-e TF_VAR_aws_access_key="${AWSKEY}" \
+-e TF_VAR_aws_secret_key="${AWSSECRET}" \
+leonardoalvesprates/tfansible terraform apply -auto-approve
 
 docker run --rm -v $(pwd):/lab leonardoalvesprates/tfansible terraform output -raw private_key_ssh > private_key_ssh.pem 
 docker run --rm -v $(pwd):/lab leonardoalvesprates/tfansible terraform output -raw instance_public_ip > instance_public_ip 
@@ -28,23 +28,24 @@ export PUBLIC_IP=$(cat instance_public_ip)
 curl -s https://raw.githubusercontent.com/rancher/rke/release/v1.3/data/data.json| grep v1.2 | grep rke2 |sed 's/"//g'|awk '{print $2}'|sort
 
 export RKE2_VERSION=""
+
 docker run --rm -v $(pwd):/lab \
-  -e PUBLIC_IP=$PUBLIC_IP \
-  -e RKE2_VERSION=$RKE2_VERSION \
-  -e ANSIBLE_HOST_KEY_CHECKING=False \
-  leonardoalvesprates/tfansible ansible-playbook -i $PUBLIC_IP, --private-key ./private_key_ssh.pem ansible/rke2.yaml
+-e PUBLIC_IP=$PUBLIC_IP \
+-e RKE2_VERSION=$RKE2_VERSION \
+-e ANSIBLE_HOST_KEY_CHECKING=False \
+leonardoalvesprates/tfansible ansible-playbook -i $PUBLIC_IP, --private-key ./private_key_ssh.pem ansible/rke2.yaml
 
 export RANCHER_REPO=""      ### (stable/latest)
 export RANCHER_VERSION=""
 export RANCHER_URL=""
 
 docker run --rm -v $(pwd):/lab \
-  -e PUBLIC_IP=$PUBLIC_IP \
-  -e RANCHER_REPO=stable \
-  -e RANCHER_VERSION=2.6.10 \
-  -e RANCHER_URL=rke2.prateslabs.com.br \
-  -e ANSIBLE_HOST_KEY_CHECKING=False \
-  leonardoalvesprates/tfansible ansible-playbook -i $PUBLIC_IP, --private-key ./private_key_ssh.pem ansible/rancher.yaml
+-e PUBLIC_IP=$PUBLIC_IP \
+-e RANCHER_REPO=stable \
+-e RANCHER_VERSION=2.6.10 \
+-e RANCHER_URL=rke2.prateslabs.com.br \
+-e ANSIBLE_HOST_KEY_CHECKING=False \
+leonardoalvesprates/tfansible ansible-playbook -i $PUBLIC_IP, --private-key ./private_key_ssh.pem ansible/rancher.yaml
 
 
 #destroy
