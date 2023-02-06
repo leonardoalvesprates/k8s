@@ -26,7 +26,7 @@ cp instance_public_ip private_key_ssh.pem ../ && cd ..
 export PUBLIC_IP=$(cat instance_public_ip)
 ```
 
-++++ choose RKE2 version
+++++ choose and set RKE2 version
 ```
 curl -s https://raw.githubusercontent.com/rancher/rke/release/v1.3/data/data.json| grep v1.2 | grep rke2 |sed 's/"//g'|awk '{print $2}'|sort
 
@@ -37,7 +37,10 @@ docker run --rm -v $(pwd):/lab \
 -e RKE2_VERSION=$RKE2_VERSION \
 -e ANSIBLE_HOST_KEY_CHECKING=False \
 leonardoalvesprates/tfansible ansible-playbook -i $PUBLIC_IP, --private-key ./private_key_ssh.pem ansible/rke2.yaml
+```
 
++++ choose and set rancher repo, version and URL
+```
 export RANCHER_REPO=""      ### (stable/latest)
 export RANCHER_VERSION=""
 export RANCHER_URL=""
