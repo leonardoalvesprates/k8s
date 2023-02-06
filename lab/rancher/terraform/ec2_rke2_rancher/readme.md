@@ -36,7 +36,7 @@ cp instance_public_ip private_key_ssh.pem ../
 cd ..
 ```
 
-+++ set files pérmissions
++++ changing files prrmissions
 ```
 sudo chown $USER: instance_public_ip private_key_ssh.pem 
 sudo chmod 600 instance_public_ip private_key_ssh.pem
