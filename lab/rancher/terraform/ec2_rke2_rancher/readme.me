@@ -1,9 +1,11 @@
-# run on docker
+#### run on docker
 
 +++ export the variables with a space at the begging of the prompt, that won't get in your shell history
-
+```
  export AWSKEY="<VALUE>"
  export AWSSECRET="<VALUE>"
+
+```
 cd tf/
 docker run --rm -v $(pwd):/lab leonardoalvesprates/tfansible terraform init
 
@@ -23,6 +25,7 @@ docker run --rm -v $(pwd):/lab leonardoalvesprates/tfansible terraform output -r
 sudo chown $USER: instance_public_ip private_key_ssh.pem
 cp instance_public_ip private_key_ssh.pem ../ && cd ..
 export PUBLIC_IP=$(cat instance_public_ip)
+```
 
 #choose RKE2 version
 curl -s https://raw.githubusercontent.com/rancher/rke/release/v1.3/data/data.json| grep v1.2 | grep rke2 |sed 's/"//g'|awk '{print $2}'|sort
@@ -41,9 +44,9 @@ export RANCHER_URL=""
 
 docker run --rm -v $(pwd):/lab \
 -e PUBLIC_IP=$PUBLIC_IP \
--e RANCHER_REPO=stable \
--e RANCHER_VERSION=2.6.10 \
--e RANCHER_URL=rke2.prateslabs.com.br \
+-e RANCHER_REPO=$RANCHER_REPO \
+-e RANCHER_VERSION=$RANCHER_VERSION \
+-e RANCHER_URL=$RANCHER_URL \
 -e ANSIBLE_HOST_KEY_CHECKING=False \
 leonardoalvesprates/tfansible ansible-playbook -i $PUBLIC_IP, --private-key ./private_key_ssh.pem ansible/rancher.yaml
 
