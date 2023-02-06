@@ -31,8 +31,7 @@ leonardoalvesprates/tfansible terraform apply -auto-approve
 ```
 docker run --rm -v $(pwd):/lab leonardoalvesprates/tfansible terraform output -raw private_key_ssh > private_key_ssh.pem 
 docker run --rm -v $(pwd):/lab leonardoalvesprates/tfansible terraform output -raw instance_public_ip > instance_public_ip 
-sudo chown $USER: instance_public_ip private_key_ssh.pem
-cp instance_public_ip private_key_ssh.pem
+cp instance_public_ip private_key_ssh.pem ../ 
 cd ..
 ```
 
