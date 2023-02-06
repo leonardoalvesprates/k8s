@@ -6,10 +6,19 @@
  export AWSSECRET="<VALUE>"
 cd tf/
 docker run --rm -v $(pwd):/lab leonardoalvesprates/tfansible terraform init
-docker run --rm -v $(pwd):/lab -e TF_VAR_aws_access_key="${AWSKEY}" -e TF_VAR_aws_secret_key="${AWSSECRET}" leonardoalvesprates/tfansible terraform plan
-docker run --rm -v $(pwd):/lab -e TF_VAR_aws_access_key="${AWSKEY}" -e TF_VAR_aws_secret_key="${AWSSECRET}" leonardoalvesprates/tfansible terraform apply -auto-approve
-docker run --rm -v $(pwd):/lab -e TF_VAR_aws_access_key="${AWSKEY}" -e TF_VAR_aws_secret_key="${AWSSECRET}" leonardoalvesprates/tfansible terraform output -raw private_key_ssh > private_key_ssh.pem 
-docker run --rm -v $(pwd):/lab -e TF_VAR_aws_access_key="${AWSKEY}" -e TF_VAR_aws_secret_key="${AWSSECRET}" leonardoalvesprates/tfansible terraform output -raw instance_public_ip > instance_public_ip 
+
+docker run --rm -v $(pwd):/lab \ 
+  -e TF_VAR_aws_access_key="${AWSKEY}" \
+  -e TF_VAR_aws_secret_key="${AWSSECRET}" \
+  leonardoalvesprates/tfansible terraform plan
+
+docker run --rm -v $(pwd):/lab \
+  -e TF_VAR_aws_access_key="${AWSKEY}" \
+  -e TF_VAR_aws_secret_key="${AWSSECRET}" \
+  leonardoalvesprates/tfansible terraform apply -auto-approve
+
+docker run --rm -v $(pwd):/lab leonardoalvesprates/tfansible terraform output -raw private_key_ssh > private_key_ssh.pem 
+docker run --rm -v $(pwd):/lab leonardoalvesprates/tfansible terraform output -raw instance_public_ip > instance_public_ip 
 
 sudo chown $USER: instance_public_ip private_key_ssh.pem
 cp instance_public_ip private_key_ssh.pem ../ && cd ..
