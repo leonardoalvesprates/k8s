@@ -57,6 +57,9 @@ leonardoalvesprates/tfansible ansible-playbook -i $PUBLIC_IP, --private-key ./pr
 ### destroy
 ```
 cd tf/
-docker run --rm -v $(pwd):/lab -e TF_VAR_aws_access_key="${AWSKEY}" -e TF_VAR_aws_secret_key="${AWSSECRET}" leonardoalvesprates/tfansible terraform destroy -auto-approve
+docker run --rm -v $(pwd):/lab \
+-e TF_VAR_aws_access_key="${AWSKEY}" \
+-e TF_VAR_aws_secret_key="${AWSSECRET}" \
+leonardoalvesprates/tfansible terraform destroy -auto-approve
 ```
 
