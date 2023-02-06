@@ -41,12 +41,14 @@ cd ..
 curl -s https://raw.githubusercontent.com/rancher/rke/release/v1.3/data/data.json| grep v1.2 | grep rke2 |sed 's/"//g'|awk '{print $2}'|sort
 ```
 
-+++ set rke2 version and install
++++ set rke2 version 
 ```
 export RKE2_VERSION=""
+```
 
++++ install RKE2
+```
 export PUBLIC_IP=$(cat instance_public_ip)
-
 docker run --rm -v $(pwd):/lab \
 -e PUBLIC_IP=$PUBLIC_IP \
 -e RKE2_VERSION=$RKE2_VERSION \
@@ -59,7 +61,10 @@ leonardoalvesprates/tfansible ansible-playbook -i $PUBLIC_IP, --private-key ./pr
 export RANCHER_REPO=""      ### (stable/latest)
 export RANCHER_VERSION=""
 export RANCHER_URL=""
+```
 
++++ install rancher
+```
 docker run --rm -v $(pwd):/lab \
 -e PUBLIC_IP=$PUBLIC_IP \
 -e RANCHER_REPO=$RANCHER_REPO \
