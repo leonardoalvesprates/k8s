@@ -5,7 +5,6 @@
  export AWSKEY="<VALUE>"
  export AWSSECRET="<VALUE>"
 
-```
 cd tf/
 docker run --rm -v $(pwd):/lab leonardoalvesprates/tfansible terraform init
 
