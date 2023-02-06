@@ -1,6 +1,7 @@
 ### run terraform and ansible in docker
 
 +++ (pinned prefix, NSG and AWS Zone tf/vars.tf)
+
 +++ export the variables with a space at the begging of the prompt, that won't get in your shell history
 
 ```
@@ -34,6 +35,13 @@ docker run --rm -v $(pwd):/lab leonardoalvesprates/tfansible terraform output -r
 cp instance_public_ip private_key_ssh.pem ../ 
 cd ..
 ```
+
++++ set files pérmissions
+```
+sudo chown $USER: instance_public_ip private_key_ssh.pem 
+sudo chmod 600 instance_public_ip private_key_ssh.pem
+```
+
 
 +++ list RKE2 versions
 ```
