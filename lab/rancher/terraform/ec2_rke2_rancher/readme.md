@@ -30,11 +30,11 @@ leonardoalvesprates/tfansible terraform apply -auto-approve
 docker run --rm -v $(pwd):/lab leonardoalvesprates/tfansible terraform output -raw private_key_ssh > private_key_ssh.pem 
 docker run --rm -v $(pwd):/lab leonardoalvesprates/tfansible terraform output -raw instance_public_ip > instance_public_ip 
 sudo chown $USER: instance_public_ip private_key_ssh.pem
-cp instance_public_ip private_key_ssh.pem ../ && cd ..
-export PUBLIC_IP=$(cat instance_public_ip)
+cp instance_public_ip private_key_ssh.pem
+cd ..
 ```
 
-+++ listRKE2 versions
++++ list RKE2 versions
 ```
 curl -s https://raw.githubusercontent.com/rancher/rke/release/v1.3/data/data.json| grep v1.2 | grep rke2 |sed 's/"//g'|awk '{print $2}'|sort
 ```
@@ -42,6 +42,8 @@ curl -s https://raw.githubusercontent.com/rancher/rke/release/v1.3/data/data.jso
 +++ set rke2 version and install
 ```
 export RKE2_VERSION=""
+
+export PUBLIC_IP=$(cat instance_public_ip)
 
 docker run --rm -v $(pwd):/lab \
 -e PUBLIC_IP=$PUBLIC_IP \
