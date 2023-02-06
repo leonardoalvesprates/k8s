@@ -1,8 +1,17 @@
+resource "tls_private_key" "global_key" {
+  algorithm = "ED25519"
+}
+
+resource "aws_key_pair" "key_pair" {
+  key_name_prefix = "${var.prefix}-key_pair"
+  public_key      = tls_private_key.global_key.public_key_openssh
+}
+
 resource "aws_instance" "instance" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.aws_instance_type
 
-  key_name        = var.key_name
+  key_name        = aws_key_pair.key_pair.key_name
   security_groups = ["${var.aws_nsg}"]
 
   root_block_device {
@@ -10,11 +19,10 @@ resource "aws_instance" "instance" {
   }
 
   tags = {
-    Name = "quicklab-lp"
+    Name = "${var.prefix}-quicklab"
     Owner = "lprates"
   }
 }
-
 
 data "aws_ami" "ubuntu" {
   most_recent = true
@@ -30,3 +38,6 @@ data "aws_ami" "ubuntu" {
     values = ["hvm"]
   }
 }
+
+
+

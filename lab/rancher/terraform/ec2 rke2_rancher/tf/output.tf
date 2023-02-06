@@ -10,4 +10,8 @@ output "instance_private_ip" {
     value = aws_instance.instance.private_ip
 }
 
-
+output "private_key_ssh" {
+  value       = tls_private_key.global_key.private_key_openssh
+  description = "private_key_ssh"
+  sensitive   = true
+}

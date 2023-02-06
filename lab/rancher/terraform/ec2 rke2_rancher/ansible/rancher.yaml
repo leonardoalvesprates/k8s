@@ -1,0 +1,8 @@
+---
+- name: Install Rancher
+  hosts: all
+  remote_user: ubuntu
+  become: yes
+
+  roles:
+  - rancher

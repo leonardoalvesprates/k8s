@@ -1,0 +1,40 @@
+- name: copy kubectl /usr/local/bin
+  shell: |
+    cp /var/lib/rancher/rke2/bin/kubectl /usr/local/bin/
+
+- name: copy rke2.yaml
+  args:
+    warn: false
+  shell: |
+    mkdir -p /root/.kube
+    cp /etc/rancher/rke2/rke2.yaml /root/.kube/config
+
+- name: install helm binary
+  args:
+    warn: false
+  shell: |
+    curl -sLO https://get.helm.sh/helm-v3.11.0-linux-amd64.tar.gz
+    tar xzf helm-v3.11.0-linux-amd64.tar.gz
+    chmod 755 linux-amd64/helm
+    mv linux-amd64/helm /usr/local/bin/helm
+
+- name: Addind cert-manager repo
+  shell: |
+    helm repo add jetstack https://charts.jetstack.io
+
+- name: Helm installing cert-manater v1.7.1
+  shell: |
+    kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.7.1/cert-manager.crds.yaml
+    helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.7.1
+
+- name: Adding rancher helm repo
+  shell: |
+    helm repo add rancher-'{{ lookup('env', 'RANCHER_REPO') }}' https://releases.rancher.com/server-charts/'{{ lookup('env', 'RANCHER_REPO') }}'
+
+- name: Creating cattle-system namespace
+  shell: |
+    kubectl create namespace cattle-system
+
+- name: Helm install Rancher
+  shell: |
+    helm install rancher rancher-'{{ lookup('env', 'RANCHER_REPO') }}'/rancher --namespace cattle-system --set hostname='{{ lookup('env', 'RANCHER_URL') }}' --version '{{ lookup('env', 'RANCHER_VERSION') }}'
