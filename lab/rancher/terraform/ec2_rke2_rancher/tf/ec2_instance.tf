@@ -20,7 +20,7 @@ resource "aws_instance" "instance" {
 
   tags = {
     Name = "${var.prefix}-quicklab"
-    Owner = "lprates"
+    Owner = var.prefix
   }
 }
 

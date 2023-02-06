@@ -1,6 +1,8 @@
 ### run terraform and ansible in docker
 
++++ (pinned prefix, NSG and AWS Zone tf/vars.tf)
 +++ export the variables with a space at the begging of the prompt, that won't get in your shell history
+
 ```
  export AWSKEY="<VALUE>"
  export AWSSECRET="<VALUE>"
