@@ -1,4 +1,4 @@
-#### run on docker
+### run on docker
 
 +++ export the variables with a space at the begging of the prompt, that won't get in your shell history
 ```
@@ -26,7 +26,8 @@ cp instance_public_ip private_key_ssh.pem ../ && cd ..
 export PUBLIC_IP=$(cat instance_public_ip)
 ```
 
-#choose RKE2 version
+++++ choose RKE2 version
+```
 curl -s https://raw.githubusercontent.com/rancher/rke/release/v1.3/data/data.json| grep v1.2 | grep rke2 |sed 's/"//g'|awk '{print $2}'|sort
 
 export RKE2_VERSION=""
@@ -50,9 +51,9 @@ docker run --rm -v $(pwd):/lab \
 leonardoalvesprates/tfansible ansible-playbook -i $PUBLIC_IP, --private-key ./private_key_ssh.pem ansible/rancher.yaml
 
 
-#destroy
-
+### destroy
+```
 cd tf/
 docker run --rm -v $(pwd):/lab -e TF_VAR_aws_access_key="${AWSKEY}" -e TF_VAR_aws_secret_key="${AWSSECRET}" leonardoalvesprates/tfansible terraform destroy -auto-approve
-
+```
 
