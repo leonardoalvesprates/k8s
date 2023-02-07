@@ -18,6 +18,7 @@ docker run --rm -v $(pwd):/lab \
 -e TF_VAR_aws_access_key="${AWSKEY}" \
 -e TF_VAR_aws_secret_key="${AWSSECRET}" \
 leonardoalvesprates/tfansible terraform plan
+
 ```
 
 +++ terraform apply
@@ -26,6 +27,7 @@ docker run --rm -v $(pwd):/lab \
 -e TF_VAR_aws_access_key="${AWSKEY}" \
 -e TF_VAR_aws_secret_key="${AWSSECRET}" \
 leonardoalvesprates/tfansible terraform apply -auto-approve
+
 ```
 
 +++ copy of instance public ip and private ssh key
