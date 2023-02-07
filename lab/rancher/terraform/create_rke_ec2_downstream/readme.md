@@ -1,4 +1,4 @@
-### run terraform and ansible in docker
+### run terraform in docker
 
 +++ (a lot of pinned set, take look at vars.tf)
 
