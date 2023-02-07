@@ -16,3 +16,7 @@
   systemd:
     name: rke2-server
     state: started
+
+- name: Sleeping 120s
+  shell: |
+    sleep 120

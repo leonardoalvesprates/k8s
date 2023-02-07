@@ -68,7 +68,7 @@ leonardoalvesprates/tfansible ansible-playbook -i $PUBLIC_IP, --private-key ./pr
 
 ```
 
-+++ choose and set rancher repo, version and URL - install
++++ choose and set rancher repo, version and URL
 ```
 export RANCHER_REPO=""      ### (stable/latest)
 export RANCHER_VERSION=""
