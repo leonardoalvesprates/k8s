@@ -36,6 +36,7 @@ docker run --rm -v $(pwd):/lab leonardoalvesprates/tfansible terraform output -r
 docker run --rm -v $(pwd):/lab leonardoalvesprates/tfansible terraform output -raw instance_public_ip > instance_public_ip 
 cp instance_public_ip private_key_ssh.pem ../ 
 cd ..
+
 ```
 
 +++ changing files prrmissions
@@ -48,6 +49,7 @@ sudo chmod 600 instance_public_ip private_key_ssh.pem
 +++ list RKE2 versions
 ```
 curl -s https://raw.githubusercontent.com/rancher/rke/release/v1.3/data/data.json| grep v1.2 | grep rke2 |sed 's/"//g'|awk '{print $2}'|sort
+
 ```
 
 +++ choose and set rke2 version 
@@ -63,6 +65,7 @@ docker run --rm -v $(pwd):/lab \
 -e RKE2_VERSION=$RKE2_VERSION \
 -e ANSIBLE_HOST_KEY_CHECKING=False \
 leonardoalvesprates/tfansible ansible-playbook -i $PUBLIC_IP, --private-key ./private_key_ssh.pem ansible/rke2.yaml
+
 ```
 
 +++ choose and set rancher repo, version and URL - install
@@ -81,6 +84,7 @@ docker run --rm -v $(pwd):/lab \
 -e RANCHER_URL=$RANCHER_URL \
 -e ANSIBLE_HOST_KEY_CHECKING=False \
 leonardoalvesprates/tfansible ansible-playbook -i $PUBLIC_IP, --private-key ./private_key_ssh.pem ansible/rancher.yaml
+
 ```
 
 ### destroy
@@ -90,5 +94,6 @@ docker run --rm -v $(pwd):/lab \
 -e TF_VAR_aws_access_key="${AWSKEY}" \
 -e TF_VAR_aws_secret_key="${AWSSECRET}" \
 leonardoalvesprates/tfansible terraform destroy -auto-approve
+
 ```
 
