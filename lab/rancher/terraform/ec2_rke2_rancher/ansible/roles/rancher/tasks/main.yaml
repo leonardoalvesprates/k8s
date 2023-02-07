@@ -21,20 +21,35 @@
 - name: Addind cert-manager repo
   shell: |
     helm repo add jetstack https://charts.jetstack.io
+  register: command_output
+- debug:
+    var: command_output.stdout_lines
 
 - name: Helm installing cert-manater v1.7.1
   shell: |
     kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.7.1/cert-manager.crds.yaml
     helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.7.1
+  register: command_output
+- debug:
+    var: command_output.stdout_lines
 
 - name: Adding rancher helm repo
   shell: |
     helm repo add rancher-'{{ lookup('env', 'RANCHER_REPO') }}' https://releases.rancher.com/server-charts/'{{ lookup('env', 'RANCHER_REPO') }}'
+  register: command_output
+- debug:
+    var: command_output.stdout_lines
 
 - name: Creating cattle-system namespace
   shell: |
     kubectl create namespace cattle-system
+  register: command_output
+- debug:
+    var: command_output.stdout_lines
 
 - name: Helm install Rancher
   shell: |
     helm install rancher rancher-'{{ lookup('env', 'RANCHER_REPO') }}'/rancher --namespace cattle-system --set hostname='{{ lookup('env', 'RANCHER_URL') }}' --version '{{ lookup('env', 'RANCHER_VERSION') }}'
+  register: command_output
+- debug:
+    var: command_output.stdout_lines

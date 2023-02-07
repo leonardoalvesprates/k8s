@@ -3,6 +3,9 @@
     warn: false
   shell: |
     curl -sfL https://get.rke2.io | INSTALL_RKE2_VERSION='{{ lookup('env', 'RKE2_VERSION') }}' sh -
+  register: command_output
+- debug:
+    var: command_output.stdout_lines
 
 - name: Enable rke2-server
   systemd:
