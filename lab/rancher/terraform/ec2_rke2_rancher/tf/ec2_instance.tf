@@ -3,7 +3,7 @@ resource "tls_private_key" "global_key" {
 }
 
 resource "aws_key_pair" "key_pair" {
-  key_name_prefix = "${var.prefix}-key_pair"
+  key_name_prefix = "${var.prefix}-"
   public_key      = tls_private_key.global_key.public_key_openssh
 }
 
@@ -19,7 +19,7 @@ resource "aws_instance" "instance" {
   }
 
   tags = {
-    Name = "${var.prefix}-quicklab"
+    Name = "${var.prefix}-${random_string.random.result}"
     Owner = var.prefix
   }
 }
