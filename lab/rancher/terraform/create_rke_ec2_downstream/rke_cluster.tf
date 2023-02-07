@@ -1,8 +1,8 @@
 resource "rancher2_cluster" "rke_ec2" {
   name = var.rke_cluster_name
-  description = "lprates lab"
+  description = "rke downstream lab"
   rke_config {
-    kubernetes_version = "v1.20.15-rancher1-3"
+    kubernetes_version = var.kubernetes_version
     network {
       plugin = "canal"
     }
