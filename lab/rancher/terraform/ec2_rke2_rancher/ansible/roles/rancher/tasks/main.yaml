@@ -36,9 +36,12 @@
 - debug:
     var: command_output.stdout_lines
 
+- name: Sleeping 120s
+  wait_for:
+    timeout: 120
+
 - name: Helm install Rancher
   shell: |
-    sleep 120
     helm install rancher rancher-'{{ lookup('env', 'RANCHER_REPO') }}'/rancher --namespace cattle-system --set hostname='{{ lookup('env', 'RANCHER_URL') }}' --version '{{ lookup('env', 'RANCHER_VERSION') }}'
   register: command_output
 - debug:

@@ -18,14 +18,14 @@
     state: started
 
 - name: Sleeping 120s
-  shell: |
-    sleep 120
+  wait_for:
+    timeout: 120
 
-- name: copy kubectl /usr/local/bin
+- name: copy kubectl to /usr/local/bin/
   shell: |
     cp /var/lib/rancher/rke2/bin/kubectl /usr/local/bin/
 
-- name: copy rke2.yaml
+- name: copy rke2.yaml to /root/.kube/config
   args:
     warn: false
   shell: |
