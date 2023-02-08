@@ -70,9 +70,9 @@ leonardoalvesprates/tfansible ansible-playbook -i $PUBLIC_IP, --private-key ./pr
 
 +++ choose and set rancher repo, version and URL
 ```
-export RANCHER_REPO=""      ### (stable/latest)
-export RANCHER_VERSION=""
-export RANCHER_URL=""
+export RANCHER_REPO=""      ### stable or latest
+export RANCHER_VERSION=""   ### e.g. 2.6.9, 2.7.1, 2.6.3
+export RANCHER_URL=""       ### that can be ec2 public IPv4 DNS (the terraform output of instance_public_dns from the terraform apply above)
 ```
 
 +++ install rancher

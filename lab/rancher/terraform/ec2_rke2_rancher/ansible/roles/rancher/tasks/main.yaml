@@ -1,14 +1,3 @@
-- name: copy kubectl /usr/local/bin
-  shell: |
-    cp /var/lib/rancher/rke2/bin/kubectl /usr/local/bin/
-
-- name: copy rke2.yaml
-  args:
-    warn: false
-  shell: |
-    mkdir -p /root/.kube
-    cp /etc/rancher/rke2/rke2.yaml /root/.kube/config
-
 - name: install helm binary
   args:
     warn: false
