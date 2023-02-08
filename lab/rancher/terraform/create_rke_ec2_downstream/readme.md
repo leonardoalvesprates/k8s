@@ -6,8 +6,8 @@
 ```
  export AWSKEY="<VALUE>"
  export AWSSECRET="<VALUE>"
- export RANCHER_URL="<VALUE>"  ### e.g. https://rancher.lab
- export RANCHER_TOKEN_KEY="<VALUE>"
+ export RANCHER_URL="<VALUE>"            ### the rancher URL - e.g. https://<RANCHER_URL>
+ export RANCHER_TOKEN_KEY="<VALUE>"      ### rancher admin bearer token (User Avatar > API & Keys from the User Settings menu in the upper-right.)
 ```
 
 +++ terraform init and plan
@@ -34,7 +34,7 @@ leonardoalvesprates/tfansible terraform apply -auto-approve
 
 ```
 
-+++ copy of kubeconfig
++++ copy of kubeconfig (need to run tf apply again after the downstream finish its provisioning)
 ```
 docker run --rm -v $(pwd):/lab leonardoalvesprates/tfansible terraform output -raw kube_config > kube_config.yaml 
 
