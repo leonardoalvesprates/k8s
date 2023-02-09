@@ -15,4 +15,7 @@ resource "rancher2_node_template" "rke_template" {
     iam_instance_profile = var.iam_profile
     tags = "Owner,${var.prefix}"
   }
+  depends_on = [
+  rancher2_cloud_credential.aws,
+  ]
 }

@@ -48,6 +48,12 @@ variable iam_profile {
     default = "rk-all-role"
 }
 
+resource "random_string" "random" {
+  length  = 3
+  special = false
+  upper   = false
+}
+
 variable kubernetes_version {
     default = "v1.23.15-rancher1-1"
 }
