@@ -7,4 +7,4 @@ do
 done
 
 # error: resource(s) were provided, but no name was specified
-# This is expeded if the token doesn't match the defined creationTimestamp
+# This is expected if the token doesn't match the defined creationTimestamp
