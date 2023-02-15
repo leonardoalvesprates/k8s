@@ -9,7 +9,7 @@ resource "rancher2_node_pool" "cp26" {
   worker = false
 
   depends_on = [
-  rancher2_node_template.rke_template,
+  rancher2_node_template.rke_template
   ]
 }
 
@@ -24,6 +24,6 @@ resource "rancher2_node_pool" "wk26" {
   worker = true
 
   depends_on = [
-  rancher2_node_template.rke_template,
+  rancher2_node_template.rke_template
   ]
 }

@@ -16,6 +16,6 @@ resource "rancher2_node_template" "rke_template" {
     tags = "Owner,${var.prefix}"
   }
   depends_on = [
-  rancher2_cloud_credential.aws,
+  rancher2_cloud_credential.aws
   ]
 }
