@@ -1,6 +1,6 @@
 ### run terraform and ansible in docker
 
-+++ (pinned prefix, NSG and AWS Region tf/vars.tf)
++++ (pinned prefix, NSG and AWS Region tf/vars.tf - must put some string at prefix variable)
 
 +++ export the variables with a space at the begging of the prompt, that won't get that in your shell history
 

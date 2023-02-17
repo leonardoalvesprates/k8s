@@ -1,6 +1,6 @@
 ### run terraform in docker
 
-+++ (a lot of pinned set, take look at vars.tf)
++++ (a lot of pinned set, take look at vars.tf - must put some string at prefix variable)
 
 +++ export the variables with a space at the begging of the prompt, that won't get that in your shell history
 ```
