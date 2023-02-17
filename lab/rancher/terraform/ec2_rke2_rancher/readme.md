@@ -36,15 +36,9 @@ docker run --rm -v $(pwd):/lab leonardoalvesprates/tfansible terraform output -r
 docker run --rm -v $(pwd):/lab leonardoalvesprates/tfansible terraform output -raw instance_public_ip > instance_public_ip 
 cp instance_public_ip private_key_ssh.pem ../ 
 cd ..
+chmod 600 instance_public_ip private_key_ssh.pem
 
 ```
-
-+++ changing files prrmissions
-```
-sudo chown $USER: instance_public_ip private_key_ssh.pem 
-sudo chmod 600 instance_public_ip private_key_ssh.pem
-```
-
 
 +++ list RKE2 versions
 ```
