@@ -41,7 +41,7 @@ variable aws_instance_type {
 }
 
 variable prefix {
-    default = "lprates"
+    default = ""
 }
 
 variable iam_profile {

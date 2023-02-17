@@ -15,7 +15,7 @@ variable aws_instance_type {
 
 variable prefix {
   type    = string
-  default = "lprates"
+  default = ""
 }
 
 resource "random_string" "random" {

@@ -36,7 +36,7 @@ variable kubernetes_version {
 }
 
 variable prefix {
-    default = "lprates"
+    default = ""
 }
 
 resource "random_string" "random" {
