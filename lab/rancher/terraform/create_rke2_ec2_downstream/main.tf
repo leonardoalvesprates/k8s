@@ -8,6 +8,7 @@ resource "rancher2_machine_config_v2" "machine" {
     subnet_id      = var.aws_subnet
     vpc_id         = var.aws_vpc
     zone           = var.aws_zone
+    root_size      = "50"
     iam_instance_profile = var.iam_profile
   }
 }
