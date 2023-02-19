@@ -11,10 +11,9 @@
 
 +++ terraform init and plan
 ```
-cd tf/
-docker run --rm -v $(pwd):/lab leonardoalvesprates/tfansible terraform init
+docker run --rm -v $(pwd)/tf:/lab leonardoalvesprates/tfansible terraform init
 
-docker run --rm -v $(pwd):/lab \
+docker run --rm -v $(pwd)/tf:/lab \
 -e TF_VAR_aws_access_key="${AWSKEY}" \
 -e TF_VAR_aws_secret_key="${AWSSECRET}" \
 leonardoalvesprates/tfansible terraform plan
@@ -23,7 +22,7 @@ leonardoalvesprates/tfansible terraform plan
 
 +++ terraform apply
 ```
-docker run --rm -v $(pwd):/lab \
+docker run --rm -v $(pwd)/tf:/lab \
 -e TF_VAR_aws_access_key="${AWSKEY}" \
 -e TF_VAR_aws_secret_key="${AWSSECRET}" \
 leonardoalvesprates/tfansible terraform apply -auto-approve
@@ -32,10 +31,8 @@ leonardoalvesprates/tfansible terraform apply -auto-approve
 
 +++ copy of instance public ip and private ssh key
 ```
-docker run --rm -v $(pwd):/lab leonardoalvesprates/tfansible terraform output -raw private_key_ssh > private_key_ssh.pem 
-docker run --rm -v $(pwd):/lab leonardoalvesprates/tfansible terraform output -raw instance_public_ip > instance_public_ip 
-cp instance_public_ip private_key_ssh.pem ../ 
-cd ..
+docker run --rm -v $(pwd)/tf:/lab leonardoalvesprates/tfansible terraform output -raw private_key_ssh > private_key_ssh.pem 
+docker run --rm -v $(pwd)/tf:/lab leonardoalvesprates/tfansible terraform output -raw instance_public_ip > instance_public_ip 
 chmod 600 instance_public_ip private_key_ssh.pem
 
 ```
@@ -84,8 +81,7 @@ leonardoalvesprates/tfansible ansible-playbook -i $PUBLIC_IP, --private-key ./pr
 
 ### destroy
 ```
-cd tf/
-docker run --rm -v $(pwd):/lab \
+docker run --rm -v $(pwd)/tf:/lab \
 -e TF_VAR_aws_access_key="${AWSKEY}" \
 -e TF_VAR_aws_secret_key="${AWSSECRET}" \
 leonardoalvesprates/tfansible terraform destroy -auto-approve
