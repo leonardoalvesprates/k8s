@@ -22,10 +22,22 @@ resource "rancher2_cluster_v2" "rke2_cluster" {
   ]
   rke_config {
     machine_pools {
-      name                         = "pool1"
+      name                         = "cp"
       cloud_credential_secret_name = rancher2_cloud_credential.aws.id
       control_plane_role           = true
       etcd_role                    = true
+      worker_role                  = false
+      quantity                     = 1
+      machine_config {
+        kind = rancher2_machine_config_v2.machine.kind
+        name = rancher2_machine_config_v2.machine.name
+      }
+    }
+    machine_pools {
+      name                         = "wk"
+      cloud_credential_secret_name = rancher2_cloud_credential.aws.id
+      control_plane_role           = false
+      etcd_role                    = false
       worker_role                  = true
       quantity                     = 1
       machine_config {
@@ -39,4 +51,3 @@ cni: cilium
 EOF
   }
 }
-
