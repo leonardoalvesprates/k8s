@@ -160,5 +160,5 @@ nodepools:
 rke:
   localClusterAuthEndpoint:
     enabled: true
-    # fqdn: lab.prateslabs.com.br
+    fqdn: lab.prateslabs.com.br
 
