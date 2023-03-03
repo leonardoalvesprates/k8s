@@ -17,6 +17,9 @@ resource "rancher2_cluster_v2" "rke2_cluster" {
   name                                     = "${var.prefix}-${random_string.random.result}"
   kubernetes_version                       = var.kubernetes_version  
   enable_network_policy                    = false
+  local_auth_endpoint {
+    enabled = true
+  }
   depends_on = [
     rancher2_cloud_credential.aws
   ]
