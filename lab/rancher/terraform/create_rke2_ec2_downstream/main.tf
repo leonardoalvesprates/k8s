@@ -51,6 +51,9 @@ resource "rancher2_cluster_v2" "rke2_cluster" {
     machine_global_config = <<EOF
 ---
 cni: cilium
+disable:
+  - rke2-ingress-nginx
+  - rke2-metrics-server
 EOF
   }
 }
