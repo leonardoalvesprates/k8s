@@ -1,4 +1,4 @@
-### run terraform and ansible in docker
+### run terraform in docker
 
 +++ (pinned prefix, NSG and AWS Region tf/vars.tf - must put some string at prefix variable)
 
