@@ -29,15 +29,3 @@ resource "random_string" "random" {
   special = false
   upper   = false
 }
-
-variable "should_create_ssh_key_pair" {
-  type = bool
-  description = "Specify if a new temporary SSH key pair needs to be created for the instances"
-  default = false
-}
-
-variable "instance_ssh_key_name" {
-  type = string
-  description = "Specify the SSH key name to use (that's already present in AWS)"
-  default = ""
-}
