@@ -57,3 +57,13 @@ disable:
 EOF
   }
 }
+
+
+# e.g.
+
+# resource "rancher2_cluster_role_template_binding" "foo" {
+#   name = "foo"
+#   cluster_id = rancher2_cluster_v2.rke2_cluster.cluster_v1_id
+#   role_template_id = "cluster-owner"
+#   user_id = "u-6tbbk"
+# }
