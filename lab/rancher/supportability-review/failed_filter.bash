@@ -1,7 +1,10 @@
 #!/bin/bash
 
+green=$(tput setaf 2)
+normal=$(tput sgr0)
+
 for EACH in $(find . | grep kb-output)
 do
-echo $EACH
-jq -r '.Controls[].tests[].results[] | select (.status == "FAIL")' < $EACH
+printf "${green}$EACH ${normal}\n"
+jq -r '.Controls[].tests[].results[] | select (.status == "FAIL") |.test_number, .test_desc,.remediation' < $EACH
 done
