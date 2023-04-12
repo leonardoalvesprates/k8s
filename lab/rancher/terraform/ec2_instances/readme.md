@@ -32,7 +32,7 @@ leonardoalvesprates/tfansible terraform apply -auto-approve
 +++ copy of private ssh key
 ```
 docker run --rm -v $(pwd)/tf:/lab leonardoalvesprates/tfansible terraform output -raw private_key_ssh > private_key_ssh.pem
-chmod 600 instance_public_ip private_key_ssh.pem
+chmod 600 private_key_ssh.pem
 
 ```
 
