@@ -1,0 +1,10 @@
+apiVersion: longhorn.io/v1beta1
+kind: RecurringJob
+metadata:
+  name: web
+  namespace: longhorn-system
+spec:
+  concurrency: 3
+  cron: 1/5 * * * ?
+  retain: 3
+  task: backup
