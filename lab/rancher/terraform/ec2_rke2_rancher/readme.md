@@ -39,7 +39,7 @@ chmod 600 instance_public_ip private_key_ssh.pem
 
 +++ list RKE2 versions
 ```
-curl -s https://raw.githubusercontent.com/rancher/rke/release/v1.3/data/data.json| grep v1.2 | grep rke2 |sed 's/"//g'|awk '{print $2}'|sort
+curl -sL https://raw.githubusercontent.com/rancher/rke/release/v1.3/data/data.json |jq -r '.rke2.releases[].version'
 
 ```
 
