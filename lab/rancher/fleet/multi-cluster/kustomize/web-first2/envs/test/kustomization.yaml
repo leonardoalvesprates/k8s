@@ -1,0 +1,6 @@
+resources:
+  - ../../base
+namespace: test-app
+images:
+  - name: nginx
+    newTag: v0.3

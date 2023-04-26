@@ -1,0 +1,5 @@
+resources:
+  - ../../envs/test
+images:
+  - name: nginx
+    newName: leonardoalvesprates/web-first

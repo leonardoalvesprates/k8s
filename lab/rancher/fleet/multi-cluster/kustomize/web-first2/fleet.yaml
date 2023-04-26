@@ -1,0 +1,7 @@
+targetCustomizations:
+- name: test
+  clusterSelector:
+    matchLabels:
+      env: dev
+  kustomize:
+    dir: clusters/dev
