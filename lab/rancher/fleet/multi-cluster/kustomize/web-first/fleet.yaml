@@ -1,0 +1,22 @@
+namespace: fleet-kustomize-web-first
+targetCustomizations:
+- name: dev
+  clusterSelector:
+    matchLabels:
+      env: dev
+  kustomize:
+    dir: overlays/dev
+
+- name: qa
+  clusterSelector:
+    matchLabels:
+      env: qa
+  kustomize:
+    dir: overlays/qa
+
+- name: prd
+  clusterSelector:
+    matchLabels:
+      env: prd
+  kustomize:
+    dir: overlays/prd
