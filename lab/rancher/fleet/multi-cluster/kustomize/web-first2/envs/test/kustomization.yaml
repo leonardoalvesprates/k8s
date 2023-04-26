@@ -2,4 +2,4 @@ resources:
   - ../../base
 namespace: test-app
 images:
-    newTag: v0.3
+    image: leonardoalvesprates/web-first:v0.3
