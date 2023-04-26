@@ -2,5 +2,5 @@ resources:
   - ../../base
 namespace: test-app
 images:
-  - name: leonardoalvesprates/web-first
+  - name: nginx
     newTag: v0.3
