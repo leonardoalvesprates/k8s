@@ -2,4 +2,4 @@ resources:
   - ../../envs/test
 images:
   - name: nginx
-    newName: leonardoalvesprates/web-first
+    newName: leonardoalvesprates/web-first:v0.1
