@@ -1,5 +1,5 @@
 resources:
   - ../../envs/test
 images:
-  - name: leonardoalvesprates/web-first:v0.1
-    newName: leonardoalvesprates/web-first:v0.2
+  - name: nginx
+    newName: leonardoalvesprates/web-first
