@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: web-first
+  name: web-first
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-first
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: web-first
+    spec:
+      containers:
+      - image: leonardoalvesprates/web-first:v0.1
+        name: web-first
+        ports:
+        - containerPort: 8080
+        resources: {}
