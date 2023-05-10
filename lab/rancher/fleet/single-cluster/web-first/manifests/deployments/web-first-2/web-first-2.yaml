@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: web-first-2
-  replicas: 2
+  replicas: 0
   template:
     metadata:
       labels:
