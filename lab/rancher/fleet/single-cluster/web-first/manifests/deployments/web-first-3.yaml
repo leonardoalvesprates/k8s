@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-first-3
+spec:
+  selector:
+    matchLabels:
+      app: web-first-3
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: web-first-3
+    spec:
+      containers:
+      - name: web-first-3
+        image: leonardoalvesprates/web-first:v0.3
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 8080
