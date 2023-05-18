@@ -79,6 +79,34 @@ leonardoalvesprates/tfansible ansible-playbook -i $PUBLIC_IP, --private-key ./pr
 
 ```
 
++++ set rancher https-url and admin beared token
+```
+export RANCHER_URL_HTTPS=""
+export RANCHER_TOKEN=""
+```
+
++++ terraform plan create awd cloud credentials and RKE node template
+```
+docker run --rm -v $(pwd)/tf_credential_node_template:/lab leonardoalvesprates/tfansible terraform init
+
+docker run --rm -v $(pwd)/tf_credential_node_template:/lab \
+-e TF_VAR_aws_access_key="${AWSKEY}" \
+-e TF_VAR_aws_secret_key="${AWSSECRET}" \
+-e TF_VAR_rancher_url_https="${RANCHER_URL_HTTPS}" \
+-e TF_VAR_rancher2_token_key="${RANCHER_TOKEN}" \
+leonardoalvesprates/tfansible terraform plan
+```
+
++++ terraform apply create awd cloud credentials and RKE node template
+```
+docker run --rm -v $(pwd)/tf_credential_node_template:/lab \
+-e TF_VAR_aws_access_key="${AWSKEY}" \
+-e TF_VAR_aws_secret_key="${AWSSECRET}" \
+-e TF_VAR_rancher_url_https="${RANCHER_URL_HTTPS}" \
+-e TF_VAR_rancher2_token_key="${RANCHER_TOKEN}" \
+leonardoalvesprates/tfansible terraform  apply -auto-approve
+```
+
 ### destroy
 ```
 docker run --rm -v $(pwd)/tf_ec2_instance:/lab \
