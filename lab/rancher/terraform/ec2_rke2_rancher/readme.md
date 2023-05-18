@@ -79,6 +79,7 @@ leonardoalvesprates/tfansible ansible-playbook -i $PUBLIC_IP, --private-key ./pr
 
 ```
 
+### aws cloud credentials and rke node template
 +++ set rancher https-url and admin beared token
 ```
 export RANCHER_URL_HTTPS=""
