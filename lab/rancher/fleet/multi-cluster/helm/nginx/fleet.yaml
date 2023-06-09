@@ -7,3 +7,13 @@ targetCustomizations:
   clusterSelector:
     matchLabels:
       env: dev
+
+namespace: lab2
+targetCustomizations:
+- name: dev
+  helm:
+    values:
+      replicas: 3
+  clusterSelector:
+    matchLabels:
+      env: dev
