@@ -8,7 +8,7 @@ targetCustomizations:
     matchLabels:
       env: dev
 
-- name: lab
+- name: lab2
   namespace: lab2
   helm:
     values:
@@ -17,7 +17,7 @@ targetCustomizations:
     matchLabels:
       env: dev
 
-- name: lab
+- name: lab3
   namespace: lab3
   helm:
     values:
