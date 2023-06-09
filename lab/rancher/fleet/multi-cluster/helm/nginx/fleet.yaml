@@ -1,6 +1,6 @@
-namespace: lab
 targetCustomizations:
-- name: dev
+- name: lab
+  namespace: lab
   helm:
     values:
       replicas: 1
@@ -8,9 +8,8 @@ targetCustomizations:
     matchLabels:
       env: dev
 
-namespace: lab2
-targetCustomizations:
-- name: dev
+- name: lab2
+  namespace: lab2
   helm:
     values:
       replicas: 3
