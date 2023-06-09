@@ -12,6 +12,15 @@ targetCustomizations:
   namespace: lab2
   helm:
     values:
+      replicas: 2
+  clusterSelector:
+    matchLabels:
+      env: dev
+
+- name: lab3
+  namespace: lab3
+  helm:
+    values:
       replicas: 3
   clusterSelector:
     matchLabels:
