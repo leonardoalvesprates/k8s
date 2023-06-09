@@ -11,7 +11,7 @@ targetCustomizations:
 
 - name: lab2
   namespace: lab2
-  defaultNamespace:: lab2
+  defaultNamespace: lab2
   helm:
     values:
       replicas: 2
@@ -21,7 +21,7 @@ targetCustomizations:
 
 - name: lab3
   namespace: lab3
-  defaultNamespace:: lab3
+  defaultNamespace: lab3
   helm:
     values:
       replicas: 3
