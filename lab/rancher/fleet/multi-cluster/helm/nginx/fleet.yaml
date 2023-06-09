@@ -1,7 +1,6 @@
 targetCustomizations:
 - name: lab
   namespace: lab
-  defaultNamespace: lab
   helm:
     values:
       replicas: 1
@@ -9,9 +8,8 @@ targetCustomizations:
     matchLabels:
       env: dev
 
-- name: lab2
+- name: lab
   namespace: lab2
-  defaultNamespace: lab2
   helm:
     values:
       replicas: 2
@@ -19,9 +17,8 @@ targetCustomizations:
     matchLabels:
       env: dev
 
-- name: lab3
+- name: lab
   namespace: lab3
-  defaultNamespace: lab3
   helm:
     values:
       replicas: 3
