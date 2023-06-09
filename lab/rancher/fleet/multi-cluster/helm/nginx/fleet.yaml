@@ -1,0 +1,9 @@
+namespace: lab
+targetCustomizations:
+- name: dev
+  helm:
+    values:
+      replicas: 1
+  clusterSelector:
+    matchLabels:
+      env: dev
