@@ -1,0 +1,9 @@
+targetCustomizations:
+- name: ns2
+  namespace: ns2
+  helm:
+    values:
+      replicas: 2
+  clusterSelector:
+    matchLabels:
+      env: dev
