@@ -27,6 +27,10 @@ printf "Rancher Version: "
 read RANCHER_VERSION
 export RANCHER_VERSION
 
+printf "Rancher admin password: "
+read ADMIN_PASS
+export ADMIN_PASS
+
 
 printf "${green}Creating ec2 instance...${normal} \n"
 printf "${green}Terraform init...${normal} \n"

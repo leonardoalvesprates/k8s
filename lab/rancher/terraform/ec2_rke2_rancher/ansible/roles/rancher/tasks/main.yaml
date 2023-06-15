@@ -42,7 +42,7 @@
 
 - name: Helm install Rancher
   shell: |
-    helm install rancher rancher-'{{ lookup('env', 'RANCHER_REPO') }}'/rancher --namespace cattle-system --set hostname='{{ lookup('env', 'RANCHER_URL') }}' --version '{{ lookup('env', 'RANCHER_VERSION') }}'
+    helm install rancher rancher-'{{ lookup('env', 'RANCHER_REPO') }}'/rancher --namespace cattle-system --set hostname='{{ lookup('env', 'RANCHER_URL') }}' --set bootstrapPassword='{{ lookup('env', 'ADMIN_PASS') }}' --version '{{ lookup('env', 'RANCHER_VERSION') }}'
   register: command_output
 - debug:
     var: command_output.stdout_lines

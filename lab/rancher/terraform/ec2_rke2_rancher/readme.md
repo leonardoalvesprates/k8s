@@ -65,6 +65,7 @@ export RANCHER_REPO=""      ### stable or latest
 export RANCHER_VERSION=""   ### e.g. 2.6.9, 2.7.1, 2.6.3
 export RANCHER_URL=""       ### that can be ec2 public IPv4 DNS (the terraform output of instance_public_dns from the terraform apply above)
                             ### or <PUBLIC_IP>.nip.io
+export ADMIN_PASS=""        ### Rancher admin password
 ```
 
 +++ install rancher
