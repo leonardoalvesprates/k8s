@@ -3,8 +3,7 @@
 green=$(tput setaf 2)
 normal=$(tput sgr0)
 
-
-create() { 
+get_aws_cred() {
 
 printf "AWSKEY: "
 read AWSKEY
@@ -13,6 +12,12 @@ export AWSKEY
 printf "AWSSECRET: "
 read AWSSECRET
 export AWSSECRET
+
+}
+
+create() { 
+
+get_aws_cred
 
 printf "RKE2 Version <=1.24.x: "
 read RKE2_VERSION
@@ -66,6 +71,8 @@ leonardoalvesprates/tfansible ansible-playbook -i $PUBLIC_IP, --private-key ./pr
 }
 
 destroy() {
+
+get_aws_cred
 
 docker run --rm -v $(pwd)/tf_ec2_instance:/lab \
 -e TF_VAR_aws_access_key="${AWSKEY}" \
