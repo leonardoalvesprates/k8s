@@ -13,11 +13,14 @@ printf "AWSSECRET: "
 read AWSSECRET
 export AWSSECRET
 
+echo AWSKEY=$(echo $AWSKEY) > .cred
+echo AWSSECRET=$(echo $AWSSECRET) >> .cred
+
 }
 
 create() { 
 
-get_aws_cred
+source .cred
 
 printf "RKE2 Version <=1.24.x: "
 read RKE2_VERSION
@@ -77,37 +80,56 @@ leonardoalvesprates/tfansible ansible-playbook -i $PUBLIC_IP, --private-key ./pr
 
 destroy() {
 
-get_aws_cred
+source .cred
 
 docker run --rm -v $(pwd)/tf_ec2_instance:/lab \
 -e TF_VAR_aws_access_key="${AWSKEY}" \
 -e TF_VAR_aws_secret_key="${AWSSECRET}" \
 leonardoalvesprates/tfansible terraform destroy -auto-approve
 
-
 }
 
 help() {
 
 printf "${green} Usage: ec2_rke2_rancher.bash <OPTION>${normal} \n"
-printf "${green} OPTION:${normal} \n"
+printf "${green} ---  ${normal} \n"
+printf "${green} OPTIONS: ${normal} \n"
+printf "${green} get_aws_cred ${normal} \n"
+printf "${green} create - create upstream - need (get_aws_cred) ${normal} \n"
+printf "${green} destroy - destroy upstream - need (get_aws_cred) ${normal} \n"
+printf "${green} beared_token - save beared token ${normal} \n"
+printf "${green} cred_rke_node_template - needs (get_aws_cred, beared token) ${normal} \n"
+printf "${green} rke2_downstream - need (get_aws_cred, beared token) ${normal} \n"
 printf "${green} help ${normal} \n"
-printf "${green} create ${normal} \n"
-printf "${green} destroy ${normal} \n"
-printf "${green} cred_rke_node_template ${normal} \n"
+printf "${green} ---  ${normal} \n"
+printf "${green} ---  ${normal} \n"
+printf "${green} 1) set variables prefix ${normal} \n"
+printf "${green}   - vi tf_ec2_instance/vars.tf ${normal} \n"
+printf "${green}   - vi tf_credential_node_template/vars.tf ${normal} \n"
+printf "${green}   - vi tf_rke2_downstream/vars.tf ${normal} \n"
+printf "${green} ---  ${normal} \n"
+printf "${green} 2) save aws creds ${normal} \n"
 
+}
+
+beared_token() {
+
+printf "Rancher beared token: "
+read RANCHER_TOKEN
+export RANCHER_TOKEN
+
+echo RANCHER_TOKEN=$(echo $RANCHER_TOKEN) > .beared_token
 
 }
 
 cred_rke_node_template() {
 
+source .cred
+source .beared_token
+
 printf "${green} Setting Rancher URL to https://$(cat instance_public_ip).nip.io ${normal} \n"
 
 export RANCHER_URL_HTTPS="https://$(cat instance_public_ip).nip.io"
-
-printf "Rancher beared token: "
-read RANCHER_TOKEN
-export RANCHER_TOKEN
 
 printf "${green} Terraform init and apply... ${normal} \n"
 docker run --rm -v $(pwd)/tf_credential_node_template:/lab leonardoalvesprates/tfansible terraform init
@@ -120,8 +142,32 @@ leonardoalvesprates/tfansible terraform  apply -auto-approve
 
 }
 
+rke2_downstream() {
+
+source .cred
+source .beared_token
+
+printf "${green} Setting Rancher URL to https://$(cat instance_public_ip).nip.io ${normal} \n"
+export RANCHER_URL="https://$(cat instance_public_ip).nip.io"
+
+printf "Rancher beared token: "
+read RANCHER_TOKEN
+export RANCHER_TOKEN
+
+docker run --rm -v $(pwd)/tf_rke2_downstream:/lab leonardoalvesprates/tfansible terraform init
+docker run --rm -v $(pwd)/tf_rke2_downstream:/lab \
+-e TF_VAR_aws_access_key="${AWSKEY}" \
+-e TF_VAR_aws_secret_key="${AWSSECRET}" \
+-e TF_VAR_rancher_url="${RANCHER_URL}" \
+-e TF_VAR_rancher2_token_key="${RANCHER_TOKEN}" \
+leonardoalvesprates/tfansible terraform apply -auto-approve
+
+}
 
 case $1 in
+get_aws_cred)
+  get_aws_cred
+  ;;
 create)
   create
   ;;
@@ -133,6 +179,12 @@ help)
   ;;
 cred_rke_node_template)
   cred_rke_node_template
+  ;;
+rke2_downstream)
+  rke2_downstream
+  ;;
+beared_token)
+  beared_token
   ;;
 *)
   help && exit 0
