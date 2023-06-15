@@ -69,6 +69,7 @@ docker run --rm -v $(pwd):/lab \
 -e RANCHER_REPO=$RANCHER_REPO \
 -e RANCHER_VERSION=$RANCHER_VERSION \
 -e RANCHER_URL=$RANCHER_URL \
+-e ADMIN_PASS=$ADMIN_PASS \
 -e ANSIBLE_HOST_KEY_CHECKING=False \
 leonardoalvesprates/tfansible ansible-playbook -i $PUBLIC_IP, --private-key ./private_key_ssh.pem ansible/rancher.yaml
 
