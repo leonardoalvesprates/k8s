@@ -22,11 +22,15 @@ create() {
 
 source .cred
 
+printf "RKE2 versions \n"
+printf "${green}curl -sL https://raw.githubusercontent.com/rancher/rke/release/v1.3/data/data.json |jq -r '.rke2.releases[].version'${normal} \n"
+printf "${green}curl -sL https://raw.githubusercontent.com/rancher/rke/release/v1.4/data/data.json |jq -r '.rke2.releases[].version'${normal} \n"
+
 printf "RKE2 Version <=1.24.x: "
 read RKE2_VERSION
 export RKE2_VERSION
 
-printf "Rancher Version: "
+printf "Rancher Version (e.g 2.7.1): "
 read RANCHER_VERSION
 export RANCHER_VERSION
 
@@ -94,21 +98,31 @@ help() {
 printf "${green} Usage: ec2_rke2_rancher.bash <OPTION>${normal} \n"
 printf "${green} ---  ${normal} \n"
 printf "${green} OPTIONS: ${normal} \n"
-printf "${green} get_aws_cred ${normal} \n"
-printf "${green} create - create upstream - need (get_aws_cred) ${normal} \n"
-printf "${green} destroy - destroy upstream - need (get_aws_cred) ${normal} \n"
-printf "${green} beared_token - save beared token ${normal} \n"
-printf "${green} cred_rke_node_template - needs (get_aws_cred, beared token) ${normal} \n"
-printf "${green} rke2_downstream - need (get_aws_cred, beared token) ${normal} \n"
-printf "${green} help ${normal} \n"
+printf " get_aws_cred ${green}- save aws creds ${normal} \n"
+printf " create ${green}- create upstream - need (get_aws_cred) ${normal} \n"
+printf " destroy ${green}- destroy upstream - need (get_aws_cred) ${normal} \n"
+printf " beared_token ${green}- save beared token - need (create) ${normal} \n"
+printf " cred_rke_node_template ${green}- needs (get_aws_cred, create, beared token) ${normal} \n"
+printf " rke2_downstream ${green}- need (get_aws_cred, create, beared token) ${normal} \n"
+printf " help ${normal} \n"
 printf "${green} ---  ${normal} \n"
+printf "${green} * pre-reqs *  ${normal} \n"
+printf "${green} set variables prefix ${normal} \n"
+printf "   - vi tf_ec2_instance/vars.tf ${normal} \n"
+printf "   - vi tf_credential_node_template/vars.tf ${normal} \n"
+printf "   - vi tf_rke2_downstream/vars.tf ${normal} \n"
+printf "${green} -----------------------------------------------------------------------------------  ${normal} \n"
+printf "${green} upstream instance ${normal} \n"
+printf " aws_ami ${green}- tf_ec2_instance/ec2_instance.tf ${normal} \n"
+printf " aws_region, aws_nsg, aws_instance_type ${green}- tf_ec2_instance/vars.tf ${normal} \n"
 printf "${green} ---  ${normal} \n"
-printf "${green} 1) set variables prefix ${normal} \n"
-printf "${green}   - vi tf_ec2_instance/vars.tf ${normal} \n"
-printf "${green}   - vi tf_credential_node_template/vars.tf ${normal} \n"
-printf "${green}   - vi tf_rke2_downstream/vars.tf ${normal} \n"
+printf "${green} aws cloud credentials and RKE node template ${normal} \n"
+printf " aws_region, aws_subnet, aws_vpc, aws_nsg, aws_instance_type, iam_profile ${green}- tf_credential_node_template/vars.tf ${normal} \n"
 printf "${green} ---  ${normal} \n"
-printf "${green} 2) save aws creds ${normal} \n"
+printf "${green} RKE2 downstream ${normal} \n"
+printf " aws_ami ${green}- tf_rke2_downstream/aws_ami.tf ${normal} \n"
+printf " machine_global_config, WORKER quantity, CONTROLPLANE quantity ${green}- tf_rke2_downstream/main.tf ${normal} \n"
+printf " aws_region, aws_zone, aws_instance_type, aws_nsg, aws_vpc, aws_subnet, iam_profile, kubernetes_version ${green}- tf_rke2_downstream/vars.tf ${normal} \n"
 
 }
 
@@ -149,10 +163,6 @@ source .beared_token
 
 printf "${green} Setting Rancher URL to https://$(cat instance_public_ip).nip.io ${normal} \n"
 export RANCHER_URL="https://$(cat instance_public_ip).nip.io"
-
-printf "Rancher beared token: "
-read RANCHER_TOKEN
-export RANCHER_TOKEN
 
 docker run --rm -v $(pwd)/tf_rke2_downstream:/lab leonardoalvesprates/tfansible terraform init
 docker run --rm -v $(pwd)/tf_rke2_downstream:/lab \
