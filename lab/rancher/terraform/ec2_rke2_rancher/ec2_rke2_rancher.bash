@@ -86,6 +86,8 @@ docker run --rm -v $(pwd):/lab \
 -e ANSIBLE_HOST_KEY_CHECKING=False \
 leonardoalvesprates/tfansible ansible-playbook -i $PUBLIC_IP, --private-key ./private_key_ssh.pem ansible/rancher.yaml
 
+printf "${green} Rancher URL to https://$(cat instance_public_ip).nip.io ${normal} \n"
+
 }
 
 destroy_upstream() {
@@ -194,6 +196,9 @@ rke2_downstream_destroy() {
 source .cred
 source .beared_token
 
+printf "${green} Setting Rancher URL to https://$(cat instance_public_ip).nip.io ${normal} \n"
+export RANCHER_URL="https://$(cat instance_public_ip).nip.io"
+
 docker run --rm -v $(pwd)/tf_rke2_downstream:/lab \
 -e TF_VAR_aws_access_key="${AWSKEY}" \
 -e TF_VAR_aws_secret_key="${AWSSECRET}" \
@@ -207,6 +212,9 @@ rke_downstream() {
 
 source .cred
 source .beared_token
+
+printf "${green} Setting Rancher URL to https://$(cat instance_public_ip).nip.io ${normal} \n"
+export RANCHER_URL="https://$(cat instance_public_ip).nip.io"
 
 docker run --rm -v $(pwd)/tf_rke_downstream:/lab leonardoalvesprates/tfansible terraform init
 docker run --rm -v $(pwd)/tf_rke_downstream:/lab \
@@ -222,6 +230,9 @@ rke_downstream_destroy() {
 
 source .cred
 source .beared_token
+
+printf "${green} Setting Rancher URL to https://$(cat instance_public_ip).nip.io ${normal} \n"
+export RANCHER_URL="https://$(cat instance_public_ip).nip.io"
 
 docker run --rm -v $(pwd)/tf_rke_downstream:/lab \
 -e TF_VAR_aws_access_key="${AWSKEY}" \
