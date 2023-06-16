@@ -55,5 +55,5 @@ resource "random_string" "random" {
 }
 
 variable kubernetes_version {
-    default = "v1.23.15-rancher1-1"
+    default = "v1.23.16-rancher2-2"
 }
