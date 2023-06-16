@@ -48,13 +48,13 @@ resource "rancher2_cluster_v2" "rke2_cluster" {
         name = rancher2_machine_config_v2.machine.name
       }
     }
-    machine_global_config = <<EOF
----
-cni: cilium
-disable:
-  - rke2-ingress-nginx
-  - rke2-metrics-server
-EOF
+#     machine_global_config = <<EOF
+# ---
+# cni: cilium
+# disable:
+#   - rke2-ingress-nginx
+#   - rke2-metrics-server
+# EOF
   }
 }
 
