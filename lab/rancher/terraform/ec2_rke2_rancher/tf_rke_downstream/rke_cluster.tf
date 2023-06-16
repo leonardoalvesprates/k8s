@@ -18,6 +18,9 @@ resource "rancher2_cluster" "rke_ec2" {
       # kube_api {
       #   service_cluster_ip_range = "11.43.0.0/16"
       # }
+      # kubelet {
+      #   cluster_dns_server = "11.43.0.10"
+      # }
     }
     ingress {
       default_backend = "false"
