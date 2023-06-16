@@ -5,22 +5,28 @@ normal=$(tput sgr0)
 
 get_aws_cred() {
 
+stty -echo
+
 printf "AWSKEY: "
 read AWSKEY
 export AWSKEY
+printf "\n"
 
 printf "AWSSECRET: "
 read AWSSECRET
 export AWSSECRET
+printf "\n"
+
+stty echo
 
 echo AWSKEY=$(echo $AWSKEY) > .cred
 echo AWSSECRET=$(echo $AWSSECRET) >> .cred
 
 }
 
-create() { 
+create_upstream() { 
 
-source .cred
+get_aws_cred
 
 printf "RKE2 versions \n"
 printf "${green}curl -sL https://raw.githubusercontent.com/rancher/rke/release/v1.3/data/data.json |jq -r '.rke2.releases[].version'${normal} \n"
@@ -82,7 +88,7 @@ leonardoalvesprates/tfansible ansible-playbook -i $PUBLIC_IP, --private-key ./pr
 
 }
 
-destroy() {
+destroy_upstream() {
 
 source .cred
 
@@ -98,19 +104,28 @@ help() {
 printf "${green} Usage: ec2_rke2_rancher.bash <OPTION>${normal} \n"
 printf "${green} ---  ${normal} \n"
 printf "${green} OPTIONS: ${normal} \n"
-printf " get_aws_cred ${green}- save aws creds ${normal} \n"
-printf " create ${green}- create upstream - need (get_aws_cred) ${normal} \n"
-printf " destroy ${green}- destroy upstream - need (get_aws_cred) ${normal} \n"
+printf " create_upstream ${green}- create upstream ${normal} \n"
+printf " destroy_upstream ${green}- destroy upstream ${normal} \n"
 printf " beared_token ${green}- save beared token - need (create) ${normal} \n"
-printf " cred_rke_node_template ${green}- needs (get_aws_cred, create, beared token) ${normal} \n"
-printf " rke2_downstream ${green}- need (get_aws_cred, create, beared token) ${normal} \n"
-printf " help ${normal} \n"
+printf " cred_rke_node_template ${green}- needs (create, beared token) ${normal} \n"
+printf " rke2_downstream ${green}- need (create, beared token) ${normal} \n"
+printf " rke2_downstream_destroy ${green}- need (create, beared token) ${normal} \n"
+printf " rke_downstream ${green}- need (create, beared token) ${normal} \n"
+printf " rke_downstream_destroy ${green}- need (create, beared token) ${normal} \n"
+printf " help ${green}- this message ${normal} \n"
+printf " info ${green}- info TF files ${normal} \n"
+
+}
+
+info(){
+
 printf "${green} ---  ${normal} \n"
 printf "${green} * pre-reqs *  ${normal} \n"
 printf "${green} set variables prefix ${normal} \n"
 printf "   - vi tf_ec2_instance/vars.tf ${normal} \n"
 printf "   - vi tf_credential_node_template/vars.tf ${normal} \n"
 printf "   - vi tf_rke2_downstream/vars.tf ${normal} \n"
+printf "   - vi tf_rke_downstream/vars.tf ${normal} \n"
 printf "${green} -----------------------------------------------------------------------------------  ${normal} \n"
 printf "${green} upstream instance ${normal} \n"
 printf " aws_ami ${green}- tf_ec2_instance/ec2_instance.tf ${normal} \n"
@@ -174,15 +189,55 @@ leonardoalvesprates/tfansible terraform apply -auto-approve
 
 }
 
+rke2_downstream_destroy() {
+
+source .cred
+source .beared_token
+
+docker run --rm -v $(pwd)/tf_rke2_downstream:/lab \
+-e TF_VAR_aws_access_key="${AWSKEY}" \
+-e TF_VAR_aws_secret_key="${AWSSECRET}" \
+-e TF_VAR_rancher_url="${RANCHER_URL}" \
+-e TF_VAR_rancher2_token_key="${RANCHER_TOKEN}" \
+leonardoalvesprates/tfansible terraform destroy -auto-approve
+
+}
+
+rke_downstream() {
+
+source .cred
+source .beared_token
+
+docker run --rm -v $(pwd)/tf_rke_downstream:/lab leonardoalvesprates/tfansible terraform init
+docker run --rm -v $(pwd)/tf_rke_downstream:/lab \
+-e TF_VAR_aws_access_key="${AWSKEY}" \
+-e TF_VAR_aws_secret_key="${AWSSECRET}" \
+-e TF_VAR_rancher_url="${RANCHER_URL}" \
+-e TF_VAR_rancher2_token_key="${RANCHER_TOKEN}" \
+leonardoalvesprates/tfansible terraform apply -auto-approve
+
+}
+
+rke_downstream_destroy() {
+
+source .cred
+source .beared_token
+
+docker run --rm -v $(pwd)/tf_rke_downstream:/lab \
+-e TF_VAR_aws_access_key="${AWSKEY}" \
+-e TF_VAR_aws_secret_key="${AWSSECRET}" \
+-e TF_VAR_rancher_url="${RANCHER_URL}" \
+-e TF_VAR_rancher2_token_key="${RANCHER_TOKEN}" \
+leonardoalvesprates/tfansible terraform destroy -auto-approve
+
+}
+
 case $1 in
-get_aws_cred)
-  get_aws_cred
+create_upstream)
+  create_upstream
   ;;
-create)
-  create
-  ;;
-destroy)
-  destroy
+destroy_upstream)
+  destroy_upstream
   ;;
 help)
   help
@@ -193,9 +248,22 @@ cred_rke_node_template)
 rke2_downstream)
   rke2_downstream
   ;;
+rke2_downstream_destroy)
+  rke2_downstream_destroy
+  ;;
+rke_downstream)
+  rke_downstream
+  ;;
+rke_downstream_destroy)
+  rke_downstream_destroy
+  ;;
 beared_token)
   beared_token
+  ;;
+info)
+  info
   ;;
 *)
   help && exit 0
 esac
+

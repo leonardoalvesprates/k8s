@@ -3,7 +3,7 @@ terraform {
     rancher2 = {
       source = "rancher/rancher2"
       version = "1.25.0"
-    }
+    }    
     aws = {
       source  = "hashicorp/aws"
       version = "~> 4.0"
