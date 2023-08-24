@@ -68,6 +68,8 @@ destroy() {
 
 source .cred
 
+docker run --rm -v $(pwd)/rke:/lab leonardoalvesprates/tfansible terraform destroy -auto-approve
+
 docker run --rm -v $(pwd)/ec2_instance:/lab \
 -e TF_VAR_aws_access_key="${AWSKEY}" \
 -e TF_VAR_aws_secret_key="${AWSSECRET}" \
