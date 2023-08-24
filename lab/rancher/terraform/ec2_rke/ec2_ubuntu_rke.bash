@@ -48,10 +48,16 @@ sleep 30
 
 for INSTANCE in 1 2 3 
 do
-ssh -o StrictHostKeyChecking=no -i private_key_ssh.pem ubuntu@$(cat instance_"$INSTANCE"_ip) "sudo curl https://releases.rancher.com/install-docker/20.10.sh | sh"
+ssh -o StrictHostKeyChecking=no -i private_key_ssh.pem ubuntu@$(cat rke/instance_"$INSTANCE"_ip) "sudo curl https://releases.rancher.com/install-docker/20.10.sh | sh"
 sleep 10
-ssh -o StrictHostKeyChecking=no -i private_key_ssh.pem ubuntu@$(cat instance_"$INSTANCE"_ip) "sudo usermod -G docker ubuntu"
+ssh -o StrictHostKeyChecking=no -i private_key_ssh.pem ubuntu@$(cat rke/instance_"$INSTANCE"_ip) "sudo usermod -G docker ubuntu"
 done
+
+export NODE1=$(cat rke//instance_1_ip)
+export NODE2=$(cat rke//instance_2_ip)
+export NODE3=$(cat rke//instance_3_ip)
+
+envsubst < rke/cluster.template > rke/cluster.yml
 
 docker run --rm -v $(pwd)/rke:/lab leonardoalvesprates/tfansible terraform init
 docker run --rm -v $(pwd)/rke:/lab leonardoalvesprates/tfansible terraform apply -auto-approve

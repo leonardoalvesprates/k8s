@@ -10,7 +10,7 @@ variable aws_nsg {
 }
 
 variable aws_instance_type {
-    default = "t3a.xlarge"
+    default = "t3a.large"
 }
 
 variable prefix {

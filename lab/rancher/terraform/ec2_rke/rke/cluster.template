@@ -1,0 +1,27 @@
+nodes:
+    - address: $NODE1
+      user: ubuntu
+      role:
+        - controlplane
+        - etcd
+        - worker
+      ssh_key_path: private_key_ssh.pem
+    - address: $NODE2
+      user: ubuntu
+      role:
+        - controlplane
+        - etcd
+        - worker
+      ssh_key_path: private_key_ssh.pem
+    - address: $NODE3
+      user: ubuntu
+      role:
+        - controlplane
+        - etcd
+        - worker
+      ssh_key_path: private_key_ssh.pem
+services:
+  etcd:
+    snapshot: true
+    creation: 1h
+    retention: 24h
