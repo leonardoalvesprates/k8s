@@ -4,24 +4,6 @@ https://github.com/kubernetes
 https://helm.sh/docs
 
 
-apt update
-apt-get install containerd
-sudo apt-get install -y apt-transport-https ca-certificates curl
-curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
-sudo apt-get update
-sudo apt-get install -y kubelet kubeadm kubectl
-sudo sed -i 's/#AllowTcpForwarding yes/AllowTcpForwarding yes/g' /etc/ssh/sshd_config
-sudo systemctl restart sshd
-sudo modprobe br_netfilter
-sudo bash -c 'echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf'
-sudo sysctl -p /etc/sysctl.conf
-sudo bash -c 'echo "net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf'
-sudo sysctl -p /etc/sysctl.conf
-
-kubeadm init --apiserver-advertise-address 172.31.38.153
-
-
 ###############################
 ###############################
 ###############################
@@ -64,4 +46,23 @@ sudo apt-get install -y kubelet kubeadm kubectl
 
 kubeadm init --pod-network-cidr 192.168.0.0/16
 
+export KUBECONFIG=/etc/kubernetes/admin.conf
+source <(kubectl completion bash)
+
 kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+
+###############################
+###############################
+###############################
+
+docker build
+docker save
+
+--- Jobs and CronJobs
+
+- Job -> backofflimit: <NUMBER> // activeDeadlineSeconds: <NUMBER>
+kubectl create job job01 --image=busybox --dry-run=client -o yaml > job01.yaml
+command: ["echo", "this is a TEST"]
+
+- CronJobs
+kubectl create cronjob cronjob01 --image=busybox --schedule="*/1 * * * *" --dry-run=client -o yaml
