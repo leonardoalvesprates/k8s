@@ -3,4 +3,5 @@ kind: Namespace
 metadata:
   labels:
     pod-security.kubernetes.io/enforce=baseline
+    env=lab-test1
   name: lab-test1
