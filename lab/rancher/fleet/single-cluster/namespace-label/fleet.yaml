@@ -1,0 +1,5 @@
+defaultNamespace: lab-test
+namespaceLabels:
+  label1: label1-value
+namespaceAnnotations:
+  annotation1: annotation1-value
