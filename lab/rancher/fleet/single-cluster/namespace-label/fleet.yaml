@@ -2,7 +2,7 @@ defaultNamespace: lab-test
 namespaceLabels:
   label1: label1-value
 #  env1: '${ index .ClusterLabels "management.cattle.io/cluster-name" }'
-  env2: global.fleet.clusterLabels.ENV
+  env2: '${ global.fleet.clusterLabels.ENV }'
 namespaceAnnotations:
   annotation1: annotation1-value
 
