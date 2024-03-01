@@ -1,6 +1,7 @@
 #defaultNamespace: lab-test
 #defaultNamespace: kube-system
-namespace: kube-system
+#namespace: kube-system
+namespace: default
 namespaceLabels:
   label1: label1-value
 #  env1: '${ index .ClusterLabels "management.cattle.io/cluster-name" }'
