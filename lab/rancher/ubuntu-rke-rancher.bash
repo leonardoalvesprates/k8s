@@ -102,7 +102,18 @@ export KUBECONFIG=kube_config_cluster.yml
 source <(kubectl completion bash)
 kubectl get nodes
 ###
-helm repo add rancher-$RANCHER_REPO https://releases.rancher.com/server-charts/$RANCHER_REPO
+case $RANCHER_REPO in
+stable)
+  helm repo add rancher-$RANCHER_REPO https://releases.rancher.com/server-charts/$RANCHER_REPO
+  ;;
+latest)
+  helm repo add rancher-$RANCHER_REPO https://releases.rancher.com/server-charts/$RANCHER_REPO
+  ;;
+prime)
+  helm repo add rancher-$RANCHER_REPO https://charts.rancher.com/server-charts/$RANCHER_REPO
+  ;;
+esac
+
 kubectl create namespace cattle-system
 kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/$CERTMANAGER_VERSION/cert-manager.crds.yaml
 helm repo add jetstack https://charts.jetstack.io
