@@ -20,7 +20,7 @@ rke config -list-version -all
 printf "${normal} \n"
 printf "K8S Version: "
 read K8S_VERSION
-printf "Rancher Repo (stable/latest): "
+printf "Rancher Repo (stable/latest/prime): "
 read RANCHER_REPO     
 printf "Rancher version: "
 read RANCHER_VERSION
