@@ -10,5 +10,7 @@ RUN  apt update && \
      apt update && \
      apt install brave-browser -y && \
      apt clean && \
-     apt autoclean
-CMD ["/usr/bin/brave-browser-stable", "--no-sandbox"]
+     apt autoclean && \
+     useradd -m lab
+USER lab
+CMD ["/usr/bin/brave-browser-stable"]
