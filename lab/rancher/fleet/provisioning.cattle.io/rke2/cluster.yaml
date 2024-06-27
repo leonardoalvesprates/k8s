@@ -23,7 +23,7 @@ spec:
         etcdRole: true
         machineConfigRef:
           kind: Amazonec2Config
-          name: nc-rke2-lprates-all-9zxcz
+          name: nc-rke2-pool1-xyz1x
         name: lprates-all
         quantity: 1
         unhealthyNodeTimeout: 0s
