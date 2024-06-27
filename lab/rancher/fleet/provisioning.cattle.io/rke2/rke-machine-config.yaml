@@ -1,0 +1,41 @@
+accessKey: null                                                                                                                                                                                                                               
+ami: null                                                                                                                                                                                                                                     
+apiVersion: rke-machine-config.cattle.io/v1                                                                                                                                                                                                   
+blockDurationMinutes: "0"                                                                                                                                                                                                                     
+deviceName: null                                                                                                                                                                                                                              
+encryptEbsVolume: false                                                                                                                                                                                                                       
+endpoint: null                                                                                                                                                                                                                                
+httpEndpoint: null                                                                                                                                                                                                                            
+httpTokens: null                                                                                                                                                                                                                              
+iamInstanceProfile: null                                                                                                                                                                                                                      
+insecureTransport: false                                                                                                                                                                                                                      
+instanceType: t3a.large                                                                                                                                                                                                                       
+keypairName: null                                                                                                                                                                                                                             
+kind: Amazonec2Config                                                                                                                                                                                                                         
+kmsKey: null                                                                                                                                                                                                                                  
+metadata:
+  name: nc-rke2-pool1-xyz1x
+  namespace: fleet-default
+monitoring: false
+openPort: []
+privateAddressOnly: false
+region: us-east-1
+requestSpotInstance: false
+retries: "5"
+rootSize: "50"
+secretKey: null
+securityGroup:
+- rancher-nodes
+securityGroupReadonly: false
+sessionToken: null
+spotPrice: "0.50"
+sshKeyContents: null
+sshUser: ubuntu
+subnetId: subnet-ab21ac85
+tags: null
+useEbsOptimizedInstance: false
+usePrivateAddress: false
+userdata: null
+volumeType: gp2
+vpcId: vpc-e23ae898
+zone: a
