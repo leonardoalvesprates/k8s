@@ -21,7 +21,7 @@ NO)
   ;;
 esac
 
-curl -s https://raw.githubusercontent.com/rancher/rke/release/v1.3/data/data.json| grep v1.2 | grep rke2 |sed 's/"//g'|awk '{print $2}'|sort
+curl -sL https://api.github.com/repos/rancher/rke2/releases | jq -r '.[].tag_name' | egrep -v "rc|alpha|beta|debug"
 printf "\n"
 printf "${blue}-- RKE2 Version: ${normal}"
 read RKE2_VERSION
