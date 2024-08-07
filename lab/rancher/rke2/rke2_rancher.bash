@@ -35,10 +35,11 @@ export RKE2_TLS_SANS
 export RANCHER_VERSION
 export RANCHER_HOSTNAME
 
-printf "${yellow}Installing RKE2...${normal} \n"
+printf "${yellow}Installing and enabling RKE2 service...${normal} \n"
 curl -sfL https://get.rke2.io | INSTALL_RKE2_VERSION=$RKE2_VERSION sh -
 systemctl enable rke2-server
 
+printf "${yellow}Creating /etc/rancher/rke2/ dir /etc/rancher/rke2/config.yaml file, and starting ...${normal} \n"
 mkdir -p /etc/rancher/rke2/
 cat <<EOF > config.sample
 tls-san:
@@ -122,4 +123,6 @@ kubectl -n cert-manager get pods -o wide
 printf "${yellow}Installing Rancher $RANCHER_VERSION ...${normal} \n"
 helm install rancher rancher-$RANCHER_REPO/rancher --namespace cattle-system --set hostname=$RANCHER_HOSTNAME --version $RANCHER_VERSION --set global.cattle.psp.enabled=false
 
+printf "${yellow}$ export KUBECONFIG=/etc/rancher/rke2/rke2.yaml ${normal} \n"
+printf "${yellow}$ source <(kubectl completion bash) ${normal} \n"
 printf "${yellow}$ kubectl get pod -A ${normal} \n"
