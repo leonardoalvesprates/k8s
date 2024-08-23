@@ -8,7 +8,7 @@ for CLUSTER in $(kubectl get clusters.management.cattle.io --no-headers -o custo
 do
   if [[ "$CLUSTER" == "local" ]]
   then
-    printf "${yellow}Not gathering local nodes info"
+    printf "${yellow}Not gathering local nodes info \n"
     printf "${normal}"
     
   else
