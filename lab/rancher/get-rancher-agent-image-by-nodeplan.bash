@@ -24,3 +24,7 @@ do
     printf "${normal} \n"
   fi
 done
+
+printf "${blue} \n"
+kubectl get clusters.management.cattle.io -o custom-columns="ID:.metadata.name,NAME:.spec.displayName,K8S_VERSION:.status.version.gitVersion,CREATED:.metadata.creationTimestamp,DELETED:.metadata.deletionTimestamp,LAST_READY:.status.conditions[?(@.type == 'Ready')].lastUpdateTime,READY:.status.conditions[?(@.type == 'Ready')].status" --sort-by=.metadata.creationTimestamp
+printf "${normal}"
