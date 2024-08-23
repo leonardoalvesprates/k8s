@@ -1,0 +1,26 @@
+#!/bin/bash
+
+blue=$(tput setaf 6)
+yellow=$(tput setaf 220)
+normal=$(tput sgr0)
+
+for CLUSTER in $(kubectl get clusters.management.cattle.io --no-headers -o custom-columns=":metadata.name")
+do
+  if [[ "$CLUSTER" == "local" ]]
+  then
+    printf "${yellow}Not gathering local nodes info"
+    printf "${normal}"
+    
+  else
+    printf "${yellow}"
+    echo $CLUSTER
+    for NODE in $(kubectl -n $CLUSTER get nodes.management.cattle.io --no-headers -o custom-columns=":metadata.name")
+    do
+      NODEIMAGE=$(kubectl -n $CLUSTER get nodes.management.cattle.io $NODE -o jsonpath='{.status.nodePlan.plan.processes.share-mnt.image}{"\n"}')
+      printf "${blue}"
+      echo $NODE $NODEIMAGE
+      printf "${normal}"
+    done
+    printf "${normal} \n"
+  fi
+done
