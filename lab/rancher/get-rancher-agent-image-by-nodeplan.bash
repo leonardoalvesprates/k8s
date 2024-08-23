@@ -4,6 +4,8 @@ blue=$(tput setaf 6)
 yellow=$(tput setaf 220)
 normal=$(tput sgr0)
 
+printf "${yellow} ==== This works to gather RKE node info ONLY ==== \n"
+
 for CLUSTER in $(kubectl get clusters.management.cattle.io --no-headers -o custom-columns=":metadata.name")
 do
   if [[ "$CLUSTER" == "local" ]]
