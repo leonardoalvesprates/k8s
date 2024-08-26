@@ -38,6 +38,8 @@ _installrke2() {
   curl -sL https://api.github.com/repos/rancher/rke2/releases | jq -r '.[].tag_name' | egrep -v "rc|alpha|beta|debug"
   printf "${blue}-- RKE2 Version: ${normal}"
   read RKE2_VERSION
+  printf "${blue}-- RKE2 CNI (canal/cilium/calico): ${normal}"
+  read RKE2_CNI
   printf "${blue}-- TLS SANS: ${normal}"
   read RKE2_TLS_SANS
   printf "${yellow}Installing and enabling RKE2 service...${normal} \n"
@@ -48,6 +50,8 @@ _installrke2() {
 cat <<EOF > config.sample
 tls-san:
   - $RKE2_TLS_SANS
+cni:
+  - $RKE2_CNI
 EOF
   envsubst < config.sample > /etc/rancher/rke2/config.yaml
   systemctl start rke2-server
