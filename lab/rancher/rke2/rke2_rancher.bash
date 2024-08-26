@@ -138,6 +138,7 @@ _exit() {
   printf "${yellow}$ source <(kubectl completion bash) ${normal} \n"
   exit
 }
+
 _menu() {
   printf "\n"
   printf "${blue}==================================================== ${normal}\n"
