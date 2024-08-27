@@ -136,6 +136,24 @@ _installrancher() {
   _menu
 }
 
+_nodelocaldns() {
+cat <<EOF > /var/lib/rancher/rke2/server/manifests/nodelocal-dns.yaml
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-coredns
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    nodelocal:
+      enabled: true
+EOF
+  printf "${yellow}Creating /var/lib/rancher/rke2/server/manifests/nodelocal-dns.yaml file and restarting rke2-server.service...${normal} \n"
+  systemctl restart rke2-server.service
+  kubectl get all -n kube-system -l k8s-app=node-local-dns && kubectl get all -n kube-system -l k8s-app=kube-dns
+  _menu
+}
+
 _exit() {
   printf "\n"
   printf "${yellow}$ export KUBECONFIG=/etc/rancher/rke2/rke2.yaml ${normal} \n"
@@ -152,6 +170,9 @@ _menu() {
   printf "${blue}4) install Cert-Manager (prereq HELM) ${normal}\n"
   printf "${blue}5) install Rancher (prereq HELM + Cert Manager) ${normal}\n"
   printf "${blue}6) exit ${normal}\n"
+  printf "${blue} - - - - - - - - - - - - - - - - - - - - - - - - - ${normal}\n"
+  printf "${blue}7) nodelocal dns (rke2 restart) ${normal}\n"
+  printf "\n"
   printf "${blue}-- Option: ${normal}"
   read OPTION
   case $OPTION in
@@ -172,6 +193,9 @@ _menu() {
     ;;
   6)
     _exit
+    ;;
+  7)
+    _nodelocaldns
     ;;
   esac
 }
