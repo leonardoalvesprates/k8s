@@ -24,7 +24,6 @@ _prereqs() {
     printf "${yellow}Proceding with no prereqs installation...${normal} \n"
     ;;
   esac
-  _menu
 }
 
 _exportkubeconfig() {
@@ -58,7 +57,6 @@ EOF
   sleep 60
   _exportkubeconfig
   kubectl get node -o wide
-  _menu
 }
 
 _installhelm() {
@@ -73,7 +71,6 @@ _installhelm() {
   tar xzf helm-$HELM_VERSION-linux-amd64.tar.gz
   chmod 755 linux-amd64/helm
   mv linux-amd64/helm /usr/local/bin/helm
-  _menu
 }
 
 _installcertmanager() {
@@ -96,7 +93,6 @@ _installcertmanager() {
   sleep 30
   printf "${yellow}Listing Cert-Manager PODs ...${normal} \n"
   kubectl -n cert-manager get pods -o wide
-  _menu
 }
 
 _installrancher() {
@@ -133,7 +129,6 @@ _installrancher() {
   printf "${yellow}Sleeping 60 secs ...${normal} \n"
   sleep 60
   kubectl -n cattle-system get po -o wide
-  _menu
 }
 
 _nodelocaldns() {
@@ -151,7 +146,6 @@ EOF
   printf "${yellow}Creating /var/lib/rancher/rke2/server/manifests/nodelocal-dns.yaml file and restarting rke2-server.service...${normal} \n"
   systemctl restart rke2-server.service
   kubectl get all -n kube-system -l k8s-app=node-local-dns && kubectl get all -n kube-system -l k8s-app=kube-dns
-  _menu
 }
 
 _exit() {
@@ -159,6 +153,14 @@ _exit() {
   printf "${yellow}$ export KUBECONFIG=/etc/rancher/rke2/rke2.yaml ${normal} \n"
   printf "${yellow}$ source <(kubectl completion bash) ${normal} \n"
   exit
+}
+
+_installall() {
+  _prereqs
+  _installrke2
+  _installhelm
+  _installcertmanager
+  _installrancher
 }
 
 _menu() {
@@ -171,7 +173,8 @@ _menu() {
   printf "${blue}5) install Rancher (prereq HELM + Cert Manager) ${normal}\n"
   printf "${blue}6) exit ${normal}\n"
   printf "${blue} - - - - - - - - - - - - - - - - - - - - - - - - - ${normal}\n"
-  printf "${blue}7) nodelocal dns (rke2 restart) ${normal}\n"
+  printf "${blue}7) install prereqs + RKE2 + HELM + Cert-Manager + Rancher ${normal}\n"
+  printf "${blue}8) nodelocal dns (rke2 restart) ${normal}\n"
   printf "\n"
   printf "${blue}-- Option: ${normal}"
   read OPTION
@@ -195,9 +198,15 @@ _menu() {
     _exit
     ;;
   7)
+    _installall
+    ;;
+  8)
     _nodelocaldns
     ;;
   esac
 }
 
-_menu
+while true
+do 
+  _menu
+done
