@@ -9,18 +9,50 @@ resource "rancher2_machine_config_v2" "machine" {
     vpc_id         = var.aws_vpc
     zone           = var.aws_zone
     root_size      = "50"
-    iam_instance_profile = var.iam_profile
+    # iam_instance_profile = var.iam_profile
+  }
+}
+
+resource "rancher2_secret_v2" "foo" {
+  cluster_id = "local"
+  name       = "mew-tu1-secret"
+  namespace  = "fleet-default"
+  data = {
+    audit-policy = "IyBMb2cgYWxsIHJlcXVlc3RzIGF0IHRoZSBNZXRhZGF0YSBsZXZlbC4KYXBpVmVyc2lvbjogYXVkaXQuazhzLmlvL3YxCmtpbmQ6IFBvbGljeQpydWxlczoKLSBsZXZlbDogTWV0YWRhdGE="
+  }
+  annotations = {
+    "rke.cattle.io/object-authorized-for-clusters" = "mew-tf-rke2"
   }
 }
 
 resource "rancher2_cluster_v2" "rke2_cluster" {
-  name                                     = "${var.prefix}-${random_string.random.result}"
+  # name                                     = "${var.prefix}-${random_string.random.result}"
+  name                                     = "mew-tf-rke2"
   kubernetes_version                       = var.kubernetes_version  
   enable_network_policy                    = false
   depends_on = [
     rancher2_cloud_credential.aws
   ]
   rke_config {
+    machine_selector_files {
+      machine_label_selector {
+        match_labels = {
+          "rke.cattle.io/control-plane-role" = "true"
+        }
+      }
+      file_sources {
+        secret {
+          name = "mew-tu1-secret"
+          default_permissions = "644"
+          items {
+            # dynamic = "true"
+            key = "audit-policy"
+            path ="/etc/rancher/rke2/mew-policy.yaml"
+            permissions = "666"
+          }
+        }
+      }
+    }
     machine_pools {
       name                         = "all"
       cloud_credential_secret_name = rancher2_cloud_credential.aws.id
@@ -31,25 +63,6 @@ resource "rancher2_cluster_v2" "rke2_cluster" {
       machine_config {
         kind = rancher2_machine_config_v2.machine.kind
         name = rancher2_machine_config_v2.machine.name
-      }
-    }
-    machine_selector_files {
-      machine_label_selector {
-        match_labels = {
-          "rke.cattle.io/control-plane-role" = "true"
-        }
-      }
-      file_sources {
-        secret {
-          name = "config-file-v1"
-          default_permissions = "644"
-          items {
-            dynamic = "true"
-            key = "audit-policy"
-            path ="/etc/rancher/rke2/custom/policy-v1.yaml"
-            permissions = "666"
-          }
-        }
       }
     }
   }
