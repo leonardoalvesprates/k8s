@@ -50,7 +50,7 @@ resource "rancher2_cluster_v2" "rke2_cluster" {
           name = "mew-tu1-secret"
           default_permissions = "644"
           items {
-            # dynamic = "true"
+            dynamic = "true"
             key = "audit-policy"
             path ="/etc/rancher/rke2/mew-policy.yaml"
             permissions = "666"
