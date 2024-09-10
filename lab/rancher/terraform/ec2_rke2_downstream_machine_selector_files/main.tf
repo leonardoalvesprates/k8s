@@ -18,7 +18,12 @@ resource "rancher2_secret_v2" "foo" {
   name       = "mew-tu1-secret"
   namespace  = "fleet-default"
   data = {
-    audit-policy = "IyBMb2cgYWxsIHJlcXVlc3RzIGF0IHRoZSBNZXRhZGF0YSBsZXZlbC4KYXBpVmVyc2lvbjogYXVkaXQuazhzLmlvL3YxCmtpbmQ6IFBvbGljeQpydWxlczoKLSBsZXZlbDogTWV0YWRhdGE="
+    audit-policy = <<-EOF
+apiVersion: audit.k8s.io/v1
+kind: Policy
+rules:
+- level: Metadata"
+EOF
   }
   annotations = {
     "rke.cattle.io/object-authorized-for-clusters" = "mew-tf-rke2"
